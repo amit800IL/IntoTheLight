@@ -1,3 +1,4 @@
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -5,36 +6,43 @@ public class Ghost : MonoBehaviour
 {
 
     [SerializeField] private Light Light;
+    [SerializeField] InputValue Input;
 
-    private void Start()
+    private void Update()
     {
-      
-        InputManager.Instance.OnGhostAwakening.AddListener(OnPlayerAwakeGhost);
+        OnPlayerAwakeGhost();
     }
+
     public void OnPlayerAwakeGhost()
     {
-  
-            if (GameManager.Instance.PlayerGhostAwake !=null && Vector3.Distance(GameManager.Instance.PlayerGhostAwake.transform.position, transform.position) < 0.5f)
-            {
-                InputManager.Instance.GetButtonPressValue();
-                Light.spotAngle = 100f;
-                Light.intensity = 70;
-            }
-            else
-            {
-                Light.spotAngle = default;
-                Light.intensity = default;
-            }
-        
+        if (GameManager.Instance != null && GameManager.Instance.PlayerGhostAwake != null && Vector3.Distance(GameManager.Instance.PlayerGhostAwake.transform.position, transform.position) < 0.5f)
+        {
+            CheckPressValue();
+            Light.spotAngle = 100f;
+            Light.intensity = 70;
+            Debug.Log("HELP");
+
+        }
+        else
+        {
+            Light.spotAngle = default;
+            Light.intensity = default;
+        }
 
     }
 
-    public void SetPlayer(PlayerGhostAwake player)
+    private bool CheckPressValue()
     {
-        GameManager.Instance.PlayerGhostAwake = player;
+        if (Input.isPressed)
+        {
+            InputManager.Instance.GetButtonPressValue(Input);
+            Debug.Log("noooooooo");
+            return true;
+        }
+        return false;
     }
 
-
+    
 
 
 

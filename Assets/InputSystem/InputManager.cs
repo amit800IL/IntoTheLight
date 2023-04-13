@@ -8,6 +8,7 @@ using UnityEngine.Windows;
 public class InputManager : MonoBehaviour
 {
     private IntoTheLight inputActions;
+    public IntoTheLight InputActions { get => inputActions; private set => inputActions = value; }
     public UnityEvent OnGhostAwakening { get; set; }
     public static InputManager Instance { get; private set; }
 
@@ -19,22 +20,27 @@ public class InputManager : MonoBehaviour
         }
         else
         {
-            Destroy(Instance);
+            Destroy(gameObject);
         }
+
+
     }
 
     private void Start()
     {
-        inputActions = new();
-        inputActions.Enable();
+        Instance = this;
+        InputActions = new();
+        InputActions.Enable();
 
-        inputActions.Player.GhostWake.started += OnPressStart;
-        
+        InputActions.Player.GhostWake.started += OnPressStart;
+
+        Debug.Log("Input start called");
     }
 
     public void OnPressStart(InputAction.CallbackContext context)
     {
         OnGhostAwakening?.Invoke();
+        Debug.Log("Invoked");
     }
 
     public Vector2 GetMoveValue(InputValue input)
@@ -42,9 +48,9 @@ public class InputManager : MonoBehaviour
         return input.Get<Vector2>();
     }
 
-    public Vector2 GetButtonPressValue()
+    public Vector2 GetButtonPressValue(InputValue input)
     {
-        return inputActions.Player.GhostWake.ReadValue<Vector2>();
+        return input.Get<Vector2>();
     }
 
 

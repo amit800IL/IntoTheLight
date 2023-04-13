@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -5,13 +6,12 @@ public class PlayerGhostAwake : MonoBehaviour
 {
     [SerializeField] private Ghost ghost;
 
-    private void Awake()
+
+    private void OnCollisionEnter(Collision collision)
     {
-        ghost.SetPlayer(this);
+        if (collision.gameObject.CompareTag("Ghost"))
+            ghost.OnPlayerAwakeGhost();
     }
 
-    private void Update()
-    {
-        ghost.OnPlayerAwakeGhost();
-    }
+
 }
