@@ -298,7 +298,7 @@ MonoBehaviour:
   m_DefaultControlScheme: 
   m_DefaultActionMap: Player
   m_SplitScreenIndex: -1
-  m_Camera: {fileID: 0}
+  m_Camera: {fileID: 4567791713607641002}
 --- !u!114 &4567791714284402690
 MonoBehaviour:
   m_ObjectHideFlags: 0

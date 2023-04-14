@@ -113,6 +113,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Light: {fileID: 5071565911892714528}
+  player: {fileID: 4567791714284402695, guid: 9583b86c9a75ba146ae13876ddebf1d2, type: 3}
 --- !u!54 &5071565911600792369
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -180,7 +181,7 @@ Light:
   m_InnerSpotAngle: 0
   m_CookieSize: 10
   m_Shadows:
-    m_Type: 0
+    m_Type: 2
     m_Resolution: -1
     m_CustomResolution: -1
     m_Strength: 1

@@ -1,4 +1,4 @@
-using UnityEditor;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -6,45 +6,61 @@ public class Ghost : MonoBehaviour
 {
 
     [SerializeField] private Light Light;
-    [SerializeField] InputValue Input;
+    [SerializeField] private PlayerGhostAwake player;
+    private bool IsGhostAwake = false;
+
+    private void Start()
+    {
+        CheckIfGhostAwake();
+    }
 
     private void Update()
     {
-        OnPlayerAwakeGhost();
+        AwakeGhost();
     }
-
-    public void OnPlayerAwakeGhost()
+    private void CheckIfGhostAwake()
     {
-        if (GameManager.Instance != null && GameManager.Instance.PlayerGhostAwake != null && Vector3.Distance(GameManager.Instance.PlayerGhostAwake.transform.position, transform.position) < 0.5f)
-        {
-            CheckPressValue();
-            Light.spotAngle = 100f;
-            Light.intensity = 70;
-            Debug.Log("HELP");
-
-        }
-        else
+        if (!IsGhostAwake)
         {
             Light.spotAngle = default;
             Light.intensity = default;
         }
-
     }
 
-    private bool CheckPressValue()
+    public void AwakeGhost()
     {
-        if (Input.isPressed)
+        bool keyPress = Keyboard.current.fKey.isPressed;
+
+        if (keyPress && !IsGhostAwake)
         {
-            InputManager.Instance.GetButtonPressValue(Input);
-            Debug.Log("noooooooo");
-            return true;
+            StartCoroutine(GhostFromWakeToSleep());
+            IsGhostAwake = true;
         }
-        return false;
     }
 
-    
 
+    public void OnPlayerAwakeGhost()
+    {
+        Light.spotAngle = 100f;
+        Light.intensity = 70;
+    }
+
+    public void OnGhostGoToSleep()
+    {
+        Light.spotAngle = default;
+        Light.intensity = default;
+        IsGhostAwake = false;
+    }
+
+    IEnumerator GhostFromWakeToSleep()
+    {
+        OnPlayerAwakeGhost();
+        yield return new WaitForSeconds(3);
+        OnGhostGoToSleep();
+    }
 
 
 
 }
+
+
