@@ -6,14 +6,12 @@ public class Ghost : MonoBehaviour
 {
 
     [SerializeField] private Light Light;
-    [SerializeField] private PlayerGhostAwake player;
     private bool IsGhostAwake = false;
 
     private void Start()
     {
         CheckIfGhostAwake();
     }
-
     private void Update()
     {
         AwakeGhost();
@@ -33,8 +31,8 @@ public class Ghost : MonoBehaviour
 
         if (keyPress && !IsGhostAwake)
         {
-            StartCoroutine(GhostFromWakeToSleep());
             IsGhostAwake = true;
+            StartCoroutine(GhostFromWakeToSleep());
         }
     }
 

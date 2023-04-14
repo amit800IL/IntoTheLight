@@ -639,19 +639,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e71bf98b97b304540ae744992d1675d2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  PlayerGhostAwake: {fileID: 1004456548}
---- !u!114 &1004456548 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 4567791714284402695, guid: 9583b86c9a75ba146ae13876ddebf1d2,
-    type: 3}
-  m_PrefabInstance: {fileID: 4567791713887335011}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dc82d9b543c72b145b277406b5724e91, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1051756573
 GameObject:
   m_ObjectHideFlags: 0
@@ -1087,12 +1074,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 301836288}
     m_Modifications:
-    - target: {fileID: 5071565911600792368, guid: 006232848ae8d9941b830945af940ccf,
-        type: 3}
-      propertyPath: player
-      value: 
-      objectReference: {fileID: 4567791714284402695, guid: 9583b86c9a75ba146ae13876ddebf1d2,
-        type: 3}
     - target: {fileID: 5071565911600792371, guid: 006232848ae8d9941b830945af940ccf,
         type: 3}
       propertyPath: m_RootOrder
@@ -1152,11 +1133,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Ghost (4)
-      objectReference: {fileID: 0}
-    - target: {fileID: 5071565911892714528, guid: 006232848ae8d9941b830945af940ccf,
-        type: 3}
-      propertyPath: m_Shadows.m_Type
-      value: 2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 006232848ae8d9941b830945af940ccf, type: 3}
@@ -1330,7 +1306,8 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 4567791714284402695, guid: 9583b86c9a75ba146ae13876ddebf1d2, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 9583b86c9a75ba146ae13876ddebf1d2, type: 3}
 --- !u!1001 &5071565912409230038
 PrefabInstance:
@@ -1343,7 +1320,7 @@ PrefabInstance:
         type: 3}
       propertyPath: player
       value: 
-      objectReference: {fileID: 1004456548}
+      objectReference: {fileID: 0}
     - target: {fileID: 5071565911600792371, guid: 006232848ae8d9941b830945af940ccf,
         type: 3}
       propertyPath: m_RootOrder
