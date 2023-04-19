@@ -3,7 +3,7 @@ using UnityEngine.AI;
 
 public class Guard : MonoBehaviour
 {
-    [SerializeField] float distance;
+    private float distance;
     [SerializeField] private NavMeshAgent agent;
 
     private void Update()
@@ -18,8 +18,8 @@ public class Guard : MonoBehaviour
 
         if (agent != null && raycast && distance < 5)
         {
-            Vector3 vector = Vector3.MoveTowards(agent.transform.position, GameManager.Instance.player.transform.position, distance);
-            agent.destination = vector;
+            Vector3 moveToPlayerPos = Vector3.MoveTowards(agent.transform.position, GameManager.Instance.player.transform.position, distance);
+            agent.destination = moveToPlayerPos;
         }
     }
 
