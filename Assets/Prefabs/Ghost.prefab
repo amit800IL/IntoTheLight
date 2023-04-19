@@ -18,8 +18,8 @@ GameObject:
   m_Name: Ghost
   m_TagString: Ghost
   m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_NavMeshLayer: 1
+  m_StaticEditorFlags: 8
   m_IsActive: 1
 --- !u!4 &5071565911600792371
 Transform:
@@ -113,7 +113,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Light: {fileID: 5071565911892714528}
-  player: {fileID: 4567791714284402695, guid: 9583b86c9a75ba146ae13876ddebf1d2, type: 3}
 --- !u!54 &5071565911600792369
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -145,8 +144,8 @@ GameObject:
   m_Name: Spot Light
   m_TagString: Untagged
   m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_NavMeshLayer: 1
+  m_StaticEditorFlags: 8
   m_IsActive: 1
 --- !u!4 &5071565911892714530
 Transform:

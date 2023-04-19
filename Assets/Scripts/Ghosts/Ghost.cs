@@ -29,7 +29,7 @@ public class Ghost : MonoBehaviour
     {
         bool keyPress = Keyboard.current.fKey.isPressed;
 
-        if (keyPress && !IsGhostAwake)
+        if (keyPress && !IsGhostAwake && Vector3.Distance(transform.position, GameManager.Instance.player.position) < 2f)
         {
             IsGhostAwake = true;
             StartCoroutine(GhostFromWakeToSleep());
