@@ -5,8 +5,8 @@ using UnityEngine.InputSystem;
 public class Ghost : MonoBehaviour
 {
 
-    [SerializeField] private Light Light;
-    private bool IsGhostAwake = false;
+    public bool IsGhostAwake = false;
+    [field: SerializeField] public Light Light { get; private set; }
 
     private void Start()
     {
@@ -15,6 +15,7 @@ public class Ghost : MonoBehaviour
     private void Update()
     {
         AwakeGhost();
+        GameManager.Instance.Death(IsGhostAwake);
     }
     private void CheckIfGhostAwake()
     {
@@ -29,12 +30,13 @@ public class Ghost : MonoBehaviour
     {
         bool keyPress = Keyboard.current.fKey.isPressed;
 
-        if (keyPress && !IsGhostAwake && Vector3.Distance(transform.position, GameManager.Instance.player.position) < 2f)
+        if (keyPress && !IsGhostAwake && Vector3.Distance(transform.position, GameManager.Instance.Player.transform.position) < 2f)
         {
             IsGhostAwake = true;
             StartCoroutine(GhostFromWakeToSleep());
         }
     }
+
 
 
     public void OnPlayerAwakeGhost()
