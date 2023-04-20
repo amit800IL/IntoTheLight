@@ -127,10 +127,10 @@ GameObject:
   - component: {fileID: 5071565911600792370}
   - component: {fileID: 5071565911600792373}
   - component: {fileID: 5071565911600792372}
-  - component: {fileID: 5071565911600792368}
   - component: {fileID: 5071565911600792369}
+  - component: {fileID: 6476714479810726107}
   m_Layer: 0
-  m_Name: Ghost
+  m_Name: Light Ghost
   m_TagString: Ghost
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 1
@@ -215,20 +215,6 @@ SphereCollider:
   serializedVersion: 2
   m_Radius: 0.5
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &5071565911600792368
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5071565911600792375}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 05408750891032f47b3a478fc6d53b71, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  IsGhostAwake: 0
-  <Light>k__BackingField: {fileID: 5396621972897173402}
 --- !u!54 &5071565911600792369
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -245,3 +231,17 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 126
   m_CollisionDetection: 0
+--- !u!114 &6476714479810726107
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5071565911600792375}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7adc78c0a8501fc4dab2dd29deb6e00f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  IsGhostAwake: 0
+  <Light>k__BackingField: {fileID: 5396621972897173402}

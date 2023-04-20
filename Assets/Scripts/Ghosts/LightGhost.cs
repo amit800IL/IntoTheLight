@@ -2,7 +2,7 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class Ghost : MonoBehaviour
+public class LightGhost : MonoBehaviour
 {
 
     public bool IsGhostAwake = false;

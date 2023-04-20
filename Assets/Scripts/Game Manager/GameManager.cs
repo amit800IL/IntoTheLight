@@ -6,8 +6,7 @@ public class GameManager : MonoBehaviour
     [field: SerializeField] public static GameManager Instance { get; private set; }
     [field: SerializeField] public Transform Player { get; private set; }
     [field: SerializeField] public PlayerStats PlayerStats { get; private set; }
-    [field: SerializeField] public Ghost Ghost { get; private set; }
-    [field: SerializeField] public Collider Collider { get; private set; }
+    [field: SerializeField] public LightGhost Ghost { get; private set; }
 
     [SerializeField] private float distance;
 
