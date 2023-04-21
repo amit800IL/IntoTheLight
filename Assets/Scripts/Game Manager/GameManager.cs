@@ -1,5 +1,6 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
@@ -37,9 +38,10 @@ public class GameManager : MonoBehaviour
 
             bool IsFarGhost = Vector3.Distance(ghost.transform.position, Player.position) > ghost.Light.range;
 
+            bool raycast = Physics.Raycast(ghost.transform.position, Player.position - ghost.transform.position, distance);
+
             distance = Vector3.Distance(ghost.transform.position, Player.position);
 
-            bool raycast = Physics.Raycast(ghost.transform.position, Player.position - ghost.transform.position, distance);
 
 
             if (!isGhostAwake && raycast && IsFarGhost)
@@ -47,7 +49,6 @@ public class GameManager : MonoBehaviour
                 while (distance > ghost.Light.range)
                 {
                     PlayerStats.HP -= 0.001f;
-                    Debug.Log(PlayerStats.HP);
                     break;
                 }
             }
@@ -56,27 +57,17 @@ public class GameManager : MonoBehaviour
                 while (distance < ghost.Light.range)
                 {
                     PlayerStats.HP += 0.1f;
-                    Debug.Log(PlayerStats.HP);
                     break;
                 }
             }
 
         }
 
-    }
+        if(PlayerStats.HP <= 0)
+        {
+            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        }
 
-    private IEnumerator HealthDown()
-    {
-        yield return new WaitForSeconds(5);
-        PlayerStats.HP -= 1;
-        Debug.Log(PlayerStats.HP);
-    }
-
-    private IEnumerator Hee()
-    {
-        yield return new WaitForSeconds(5);
-        PlayerStats.HP -= 1;
-        Debug.Log(PlayerStats.HP);
     }
     private void OnDrawGizmos()
     {

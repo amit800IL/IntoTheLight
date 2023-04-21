@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.SceneManagement;
 
 public abstract class Enemy : MonoBehaviour
 {
@@ -15,9 +16,10 @@ public abstract class Enemy : MonoBehaviour
         {
             Vector3 moveToPlayer = Vector3.MoveTowards(agent.transform.position, GameManager.Instance.Player.transform.position, distance);
             agent.destination = moveToPlayer;
-            if(distance == 0)
+
+            if(distance <= 1f)
             {
-                Debug.Log("Player is dead");
+                SceneManager.LoadScene(SceneManager.GetActiveScene().name);
             }
         }
     }

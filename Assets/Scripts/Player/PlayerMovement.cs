@@ -11,8 +11,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private Rigidbody rb;
     [SerializeField] private Transform GroundCheck;
     [SerializeField] private LayerMask groundMask;
-
-   
+    [SerializeField] Animator playerAnimator;
 
     private void Update()
     {
@@ -25,6 +24,8 @@ public class PlayerMovement : MonoBehaviour
             newMove.Normalize();
         }
 
+        
+
     }
 
     private void OnMove(InputValue value)
@@ -34,6 +35,8 @@ public class PlayerMovement : MonoBehaviour
         newMove = new Vector3(-newMove.x, 0, -newMove.y);
 
         rb.velocity = newMove * speed;
+
+        playerAnimator.SetBool("IsWalking", true);
 
     }
 
