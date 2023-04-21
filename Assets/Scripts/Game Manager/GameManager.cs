@@ -6,7 +6,7 @@ public class GameManager : MonoBehaviour
     [field: SerializeField] public static GameManager Instance { get; private set; }
     [field: SerializeField] public Transform Player { get; private set; }
     [field: SerializeField] public PlayerStats PlayerStats { get; private set; }
-    [field: SerializeField] public LightGhost Ghost { get; private set; }
+    [field: SerializeField] public LightGhost[] Ghost { get; private set; }
 
     [SerializeField] private float distance;
 
@@ -21,28 +21,53 @@ public class GameManager : MonoBehaviour
             Destroy(Instance);
         }
 
+    }
 
+    private void Start()
+    {
+        Ghost = FindObjectsOfType<LightGhost>();
     }
     public void Death(bool isGhostAwake)
     {
-        bool raycast = Physics.Raycast(Ghost.transform.position, Player.position, distance);
-        distance = Vector3.Distance(Ghost.transform.position, Player.position);
 
-        if (distance > Ghost.Light.range && !isGhostAwake && raycast)
+        foreach (LightGhost ghost in Ghost)
         {
-            PlayerStats.HP--;
+            bool IsCloseGhost = Vector3.Distance(ghost.transform.position, Player.position) <= 2f;
+
+            bool IsFarGhost = Vector3.Distance(ghost.transform.position, Player.position) > 2f;
+
+            distance = Vector3.Distance(ghost.transform.position, Player.position);
+
+            bool raycast = Physics.Raycast(ghost.transform.position, Player.position - ghost.transform.position, distance);
+
+
+            if (!isGhostAwake && raycast && IsFarGhost)
+            {
+                while (distance > ghost.Light.range)
+                {
+                    PlayerStats.HP -= 1;
+                    Debug.Log(PlayerStats.HP);
+                    break;
+                }
+            }
+            else if (isGhostAwake && raycast && IsCloseGhost)
+            {
+                while (distance < ghost.Light.range)
+                {
+                    PlayerStats.HP = 10;
+                    Debug.Log(PlayerStats.HP);
+                    break;
+                }
+            }
 
         }
-        else if (distance < Ghost.Light.range && isGhostAwake && raycast)
-        {
-            PlayerStats.HP++;
-        }
 
-        Debug.Log(PlayerStats.HP);
     }
-
     private void OnDrawGizmos()
     {
-        Gizmos.DrawLine(Ghost.transform.position, Player.transform.position);
+        foreach (var ghost in Ghost)
+        {
+            Gizmos.DrawLine(ghost.transform.position, Player.transform.position - ghost.transform.position);
+        }
     }
 }

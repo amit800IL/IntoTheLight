@@ -5,7 +5,7 @@ using UnityEngine.InputSystem;
 public class LightGhost : MonoBehaviour
 {
 
-    public bool IsGhostAwake = false;
+    private bool IsGhostAwake = false;
     [field: SerializeField] public Light Light { get; private set; }
 
     private void Start()
@@ -52,7 +52,7 @@ public class LightGhost : MonoBehaviour
         IsGhostAwake = false;
     }
 
-    IEnumerator GhostFromWakeToSleep()
+    public IEnumerator GhostFromWakeToSleep()
     {
         OnPlayerAwakeGhost();
         yield return new WaitForSeconds(3);

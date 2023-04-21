@@ -19,7 +19,7 @@ public class InputManager : MonoBehaviour
         }
         else
         {
-            Destroy(gameObject);
+            Destroy(Instance);
         }
     }
 
