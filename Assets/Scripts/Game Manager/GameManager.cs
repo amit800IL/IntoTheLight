@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour
@@ -32,9 +33,9 @@ public class GameManager : MonoBehaviour
 
         foreach (LightGhost ghost in Ghost)
         {
-            bool IsCloseGhost = Vector3.Distance(ghost.transform.position, Player.position) <= 2f;
+            bool IsCloseGhost = Vector3.Distance(ghost.transform.position, Player.position) <= ghost.Light.range;
 
-            bool IsFarGhost = Vector3.Distance(ghost.transform.position, Player.position) > 2f;
+            bool IsFarGhost = Vector3.Distance(ghost.transform.position, Player.position) > ghost.Light.range;
 
             distance = Vector3.Distance(ghost.transform.position, Player.position);
 
@@ -45,7 +46,7 @@ public class GameManager : MonoBehaviour
             {
                 while (distance > ghost.Light.range)
                 {
-                    PlayerStats.HP -= 1;
+                    PlayerStats.HP -= 0.001f;
                     Debug.Log(PlayerStats.HP);
                     break;
                 }
@@ -54,7 +55,7 @@ public class GameManager : MonoBehaviour
             {
                 while (distance < ghost.Light.range)
                 {
-                    PlayerStats.HP = 10;
+                    PlayerStats.HP += 0.1f;
                     Debug.Log(PlayerStats.HP);
                     break;
                 }
@@ -62,6 +63,20 @@ public class GameManager : MonoBehaviour
 
         }
 
+    }
+
+    private IEnumerator HealthDown()
+    {
+        yield return new WaitForSeconds(5);
+        PlayerStats.HP -= 1;
+        Debug.Log(PlayerStats.HP);
+    }
+
+    private IEnumerator Hee()
+    {
+        yield return new WaitForSeconds(5);
+        PlayerStats.HP -= 1;
+        Debug.Log(PlayerStats.HP);
     }
     private void OnDrawGizmos()
     {

@@ -6,7 +6,7 @@ public abstract class Enemy : MonoBehaviour
     private float distance;
     [SerializeField] private NavMeshAgent agent;
 
-    public virtual void CalcluateRouteByLight(Light enemyLight)
+    public void CalcluateRouteByLight(Light enemyLight)
     {
         bool raycast = Physics.Raycast(agent.transform.position, GameManager.Instance.Player.transform.position);
         distance = Vector3.Distance(agent.transform.position, GameManager.Instance.Player.transform.position);
@@ -15,6 +15,10 @@ public abstract class Enemy : MonoBehaviour
         {
             Vector3 moveToPlayer = Vector3.MoveTowards(agent.transform.position, GameManager.Instance.Player.transform.position, distance);
             agent.destination = moveToPlayer;
+            if(distance == 0)
+            {
+                Debug.Log("Player is dead");
+            }
         }
     }
 

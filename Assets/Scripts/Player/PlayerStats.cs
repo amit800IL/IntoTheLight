@@ -4,5 +4,5 @@ using UnityEngine;
 
 public class PlayerStats : MonoBehaviour
 {
-    public int HP = 10;
+    public float HP = 10;
 }
