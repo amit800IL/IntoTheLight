@@ -19,7 +19,8 @@ public abstract class Enemy : MonoBehaviour
 
             if (distance <= 1f)
             {
-                SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+                //SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+                Debug.Log("Player is dead");
             }
         }
     }

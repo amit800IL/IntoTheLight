@@ -65,7 +65,7 @@ public class GameManager : MonoBehaviour
 
         if(PlayerStats.HP <= 0)
         {
-            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+            Debug.Log("Player is dead");
         }
 
     }
