@@ -232,7 +232,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
+  - {fileID: 2100000, guid: d66cec316fa2b0b49abba79c2da7c2a2, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -311,9 +311,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 211ffedb50735bd4e89b9a692dc154f1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 10
+  playerSpeed: 5
   GroundDistance: 2
-  rb: {fileID: 4567791714284402688}
+  playerRigidBody: {fileID: 4567791714284402688}
   GroundCheck: {fileID: 4567791713786440680}
   groundMask:
     serializedVersion: 2

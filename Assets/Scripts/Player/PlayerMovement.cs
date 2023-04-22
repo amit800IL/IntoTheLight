@@ -6,12 +6,12 @@ public class PlayerMovement : MonoBehaviour
    
     private Vector3 newMove;
     private Vector3 moveInput;
-    [SerializeField] private float speed;
+    [SerializeField] private float playerSpeed;
     [SerializeField] private float GroundDistance;
-    [SerializeField] private Rigidbody rb;
+    [SerializeField] private Rigidbody playerRigidBody;
     [SerializeField] private Transform GroundCheck;
     [SerializeField] private LayerMask groundMask;
-    [SerializeField] Animator playerAnimator;
+    //[SerializeField] Animator playerAnimator;
 
     private void Update()
     {
@@ -24,8 +24,6 @@ public class PlayerMovement : MonoBehaviour
             newMove.Normalize();
         }
 
-        
-
     }
 
     private void OnMove(InputValue value)
@@ -34,9 +32,8 @@ public class PlayerMovement : MonoBehaviour
 
         newMove = new Vector3(-newMove.x, 0, -newMove.y);
 
-        rb.velocity = newMove * speed;
-
-        playerAnimator.SetBool("IsWalking", true);
+        playerRigidBody.velocity = newMove * playerSpeed;
+       
 
     }
 
@@ -44,7 +41,7 @@ public class PlayerMovement : MonoBehaviour
     {
         if (newMove != null)
         {
-            rb.AddForce(newMove * speed, ForceMode.Impulse);
+            playerRigidBody.AddForce(newMove * playerSpeed, ForceMode.Impulse);
         }
     }
 

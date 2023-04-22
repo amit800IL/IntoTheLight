@@ -17,7 +17,7 @@ public abstract class Enemy : MonoBehaviour
             Vector3 moveToPlayer = Vector3.MoveTowards(agent.transform.position, GameManager.Instance.Player.transform.position, distance);
             agent.destination = moveToPlayer;
 
-            if(distance <= 1f)
+            if (distance <= 1f)
             {
                 SceneManager.LoadScene(SceneManager.GetActiveScene().name);
             }
