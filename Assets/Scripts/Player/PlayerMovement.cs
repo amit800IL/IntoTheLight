@@ -3,7 +3,7 @@ using UnityEngine.InputSystem;
 
 public class PlayerMovement : MonoBehaviour
 {
-   
+
     private Vector3 newMove;
     private Vector3 moveInput;
     [SerializeField] private float playerSpeed;
@@ -11,7 +11,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private Rigidbody playerRigidBody;
     [SerializeField] private Transform GroundCheck;
     [SerializeField] private LayerMask groundMask;
-    [SerializeField] Animator playerAnimator;
+    //[SerializeField] Animator playerAnimator;
 
     private void Update()
     {
@@ -24,10 +24,6 @@ public class PlayerMovement : MonoBehaviour
             newMove.Normalize();
         }
 
-        if (Keyboard.current.wKey.isPressed)
-        {
-            playerAnimator.SetBool("IsWalking", true);
-        }
     }
 
     private void OnMove(InputValue value)
@@ -36,10 +32,13 @@ public class PlayerMovement : MonoBehaviour
 
         newMove = new Vector3(-newMove.x, 0, -newMove.y);
 
+        //if (newMove == Vector3.forward)
+        //{
+        //    playerAnimator.SetFloat("MovementSpeed", newMove.magnitude);
+        //    playerAnimator.SetBool("IsWalking", true);
+        //}
+
         playerRigidBody.velocity = newMove * playerSpeed;
-
-        
-
     }
 
     private void FixedUpdate()

@@ -41,8 +41,8 @@ public class LightGhost : MonoBehaviour
 
     public void OnPlayerAwakeGhost()
     {
-        Light.spotAngle = 100f;
-        Light.intensity = 70;
+        Light.spotAngle = 200f;
+        Light.intensity = 140;
     }
 
     public void OnGhostGoToSleep()
