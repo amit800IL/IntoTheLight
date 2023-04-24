@@ -43,7 +43,6 @@ public class GameManager : MonoBehaviour
             distance = Vector3.Distance(ghost.transform.position, Player.position);
 
 
-
             if (!isGhostAwake && raycast && IsFarGhost)
             {
                 while (distance > ghost.Light.range)
