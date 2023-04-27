@@ -11,10 +11,11 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private Rigidbody playerRigidBody;
     [SerializeField] private Transform GroundCheck;
     [SerializeField] private LayerMask groundMask;
-    //[SerializeField] Animator playerAnimator;
+    [SerializeField] private Animator playerAnimator;
 
     private void Update()
     {
+
         IsGrounded();
 
         newMove = moveInput.x * transform.right + moveInput.y * transform.forward;
@@ -23,7 +24,6 @@ public class PlayerMovement : MonoBehaviour
         {
             newMove.Normalize();
         }
-
     }
 
     private void OnMove(InputValue value)
@@ -32,13 +32,19 @@ public class PlayerMovement : MonoBehaviour
 
         newMove = new Vector3(-newMove.x, 0, -newMove.y);
 
-        //if (newMove == Vector3.forward)
-        //{
-        //    playerAnimator.SetFloat("MovementSpeed", newMove.magnitude);
-        //    playerAnimator.SetBool("IsWalking", true);
-        //}
+        if (newMove.magnitude > 0)
+        {
+            playerAnimator.SetBool("IsWalking", true);
+            playerAnimator.SetFloat("MovementSpeed", newMove.magnitude);
+        }
+
+        else
+        {
+            playerAnimator.SetBool("IsWalking", false);
+        }
 
         playerRigidBody.velocity = newMove * playerSpeed;
+
     }
 
     private void FixedUpdate()
