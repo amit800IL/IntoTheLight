@@ -15,6 +15,7 @@ public abstract class Enemy : MonoBehaviour
         {
             Vector3 moveToPlayer = Vector3.MoveTowards(agent.transform.position, GameManager.Instance.Player.transform.position, distance);
             agent.destination = moveToPlayer;
+            agent.updateRotation = true;
 
             if (distance <= 1f)
             {
