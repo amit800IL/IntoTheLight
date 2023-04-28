@@ -243,5 +243,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7adc78c0a8501fc4dab2dd29deb6e00f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  IsGhostAwake: 0
   <Light>k__BackingField: {fileID: 5396621972897173402}

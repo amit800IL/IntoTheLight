@@ -1,4 +1,3 @@
-using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -8,6 +7,7 @@ public class PlayerMovement : MonoBehaviour
     private Vector3 newMove;
     private Vector3 moveInput;
     private float blendX, blendY;
+    [SerializeField] private float AnimationAccelrator;
     [SerializeField] private float blendSpeed;
     [SerializeField] private float playerSpeed;
     [SerializeField] private float GroundDistance;
@@ -15,13 +15,24 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private Transform GroundCheck;
     [SerializeField] private LayerMask groundMask;
     [SerializeField] private Animator playerAnimator;
-   
+
 
     private void Update()
     {
-
         IsGrounded();
 
+        AnimationBlend();
+
+    }
+
+    private void AnimationBlend()
+    {
+
+        blendX = Mathf.MoveTowards(blendX, newMove.x, blendSpeed * Time.deltaTime * AnimationAccelrator);
+        blendY = Mathf.MoveTowards(blendY, newMove.z, blendSpeed * Time.deltaTime * AnimationAccelrator);
+
+        playerAnimator.SetFloat("Horizontal", blendX);
+        playerAnimator.SetFloat("Vertical", blendY);
     }
 
     private void OnMove(InputValue value)
@@ -30,16 +41,7 @@ public class PlayerMovement : MonoBehaviour
 
         newMove = new Vector3(-newMove.x, 0, -newMove.y);
 
-        newMove = moveInput.x * transform.right + moveInput.y * transform.forward;
-
-        blendX = Mathf.MoveTowards(blendX, moveInput.x, blendSpeed * Time.deltaTime);
-        blendY = Mathf.MoveTowards(blendY, moveInput.y, blendSpeed * Time.deltaTime);
-
-        if (newMove.magnitude > 1)
-        {
-            newMove.Normalize();
-        }
-
+        moveInput = newMove.x * transform.right + newMove.y * transform.forward;
 
         if (playerRigidBody.velocity == Vector3.zero)
         {
@@ -51,10 +53,11 @@ public class PlayerMovement : MonoBehaviour
             playerAnimator.SetBool("IsWalking", true);
         }
 
-        playerAnimator.SetFloat("Horizontal", blendX);
-        playerAnimator.SetFloat("Vertical", blendY);
 
-
+        if (newMove.magnitude > 1)
+        {
+            newMove.Normalize();
+        }
         playerRigidBody.velocity = newMove * playerSpeed;
 
     }
