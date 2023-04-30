@@ -311,6 +311,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 211ffedb50735bd4e89b9a692dc154f1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  AnimationAccelrator: 0
+  blendSpeed: 0
   playerSpeed: 10
   GroundDistance: 2
   playerRigidBody: {fileID: 4567791714284402688}
@@ -318,6 +320,7 @@ MonoBehaviour:
   groundMask:
     serializedVersion: 2
     m_Bits: 8
+  playerAnimator: {fileID: 0}
 --- !u!54 &4567791714284402688
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -347,3 +350,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   HP: 785.8808
+  maxHp: 100

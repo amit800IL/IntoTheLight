@@ -5,17 +5,20 @@ using UnityEngine.InputSystem;
 public class LightGhost : MonoBehaviour
 {
 
-    private bool IsGhostAwake = false;
     [field: SerializeField] public Light Light { get; private set; }
+
+    [SerializeField] private GameObject GhostLight;
+
+    private bool IsGhostAwake = false;
 
     private void Start()
     {
+        GhostLight.SetActive(false);
         CheckIfGhostAwake();
     }
     private void Update()
     {
         AwakeGhost();
-        GameManager.Instance.Death(IsGhostAwake);
     }
     private void CheckIfGhostAwake()
     {
@@ -33,6 +36,7 @@ public class LightGhost : MonoBehaviour
         if (keyPress && !IsGhostAwake && Vector3.Distance(transform.position, GameManager.Instance.Player.transform.position) < 2f)
         {
             IsGhostAwake = true;
+            GhostLight.SetActive(true);
             StartCoroutine(GhostFromWakeToSleep());
         }
     }
@@ -43,6 +47,7 @@ public class LightGhost : MonoBehaviour
     {
         Light.spotAngle = 200f;
         Light.intensity = 140;
+
     }
 
     public void OnGhostGoToSleep()
@@ -50,6 +55,7 @@ public class LightGhost : MonoBehaviour
         Light.spotAngle = default;
         Light.intensity = default;
         IsGhostAwake = false;
+        GhostLight.SetActive(false);
     }
 
     public IEnumerator GhostFromWakeToSleep()
