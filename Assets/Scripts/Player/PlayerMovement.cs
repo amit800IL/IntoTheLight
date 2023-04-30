@@ -1,3 +1,5 @@
+using System;
+using UnityEditor.ShaderGraph.Internal;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -30,6 +32,7 @@ public class PlayerMovement : MonoBehaviour
 
         blendX = Mathf.MoveTowards(blendX, newMove.x, blendSpeed * Time.deltaTime * AnimationAccelrator);
         blendY = Mathf.MoveTowards(blendY, newMove.z, blendSpeed * Time.deltaTime * AnimationAccelrator);
+
 
         playerAnimator.SetFloat("Horizontal", blendX);
         playerAnimator.SetFloat("Vertical", blendY);

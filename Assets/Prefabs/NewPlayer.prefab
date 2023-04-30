@@ -551,7 +551,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c2aeabc5e51170c4298833bc66681728, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  HP: 50
+  HP: 100
   maxHp: 100
 --- !u!54 &1575560974512497516
 Rigidbody:
@@ -1052,13 +1052,14 @@ GameObject:
   m_Component:
   - component: {fileID: 8870302261371695549}
   - component: {fileID: 387573038805052316}
+  - component: {fileID: 1965034955}
   m_Layer: 0
   m_Name: LightCheckRadius
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &8870302261371695549
 Transform:
   m_ObjectHideFlags: 0
@@ -1088,6 +1089,19 @@ CapsuleCollider:
   m_Height: 5.3035555
   m_Direction: 1
   m_Center: {x: 0.0000000012172892, y: 0.9849744, z: 0.80743307}
+--- !u!114 &1965034955
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2556270093499973913}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 23b840ccb81c30f4685e317d9ca58d84, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerStats: {fileID: 2599596959583585859}
 --- !u!1 &2831438468370509472
 GameObject:
   m_ObjectHideFlags: 0

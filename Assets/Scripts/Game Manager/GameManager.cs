@@ -27,7 +27,7 @@ public class GameManager : MonoBehaviour
     private void Start()
     {
 
-        PlayerStats.HP = 50;
+        PlayerStats.HP = 100;
     }
 
     private void Update()

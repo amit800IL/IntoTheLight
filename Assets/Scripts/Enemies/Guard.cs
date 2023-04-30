@@ -1,13 +1,38 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
-public class Guard : Enemy
+public class Guard : MonoBehaviour
 {
-    [SerializeField] private Light guardLight;
+    private float distance;
+    [SerializeField] private NavMeshAgent agent;
+    [SerializeField] private Light enemyLight;
 
     private void Update()
     {
-        CalcluateRouteByLight(guardLight);
+        CalcluateRoute();
+    }
+    public void CalcluateRoute()
+    {
+        bool raycast = Physics.Raycast(agent.transform.position, GameManager.Instance.Player.transform.position);
+        distance = Vector3.Distance(agent.transform.position, GameManager.Instance.Player.transform.position);
+
+        if (agent != null && raycast && distance < enemyLight.range)
+        {
+            Vector3 moveToPlayer = Vector3.MoveTowards(agent.transform.position, GameManager.Instance.Player.transform.position, distance);
+            agent.destination = moveToPlayer;
+            agent.updateRotation = true;
+
+
+            if (distance <= 0.5f)
+            {
+                //SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+                Debug.Log("Player is dead");
+            }
+        }
+    }
+
+    public void OnDrawGizmos()
+    {
+        Gizmos.DrawRay(agent.transform.position, GameManager.Instance.Player.transform.position);
     }
 }

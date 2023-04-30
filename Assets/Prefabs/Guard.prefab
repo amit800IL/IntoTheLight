@@ -128,7 +128,7 @@ GameObject:
   - component: {fileID: 2622723936624136689}
   - component: {fileID: 2622723936624136688}
   - component: {fileID: 2622723936624136695}
-  - component: {fileID: 2622723936624136204}
+  - component: {fileID: 3889241675234091641}
   m_Layer: 0
   m_Name: Guard
   m_TagString: Untagged
@@ -238,7 +238,7 @@ NavMeshAgent:
   m_BaseOffset: 1
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
---- !u!114 &2622723936624136204
+--- !u!114 &3889241675234091641
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -247,8 +247,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 2622723936624136694}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 230ba780a7ed3e8469279b084751a8d8, type: 3}
+  m_Script: {fileID: 11500000, guid: 943ca3bb0c8d54c4eadb404f862f4994, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   agent: {fileID: 2622723936624136695}
-  guardLight: {fileID: 2622723935895056479}
+  enemyLight: {fileID: 2622723935895056479}
