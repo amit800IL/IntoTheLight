@@ -27,7 +27,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void AnimationBlend()
     {
-        blendX = Mathf.MoveTowards(blendX, newMove.x, blendSpeed * Time.deltaTime * AnimationAccelrator);
+        blendX = Mathf.MoveTowards(blendX, -newMove.x, blendSpeed * Time.deltaTime * AnimationAccelrator);
         blendY = Mathf.MoveTowards(blendY, newMove.y, blendSpeed * Time.deltaTime * AnimationAccelrator);
 
         playerAnimator.SetFloat("Horizontal", blendX);
@@ -37,8 +37,6 @@ public class PlayerMovement : MonoBehaviour
     private void OnMove(InputValue value)
     {
         newMove = InputManager.Instance.GetMoveValue(value);
-
-        //newMove = new Vector3(-newMove.x, 0, -newMove.y);
 
         Vector3 Forward = Camera.main.transform.forward;
         Forward.y = 0f;
