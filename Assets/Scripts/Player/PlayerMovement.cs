@@ -1,5 +1,3 @@
-using System;
-using UnityEditor.ShaderGraph.Internal;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -7,8 +5,8 @@ public class PlayerMovement : MonoBehaviour
 {
 
     private Vector3 newMove;
-    private Vector3 moveInput;
     private float blendX, blendY;
+    private bool isMovingBackwards;
     [SerializeField] private float AnimationAccelrator;
     [SerializeField] private float blendSpeed;
     [SerializeField] private float playerSpeed;
@@ -29,10 +27,8 @@ public class PlayerMovement : MonoBehaviour
 
     private void AnimationBlend()
     {
-
         blendX = Mathf.MoveTowards(blendX, newMove.x, blendSpeed * Time.deltaTime * AnimationAccelrator);
-        blendY = Mathf.MoveTowards(blendY, newMove.z, blendSpeed * Time.deltaTime * AnimationAccelrator);
-
+        blendY = Mathf.MoveTowards(blendY, newMove.y, blendSpeed * Time.deltaTime * AnimationAccelrator);
 
         playerAnimator.SetFloat("Horizontal", blendX);
         playerAnimator.SetFloat("Vertical", blendY);
@@ -42,9 +38,18 @@ public class PlayerMovement : MonoBehaviour
     {
         newMove = InputManager.Instance.GetMoveValue(value);
 
-        newMove = new Vector3(-newMove.x, 0, -newMove.y);
+        //newMove = new Vector3(-newMove.x, 0, -newMove.y);
 
-        moveInput = newMove.x * transform.right + newMove.y * transform.forward;
+        Vector3 Forward = Camera.main.transform.forward;
+        Forward.y = 0f;
+        Forward.Normalize();
+
+        Vector3 Right = Camera.main.transform.right;
+        Right.y = 0f;
+        Right.Normalize();
+
+        Vector3 moveDirection = newMove.x * Right + newMove.y * Forward;
+        moveDirection.y = 0f;
 
         if (playerRigidBody.velocity == Vector3.zero)
         {
@@ -61,17 +66,11 @@ public class PlayerMovement : MonoBehaviour
         {
             newMove.Normalize();
         }
-        playerRigidBody.velocity = newMove * playerSpeed;
+        playerRigidBody.velocity = moveDirection * playerSpeed;
 
     }
 
-    private void FixedUpdate()
-    {
-        if (newMove != null)
-        {
-            playerRigidBody.AddForce(newMove * playerSpeed, ForceMode.Impulse);
-        }
-    }
+  
 
     public void IsGrounded() => Physics.CheckSphere(GroundCheck.position, GroundDistance, groundMask);
 

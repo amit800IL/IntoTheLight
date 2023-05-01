@@ -4,8 +4,8 @@ using UnityEngine.InputSystem;
 public class PlayerLook : MonoBehaviour
 {
     private Vector2 newLook;
-    [SerializeField] float LookSpeed;
-    [SerializeField] Transform orientation;
+    [SerializeField] private float LookSpeed;
+    [SerializeField] private Transform orientation;
 
     public void OnLook(InputValue value)
     {
