@@ -23,22 +23,6 @@ public class PlayerMovement : MonoBehaviour
 
         AnimationBlend();
 
-        Evade();    
-
-    }
-
-    private void Evade()
-    {
-        if (Keyboard.current.eKey.isPressed)
-        {
-            Debug.Log("Pressed");
-            playerAnimator.SetBool("IsEvading", true);
-            playerRigidBody.AddForce(-50, 0, 0);
-        }
-        else
-        {
-            playerAnimator.SetBool("IsEvading", false);
-        }
     }
 
     private void AnimationBlend()

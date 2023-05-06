@@ -37,13 +37,14 @@ public class Guard : MonoBehaviour
 
     private IEnumerator goToPlayer()
     {
-        yield return new WaitForSeconds(5);
+       yield return new WaitForSeconds(5);
         bool raycast = Physics.Raycast(agent.transform.position, GameManager.Instance.Player.transform.position);
         distance = Vector3.Distance(agent.transform.position, GameManager.Instance.Player.transform.position);
 
         if (distance > jumpToPlayerDistance)
         {
             agent.nextPosition = GameManager.Instance.Player.transform.position - new Vector3(5, 4, 3);
+            raycast = true;
         }
     }
 

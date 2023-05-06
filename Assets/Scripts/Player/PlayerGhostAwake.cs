@@ -29,8 +29,7 @@ public class PlayerGhostAwake : MonoBehaviour
     {
         while (playerStats.HP <= 100)
         {
-            playerStats.HP += 0.1f;
-            Debug.Log(playerStats.HP);
+            playerStats.HP += 10f;
             yield return new WaitForSeconds(1);
         }
     }
@@ -39,8 +38,7 @@ public class PlayerGhostAwake : MonoBehaviour
     {
         while (playerStats.HP >= 0)
         {
-            playerStats.HP -= 0.1f;
-            Debug.Log(playerStats.HP);
+            playerStats.HP -= 2f;
             yield return new WaitForSeconds(1);
         }
     }
