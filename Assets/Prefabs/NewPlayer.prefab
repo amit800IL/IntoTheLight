@@ -529,9 +529,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 211ffedb50735bd4e89b9a692dc154f1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  AnimationAccelrator: 20
+  AnimationAccelrator: 30
   blendSpeed: 1
-  playerSpeed: 5
+  playerSpeed: 10
   GroundDistance: 5
   playerRigidBody: {fileID: 1575560974512497516}
   GroundCheck: {fileID: 745394639636663472}

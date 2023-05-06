@@ -250,5 +250,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 943ca3bb0c8d54c4eadb404f862f4994, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  jumpToPlayerDistance: 30
   agent: {fileID: 2622723936624136695}
   enemyLight: {fileID: 2622723935895056479}

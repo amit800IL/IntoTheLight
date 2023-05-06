@@ -476,7 +476,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e71bf98b97b304540ae744992d1675d2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  distance: 0
   <Player>k__BackingField: {fileID: 502003234776940599}
   <PlayerStats>k__BackingField: {fileID: 2599596959583585859, guid: f5e5e7d9de8270f41aab8a8feb5b7d40,
     type: 3}

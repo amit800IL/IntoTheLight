@@ -21,8 +21,8 @@ public class LightGhost : MonoBehaviour
     {
         if (!IsGhostAwake)
         {
-            Light.spotAngle = default;
-            Light.intensity = default;
+            Light.spotAngle = 40f;
+            Light.intensity = 40f;
         }
     }
 
@@ -48,8 +48,8 @@ public class LightGhost : MonoBehaviour
 
     public void OnGhostGoToSleep()
     {
-        Light.spotAngle = default;
-        Light.intensity = default;
+        Light.spotAngle = 40f;
+        Light.intensity = 40f;
         IsGhostAwake = false;
     }
 

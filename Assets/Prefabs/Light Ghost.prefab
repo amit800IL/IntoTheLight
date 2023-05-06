@@ -129,7 +129,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   <Light>k__BackingField: {fileID: 8064291317547990248}
-  GhostLight: {fileID: 8016577237612224368}
 --- !u!1 &8016577237612224368
 GameObject:
   m_ObjectHideFlags: 0
@@ -178,7 +177,7 @@ Light:
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_Intensity: 0
   m_Range: 10
-  m_SpotAngle: 8.197922
+  m_SpotAngle: 1
   m_InnerSpotAngle: 0
   m_CookieSize: 10
   m_Shadows:
