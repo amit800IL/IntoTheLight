@@ -1,3 +1,4 @@
+
 using UnityEngine;
 
 public class GameManager : MonoBehaviour
@@ -5,7 +6,9 @@ public class GameManager : MonoBehaviour
     [field: SerializeField] public static GameManager Instance { get; private set; }
     [field: SerializeField] public Transform Player { get; private set; }
     [field: SerializeField] public PlayerStats PlayerStats { get; private set; }
-    [field: SerializeField] public LightGhost Ghost { get; private set; }
+    [field: SerializeField] public GameObject Ghost { get; private set; }
+
+
 
 
     private void Awake()
@@ -24,7 +27,7 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
-
+   
         PlayerStats.HP = 100;
     }
 
@@ -41,4 +44,6 @@ public class GameManager : MonoBehaviour
         }
 
     }
+
+    
 }

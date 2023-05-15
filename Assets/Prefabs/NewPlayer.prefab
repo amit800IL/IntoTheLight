@@ -531,7 +531,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   AnimationAccelrator: 30
   blendSpeed: 1
-  playerSpeed: 10
+  playerSpeed: 50
   GroundDistance: 5
   playerRigidBody: {fileID: 1575560974512497516}
   GroundCheck: {fileID: 745394639636663472}

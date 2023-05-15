@@ -253,3 +253,4 @@ MonoBehaviour:
   jumpToPlayerDistance: 30
   agent: {fileID: 2622723936624136695}
   enemyLight: {fileID: 2622723935895056479}
+  speed: 4

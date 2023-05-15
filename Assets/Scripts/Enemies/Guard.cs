@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.AI;
@@ -8,48 +9,41 @@ public class Guard : MonoBehaviour
     [SerializeField] private float jumpToPlayerDistance;
     [SerializeField] private NavMeshAgent agent;
     [SerializeField] private Light enemyLight;
+    [SerializeField] private float speed;
 
-    private void Update()
+    private void Start()
     {
-        CalcluateRoute();
-        StartCoroutine(goToPlayer());
+        StartCoroutine(CalcluateRoute());
     }
-    private void CalcluateRoute()
+ 
+    private IEnumerator CalcluateRoute()
     {
-        bool raycast = Physics.Raycast(agent.transform.position, GameManager.Instance.Player.transform.position);
-        distance = Vector3.Distance(agent.transform.position, GameManager.Instance.Player.transform.position);
-
-        if (agent != null && raycast && distance < enemyLight.range)
+        while (true)
         {
-            Vector3 moveToPlayer = Vector3.MoveTowards(agent.transform.position, GameManager.Instance.Player.transform.position, distance);
-            agent.destination = moveToPlayer;
-            agent.updateRotation = true;
+            distance = Vector3.Distance(transform.position, GameManager.Instance.Player.transform.position);
 
-
-            if (distance <= 0.5f)
+            if (agent != null && distance <= enemyLight.range)
             {
-                //SceneManager.LoadScene(SceneManager.GetActiveScene().name);
-                Debug.Log("Player is dead");
+                agent.SetDestination(GameManager.Instance.Player.transform.position);
+                agent.updateRotation = true;
+
+                if (distance <= 0.5f)
+                {
+                    //SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+                    Debug.Log("Player is dead");
+                }
+                
             }
+            else if (distance >= jumpToPlayerDistance)
+            {
+                yield return new WaitForSeconds(2);
+                Vector3 offset = UnityEngine.Random.onUnitSphere * speed;
+
+                offset.y = 0;
+
+                agent.Warp(GameManager.Instance.Player.transform.position + offset);
+            }
+            yield return new WaitForSeconds(2);
         }
-    }
-
-
-    private IEnumerator goToPlayer()
-    {
-       yield return new WaitForSeconds(5);
-        bool raycast = Physics.Raycast(agent.transform.position, GameManager.Instance.Player.transform.position);
-        distance = Vector3.Distance(agent.transform.position, GameManager.Instance.Player.transform.position);
-
-        if (distance > jumpToPlayerDistance)
-        {
-            agent.nextPosition = GameManager.Instance.Player.transform.position - new Vector3(5, 4, 3);
-            raycast = true;
-        }
-    }
-
-    public void OnDrawGizmos()
-    {
-        Gizmos.DrawRay(agent.transform.position, GameManager.Instance.Player.transform.position);
     }
 }
