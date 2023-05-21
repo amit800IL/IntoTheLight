@@ -31,10 +31,11 @@ public class InputManager : MonoBehaviour
 
     }
 
-    public Vector2 GetMoveValue(InputValue input)
-    {
-        return input.Get<Vector2>();
-    }
-
+    public Vector2 GetMoveValue(InputValue input) => input.Get<Vector2>();
+    public Vector2 GetLookValue(InputValue input) => input.Get<Vector2>();
 
 }
+
+        
+
+

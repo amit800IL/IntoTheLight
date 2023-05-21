@@ -5,49 +5,70 @@ public class PlayerMovement : MonoBehaviour
 {
 
     private Vector3 newMove;
-    private Vector3 moveInput;
+    private float blendX, blendY;
+    private bool isMovingBackwards;
+    [SerializeField] private float AnimationAccelrator;
+    [SerializeField] private float blendSpeed;
     [SerializeField] private float playerSpeed;
     [SerializeField] private float GroundDistance;
     [SerializeField] private Rigidbody playerRigidBody;
     [SerializeField] private Transform GroundCheck;
     [SerializeField] private LayerMask groundMask;
-    //[SerializeField] Animator playerAnimator;
+    [SerializeField] private Animator playerAnimator;
+
 
     private void Update()
     {
         IsGrounded();
 
-        newMove = moveInput.x * transform.right + moveInput.y * transform.forward;
+        AnimationBlend();
 
-        if (newMove.magnitude > 1)
-        {
-            newMove.Normalize();
-        }
+    }
 
+    private void AnimationBlend()
+    {
+        blendX = Mathf.MoveTowards(blendX, -newMove.x, blendSpeed * Time.deltaTime * AnimationAccelrator);
+        blendY = Mathf.MoveTowards(blendY, newMove.y, blendSpeed * Time.deltaTime * AnimationAccelrator);
+
+        playerAnimator.SetFloat("Horizontal", blendX);
+        playerAnimator.SetFloat("Vertical", blendY);
     }
 
     private void OnMove(InputValue value)
     {
         newMove = InputManager.Instance.GetMoveValue(value);
 
-        newMove = new Vector3(-newMove.x, 0, -newMove.y);
+        Vector3 Forward = Camera.main.transform.forward;
+        Forward.y = 0f;
+        Forward.Normalize();
 
-        //if (newMove == Vector3.forward)
-        //{
-        //    playerAnimator.SetFloat("MovementSpeed", newMove.magnitude);
-        //    playerAnimator.SetBool("IsWalking", true);
-        //}
+        Vector3 Right = Camera.main.transform.right;
+        Right.y = 0f;
+        Right.Normalize();
 
-        playerRigidBody.velocity = newMove * playerSpeed;
-    }
+        Vector3 moveDirection = newMove.x * Right + newMove.y * Forward;
+        moveDirection.y = 0f;
 
-    private void FixedUpdate()
-    {
-        if (newMove != null)
+        if (playerRigidBody.velocity == Vector3.zero)
         {
-            playerRigidBody.AddForce(newMove * playerSpeed, ForceMode.Impulse);
+            playerAnimator.SetBool("IsWalking", false);
         }
+
+        else
+        {
+            playerAnimator.SetBool("IsWalking", true);
+        }
+
+
+        if (newMove.magnitude > 1)
+        {
+            newMove.Normalize();
+        }
+        playerRigidBody.velocity = moveDirection * playerSpeed;
+
     }
+
+  
 
     public void IsGrounded() => Physics.CheckSphere(GroundCheck.position, GroundDistance, groundMask);
 

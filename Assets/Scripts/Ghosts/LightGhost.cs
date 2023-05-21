@@ -5,8 +5,9 @@ using UnityEngine.InputSystem;
 public class LightGhost : MonoBehaviour
 {
 
-    private bool IsGhostAwake = false;
     [field: SerializeField] public Light Light { get; private set; }
+
+    private bool IsGhostAwake = false;
 
     private void Start()
     {
@@ -15,14 +16,13 @@ public class LightGhost : MonoBehaviour
     private void Update()
     {
         AwakeGhost();
-        GameManager.Instance.Death(IsGhostAwake);
     }
     private void CheckIfGhostAwake()
     {
         if (!IsGhostAwake)
         {
-            Light.spotAngle = default;
-            Light.intensity = default;
+            Light.spotAngle = 40f;
+            Light.intensity = 40f;
         }
     }
 
@@ -43,12 +43,13 @@ public class LightGhost : MonoBehaviour
     {
         Light.spotAngle = 200f;
         Light.intensity = 140;
+
     }
 
     public void OnGhostGoToSleep()
     {
-        Light.spotAngle = default;
-        Light.intensity = default;
+        Light.spotAngle = 40f;
+        Light.intensity = 40f;
         IsGhostAwake = false;
     }
 
