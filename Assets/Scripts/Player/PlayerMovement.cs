@@ -23,6 +23,8 @@ public class PlayerMovement : MonoBehaviour
 
         AnimationBlend();
 
+        Evasion();
+
     }
 
     private void AnimationBlend()
@@ -32,6 +34,20 @@ public class PlayerMovement : MonoBehaviour
 
         playerAnimator.SetFloat("Horizontal", blendX);
         playerAnimator.SetFloat("Vertical", blendY);
+    }
+
+    public void Evasion()
+    {
+        if (Keyboard.current.eKey.isPressed)
+        {
+            playerAnimator.SetBool("IsEvading", true);
+            playerRigidBody.AddForce(-50,0,0);
+
+        }
+        else
+        {
+            playerAnimator.SetBool("IsEvading", false);
+        }
     }
 
     private void OnMove(InputValue value)

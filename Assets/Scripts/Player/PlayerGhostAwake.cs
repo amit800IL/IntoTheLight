@@ -10,6 +10,8 @@ public class PlayerGhostAwake : MonoBehaviour
     {
         bool keypress = Keyboard.current.fKey.isPressed;
 
+       
+
         if (keypress && other.gameObject.CompareTag("GhostLight"))
         {
 
