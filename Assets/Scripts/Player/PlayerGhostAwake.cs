@@ -10,10 +10,9 @@ public class PlayerGhostAwake : MonoBehaviour
     {
         bool keypress = Keyboard.current.fKey.isPressed;
 
-       
-
         if (keypress && other.gameObject.CompareTag("GhostLight"))
         {
+
 
             StartCoroutine(HealthUpGrduadly());
 
@@ -22,6 +21,7 @@ public class PlayerGhostAwake : MonoBehaviour
         else if (!keypress && !other.gameObject.CompareTag("GhostLight"))
         {
 
+
             StartCoroutine(HealthDownGrduadly());
 
         }
@@ -29,18 +29,20 @@ public class PlayerGhostAwake : MonoBehaviour
 
     private IEnumerator HealthUpGrduadly()
     {
-        while (playerStats.HP <= 100)
+        while (playerStats.HP < playerStats.maxHp)
         {
             playerStats.HP += 20f;
+            Debug.Log("HP up");
             yield return new WaitForSeconds(1);
         }
     }
 
     private IEnumerator HealthDownGrduadly()
     {
-        while (playerStats.HP >= 0)
+        while (playerStats.HP > 0)
         {
             playerStats.HP -= 1.5f;
+            Debug.Log("HP down");
             yield return new WaitForSeconds(1);
         }
     }

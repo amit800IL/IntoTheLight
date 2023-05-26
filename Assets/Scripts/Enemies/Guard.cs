@@ -3,6 +3,7 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.AI;
 
+
 public class Guard : MonoBehaviour
 {
     private float distance;
@@ -10,16 +11,20 @@ public class Guard : MonoBehaviour
     [SerializeField] private NavMeshAgent agent;
     [SerializeField] private Light enemyLight;
     [SerializeField] private float speed;
+    [SerializeField] private float speedMultiplier;
+    [SerializeField] private AudioSource guardScream;
 
     private void Start()
     {
         StartCoroutine(CalcluateRoute());
     }
- 
+
     private IEnumerator CalcluateRoute()
     {
         while (true)
         {
+            guardScream.Play();
+            guardScream.volume = 0.5f;
             distance = Vector3.Distance(transform.position, GameManager.Instance.Player.transform.position);
 
             if (agent != null && distance <= enemyLight.range)
@@ -31,6 +36,7 @@ public class Guard : MonoBehaviour
                 {
                     //SceneManager.LoadScene(SceneManager.GetActiveScene().name);
                     Debug.Log("Player is dead");
+                    guardScream.volume = 1f;
                 }
                 
             }

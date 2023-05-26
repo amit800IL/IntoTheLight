@@ -25,6 +25,8 @@ public class PlayerMovement : MonoBehaviour
 
         Evasion();
 
+        Running();
+
     }
 
     private void AnimationBlend()
@@ -41,12 +43,22 @@ public class PlayerMovement : MonoBehaviour
         if (Keyboard.current.eKey.isPressed)
         {
             playerAnimator.SetBool("IsEvading", true);
-            playerRigidBody.AddForce(-50,0,0);
-
         }
         else
         {
             playerAnimator.SetBool("IsEvading", false);
+        }
+    }
+
+    public void Running()
+    {
+        if (Keyboard.current.shiftKey.isPressed)
+        {
+            playerAnimator.SetBool("IsRunning", true);
+        }
+        else
+        {
+            playerAnimator.SetBool("IsRunning", false);
         }
     }
 
