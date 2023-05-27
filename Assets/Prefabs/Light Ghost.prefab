@@ -19,7 +19,7 @@ GameObject:
   m_TagString: Ghost
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 1
-  m_StaticEditorFlags: 8
+  m_StaticEditorFlags: 9
   m_IsActive: 1
 --- !u!4 &5071565911600792371
 Transform:
@@ -28,15 +28,15 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5071565911600792375}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.69, y: 0.62, z: 13.93}
+  m_LocalRotation: {x: -0.7270659, y: -0, z: -0, w: 0.6865677}
+  m_LocalPosition: {x: 0.69, y: -1, z: 13.93}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 6235272048958320788}
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: -93.282, y: 0, z: 0}
 --- !u!33 &5071565911600792370
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -76,13 +76,13 @@ MeshRenderer:
   m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
-  m_ImportantGI: 0
+  m_ImportantGI: 1
   m_StitchLightmapSeams: 1
   m_SelectedEditorRenderState: 3
   m_MinimumChartSize: 4
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
-  m_LightmapParameters: {fileID: 0}
+  m_LightmapParameters: {fileID: 15200, guid: 0000000000000000f000000000000000, type: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
@@ -140,13 +140,13 @@ GameObject:
   - component: {fileID: 6235272048958320788}
   - component: {fileID: 8064291317547990248}
   - component: {fileID: 341819991609471723}
-  - component: {fileID: 8056284158527136298}
+  - component: {fileID: 6669601718862135296}
   m_Layer: 0
   m_Name: Spot Light
   m_TagString: GhostLight
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 1
   m_IsActive: 1
 --- !u!4 &6235272048958320788
 Transform:
@@ -155,14 +155,14 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8016577237612224368}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -1.27}
+  m_LocalRotation: {x: 0.71917284, y: -0, z: -0, w: 0.69483125}
+  m_LocalPosition: {x: 0.19, y: 0.51, z: -0.07}
   m_LocalScale: {x: 3.6552, y: 1, z: 1.5616}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 5071565911600792371}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 91.971985, y: 0, z: 0}
 --- !u!108 &8064291317547990248
 Light:
   m_ObjectHideFlags: 0
@@ -175,19 +175,19 @@ Light:
   m_Type: 0
   m_Shape: 0
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_Intensity: 0
-  m_Range: 10
-  m_SpotAngle: 1
-  m_InnerSpotAngle: 0
+  m_Intensity: 6.63
+  m_Range: 5.72
+  m_SpotAngle: 46.56685
+  m_InnerSpotAngle: 24.615776
   m_CookieSize: 10
   m_Shadows:
-    m_Type: 0
+    m_Type: 2
     m_Resolution: -1
     m_CustomResolution: -1
     m_Strength: 1
     m_Bias: 0.05
     m_NormalBias: 0.4
-    m_NearPlane: 0.2
+    m_NearPlane: 3.5
     m_CullingMatrixOverride:
       e00: 1
       e01: 0
@@ -209,7 +209,7 @@ Light:
   m_Cookie: {fileID: 0}
   m_DrawHalo: 0
   m_Flare: {fileID: 0}
-  m_RenderMode: 0
+  m_RenderMode: 1
   m_CullingMask:
     serializedVersion: 2
     m_Bits: 4294967295
@@ -245,8 +245,8 @@ MonoBehaviour:
   m_ShadowLayerMask: 1
   m_LightCookieSize: {x: 1, y: 1}
   m_LightCookieOffset: {x: 0, y: 0}
---- !u!65 &8056284158527136298
-BoxCollider:
+--- !u!135 &6669601718862135296
+SphereCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -256,5 +256,5 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 2.9474697}
-  m_Center: {x: 0, y: 0, z: 0.97373486}
+  m_Radius: 0.8108482
+  m_Center: {x: 0, y: 0.0000000050294866, z: 0.7275961}
