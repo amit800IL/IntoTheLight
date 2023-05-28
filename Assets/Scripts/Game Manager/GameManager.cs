@@ -1,5 +1,6 @@
 
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
@@ -27,10 +28,9 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
-   
         PlayerStats.HP = 100;
     }
-
+    
     private void Update()
     {
         Death();
@@ -40,10 +40,10 @@ public class GameManager : MonoBehaviour
     {
         if (PlayerStats.HP <= 0)
         {
-            Debug.Log("Player is dead");
+            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
         }
 
     }
 
-    
+
 }
