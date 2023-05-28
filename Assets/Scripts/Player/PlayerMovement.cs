@@ -57,8 +57,6 @@ public class PlayerMovement : MonoBehaviour
 
         if (Keyboard.current.shiftKey.isPressed)
         {
-            playerWalk.Play();
-            playerWalk.volume = 1f;
             playerAnimator.SetBool("IsRunning", true);
         }
         else

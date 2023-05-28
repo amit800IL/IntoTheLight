@@ -5,36 +5,74 @@ using UnityEngine.InputSystem;
 public class PlayerGhostAwake : MonoBehaviour
 {
     [SerializeField] private PlayerStats playerStats;
+    private bool keypress;
+    private bool isInRangeOfGhost = false;
+    private Coroutine healingCourtuine;
+    private Coroutine decayCourtuine;
 
+
+    private void Start()
+    {
+        decayCourtuine = StartCoroutine(HealthDownGrduadly());
+
+    }
+
+    private void Update()
+    {
+        keypress = Keyboard.current.fKey.isPressed;
+    }
     private void OnTriggerEnter(Collider other)
     {
-        bool keypress = Keyboard.current.fKey.isPressed;
 
-        if (keypress && other.gameObject.CompareTag("GhostLight"))
+        if (other.gameObject.CompareTag("GhostLight"))
         {
-
-
-            StartCoroutine(HealthUpGrduadly());
-
-        }
-
-        else if (!keypress && !other.gameObject.CompareTag("GhostLight"))
-        {
-
-
-            StartCoroutine(HealthDownGrduadly());
-
+            isInRangeOfGhost = true;
+            StartCoroutine(CheckPlayerInput(other));
         }
     }
 
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.gameObject.CompareTag("GhostLight"))
+        {
+            isInRangeOfGhost = false;
+ 
+        }
+    }
+
+    private IEnumerator CheckPlayerInput(Collider other)
+    {
+        while (isInRangeOfGhost)
+        {
+            if (keypress && healingCourtuine == null)
+            {
+                healingCourtuine = StartCoroutine(HealthUpGrduadly());
+                StopCoroutine(decayCourtuine);
+                decayCourtuine = null;
+            }
+
+            yield return null;
+        }
+
+        StopCoroutine(healingCourtuine);
+        healingCourtuine = null;
+
+        if (decayCourtuine == null)
+        {
+            decayCourtuine = StartCoroutine(HealthDownGrduadly());
+        }
+
+        yield return null;
+
+    }
     private IEnumerator HealthUpGrduadly()
     {
         while (playerStats.HP < playerStats.maxHp)
         {
             playerStats.HP += 20f;
-            Debug.Log("HP up");
             yield return new WaitForSeconds(1);
         }
+
     }
 
     private IEnumerator HealthDownGrduadly()
@@ -42,7 +80,6 @@ public class PlayerGhostAwake : MonoBehaviour
         while (playerStats.HP > 0)
         {
             playerStats.HP -= 1.5f;
-            Debug.Log("HP down");
             yield return new WaitForSeconds(1);
         }
     }

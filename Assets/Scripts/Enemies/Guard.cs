@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.SceneManagement;
 
 
 public class Guard : MonoBehaviour
@@ -13,6 +14,7 @@ public class Guard : MonoBehaviour
     [SerializeField] private float speed;
     [SerializeField] private float speedMultiplier;
     [SerializeField] private AudioSource guardScream;
+    [SerializeField] private AudioSource guardKillingScream;
 
     private void Start()
     {
@@ -32,11 +34,13 @@ public class Guard : MonoBehaviour
                 agent.SetDestination(GameManager.Instance.Player.transform.position);
                 agent.updateRotation = true;
 
-                if (distance <= 0.5f)
+                if (distance <= 1.5f)
                 {
-                    //SceneManager.LoadScene(SceneManager.GetActiveScene().name);
-                    Debug.Log("Player is dead");
+                    guardKillingScream.Play();
+                    guardKillingScream.volume = 1f;
                     guardScream.volume = 1f;
+                    yield return new WaitForSeconds(1);
+                    SceneManager.LoadScene(SceneManager.GetActiveScene().name);
                 }
                 
             }
