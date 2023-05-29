@@ -1,4 +1,3 @@
-using System;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.AI;
@@ -8,6 +7,7 @@ using UnityEngine.SceneManagement;
 public class Guard : MonoBehaviour
 {
     private float distance;
+    [SerializeField] private GameObject guard;
     [SerializeField] private float jumpToPlayerDistance;
     [SerializeField] private NavMeshAgent agent;
     [SerializeField] private Light enemyLight;
@@ -16,17 +16,25 @@ public class Guard : MonoBehaviour
     [SerializeField] private AudioSource guardScream;
     [SerializeField] private AudioSource guardKillingScream;
 
+
+ 
     private void Start()
     {
-        StartCoroutine(CalcluateRoute());
+        StartCoroutine(CalculateRoute());
     }
 
-    private IEnumerator CalcluateRoute()
+ 
+
+    private IEnumerator CalculateRoute()
     {
+
+        yield return new WaitForSeconds(10);   
+
+        guardScream.Play();
+
         while (true)
         {
-            guardScream.Play();
-            guardScream.volume = 0.5f;
+
             distance = Vector3.Distance(transform.position, GameManager.Instance.Player.transform.position);
 
             if (agent != null && distance <= enemyLight.range)
@@ -37,17 +45,22 @@ public class Guard : MonoBehaviour
                 if (distance <= 1.5f)
                 {
                     guardKillingScream.Play();
+                    guardScream.pitch = 2f;
                     guardKillingScream.volume = 1f;
-                    guardScream.volume = 1f;
+
                     yield return new WaitForSeconds(1);
                     SceneManager.LoadScene(SceneManager.GetActiveScene().name);
                 }
-                
+
+                else
+                {
+                    guardScream.pitch = 1f;
+                }
+
             }
             else if (distance >= jumpToPlayerDistance)
             {
-                yield return new WaitForSeconds(2);
-                Vector3 offset = UnityEngine.Random.onUnitSphere * speed;
+                Vector3 offset = Random.onUnitSphere * speed;
 
                 offset.y = 0;
 

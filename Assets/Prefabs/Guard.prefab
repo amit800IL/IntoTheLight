@@ -42,11 +42,11 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: 4e5f4ceeebdb41c46a6116c28ac97cf5, type: 3}
+  m_audioClip: {fileID: 8300000, guid: 76c8118f7f02e0441ad2f79b561962a6, type: 3}
   m_PlayOnAwake: 0
-  m_Volume: 1
-  m_Pitch: 3
-  Loop: 0
+  m_Volume: 0.5
+  m_Pitch: 1
+  Loop: 1
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
@@ -154,7 +154,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2622723935895056476}
   m_LocalRotation: {x: -0, y: 0.083302096, z: -0, w: 0.99652433}
-  m_LocalPosition: {x: -0.26, y: -0.089999974, z: -0.24}
+  m_LocalPosition: {x: -0.26, y: -0.089999974, z: -0.08}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -380,6 +380,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 943ca3bb0c8d54c4eadb404f862f4994, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  guard: {fileID: 2622723936624136694}
   jumpToPlayerDistance: 10
   agent: {fileID: 2622723936624136695}
   enemyLight: {fileID: 2622723935895056479}

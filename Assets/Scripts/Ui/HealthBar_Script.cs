@@ -17,7 +17,6 @@ public class HealthBar_Script : MonoBehaviour
     private void Update()
     {
         CurHealth = stats.HP;
-        MaxHealth = stats.maxHp;
         HealthBar.fillAmount = CurHealth / MaxHealth;
     }
 }
