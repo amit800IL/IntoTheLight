@@ -1,4 +1,5 @@
 using System.Collections;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.SceneManagement;
@@ -15,39 +16,42 @@ public class Guard : MonoBehaviour
     [SerializeField] private float speedMultiplier;
     [SerializeField] private AudioSource guardScream;
     [SerializeField] private AudioSource guardKillingScream;
+    [SerializeField] private AudioSource guardFootSteps;
+    [SerializeField] private MeshRenderer guardMesh;
 
 
- 
     private void Start()
     {
         StartCoroutine(CalculateRoute());
     }
-
- 
-
-    private IEnumerator CalculateRoute()
+    public IEnumerator CalculateRoute()
     {
 
-        yield return new WaitForSeconds(10);   
+        guardMesh.forceRenderingOff = true;
 
-        guardScream.Play();
+        yield return new WaitForSeconds(1);
+
+        guardFootSteps.Play();
+
+
 
         while (true)
         {
-
+           
             distance = Vector3.Distance(transform.position, GameManager.Instance.Player.transform.position);
 
             if (agent != null && distance <= enemyLight.range)
             {
+                guardScream.Play(); 
                 agent.SetDestination(GameManager.Instance.Player.transform.position);
                 agent.updateRotation = true;
 
-                if (distance <= 1.5f)
+                if (distance <= 3)
                 {
+                    guardMesh.forceRenderingOff = false;
                     guardKillingScream.Play();
                     guardScream.pitch = 2f;
                     guardKillingScream.volume = 1f;
-
                     yield return new WaitForSeconds(1);
                     SceneManager.LoadScene(SceneManager.GetActiveScene().name);
                 }
@@ -60,6 +64,8 @@ public class Guard : MonoBehaviour
             }
             else if (distance >= jumpToPlayerDistance)
             {
+                yield return new WaitForSeconds(1);
+
                 Vector3 offset = Random.onUnitSphere * speed;
 
                 offset.y = 0;

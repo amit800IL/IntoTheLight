@@ -1,4 +1,5 @@
 
+using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -30,12 +31,14 @@ public class GameManager : MonoBehaviour
     {
         PlayerStats.HP = 100;
     }
-    
+
     private void Update()
     {
         Death();
+       
     }
 
+    
     public void Death()
     {
         if (PlayerStats.HP <= 0)
