@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -8,7 +9,7 @@ public class KeyScript : MonoBehaviour
     [SerializeField]
     private Text pickUpText;
 
-    private bool pickUpAllowed;
+    private bool pickUpAllowed = false;
 
     // Use this for initialization
     private void Start()
@@ -19,22 +20,23 @@ public class KeyScript : MonoBehaviour
     // Update is called once per frame
     private void Update()
     {
-        if (pickUpAllowed && Input.GetKeyDown(KeyCode.E))
+        if (pickUpAllowed && Input.GetKeyDown(KeyCode.K))
             PickUp();
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
+    
+    private void OnTriggerEnter(Collider collision)
     {
-        if (collision.gameObject.name.Equals("Girl"))
+        if (collision.gameObject.name.Equals("NewPlayer"))
         {
             pickUpText.gameObject.SetActive(true);
             pickUpAllowed = true;
         }
     }
 
-    private void OnTriggerExit2D(Collider2D collision)
+    private void OnTriggerExit(Collider collision)
     {
-        if (collision.gameObject.name.Equals("Girl"))
+        if (collision.gameObject.name.Equals("NewPlayer"))
         {
             pickUpText.gameObject.SetActive(false);
             pickUpAllowed = false;
@@ -43,6 +45,6 @@ public class KeyScript : MonoBehaviour
 
     private void PickUp()
     {
-        Destroy(gameObject);
+        Destroy(this);
     }
 }
