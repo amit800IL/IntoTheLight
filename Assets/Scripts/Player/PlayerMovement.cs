@@ -15,6 +15,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private Transform GroundCheck;
     [SerializeField] private LayerMask groundMask;
     [SerializeField] private Animator playerAnimator;
+    [SerializeField] private AudioSource playerWalk;
 
 
     private void Update()
@@ -24,6 +25,8 @@ public class PlayerMovement : MonoBehaviour
         AnimationBlend();
 
         Evasion();
+
+        Running();
 
     }
 
@@ -41,8 +44,6 @@ public class PlayerMovement : MonoBehaviour
         if (Keyboard.current.eKey.isPressed)
         {
             playerAnimator.SetBool("IsEvading", true);
-            playerRigidBody.AddForce(-50,0,0);
-
         }
         else
         {
@@ -50,9 +51,28 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
+    public void Running()
+    {
+
+
+        if (Keyboard.current.shiftKey.isPressed)
+        {
+            playerAnimator.SetBool("IsRunning", true);
+            playerWalk.pitch = 2f;
+        }
+        else
+        {
+            playerAnimator.SetBool("IsRunning", false);
+            playerWalk.pitch = 1f;
+        }
+    }
+
     private void OnMove(InputValue value)
     {
         newMove = InputManager.Instance.GetMoveValue(value);
+
+        playerWalk.Play();
+        playerWalk.volume = 0.5f;
 
         Vector3 Forward = Camera.main.transform.forward;
         Forward.y = 0f;
@@ -65,6 +85,12 @@ public class PlayerMovement : MonoBehaviour
         Vector3 moveDirection = newMove.x * Right + newMove.y * Forward;
         moveDirection.y = 0f;
 
+        if (newMove.magnitude < 0.1f)
+        {
+            playerWalk.Stop();
+            playerAnimator.SetBool("IsWalking", false);
+        }
+
         if (playerRigidBody.velocity == Vector3.zero)
         {
             playerAnimator.SetBool("IsWalking", false);
@@ -72,7 +98,9 @@ public class PlayerMovement : MonoBehaviour
 
         else
         {
+
             playerAnimator.SetBool("IsWalking", true);
+
         }
 
 
@@ -84,7 +112,7 @@ public class PlayerMovement : MonoBehaviour
 
     }
 
-  
+
 
     public void IsGrounded() => Physics.CheckSphere(GroundCheck.position, GroundDistance, groundMask);
 

@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -10,10 +8,11 @@ public class HealthBar_Script : MonoBehaviour
     public float MaxHealth = 100f;
     PlayerStats stats;
 
+
     private void Start()
     {
         HealthBar = GetComponent<Image>();
-        stats=FindObjectOfType<PlayerStats>();
+        stats = FindObjectOfType<PlayerStats>();
     }
     private void Update()
     {

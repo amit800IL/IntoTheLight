@@ -56,7 +56,7 @@ public class LightGhost : MonoBehaviour
     public IEnumerator GhostFromWakeToSleep()
     {
         OnPlayerAwakeGhost();
-        yield return new WaitForSeconds(3);
+        yield return new WaitForSeconds(10);
         OnGhostGoToSleep();
     }
 
