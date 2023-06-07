@@ -23,7 +23,7 @@ RenderSettings:
   m_AmbientSkyColor: {r: 0.09433961, g: 0.09433961, b: 0.09433961, a: 1}
   m_AmbientEquatorColor: {r: 0.16981131, g: 0.16981131, b: 0.16981131, a: 1}
   m_AmbientGroundColor: {r: 0, g: 0, b: 0, a: 1}
-  m_AmbientIntensity: 0.3
+  m_AmbientIntensity: 0.32
   m_AmbientMode: 0
   m_SubtractiveShadowColor: {r: 0.023869712, g: 0.025124101, b: 0.028301895, a: 1}
   m_SkyboxMaterial: {fileID: 10304, guid: 0000000000000000f000000000000000, type: 0}
@@ -1092,6 +1092,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2622723936624136690, guid: 94c5601101c681d4ab4278f768690ed7,
+        type: 3}
+      propertyPath: m_Mesh
+      value: 
+      objectReference: {fileID: 10206, guid: 0000000000000000e000000000000000, type: 0}
     - target: {fileID: 2622723936624136691, guid: 94c5601101c681d4ab4278f768690ed7,
         type: 3}
       propertyPath: m_RootOrder
@@ -1151,6 +1156,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: 'Guard '
+      objectReference: {fileID: 0}
+    - target: {fileID: 2622723936624136694, guid: 94c5601101c681d4ab4278f768690ed7,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 94c5601101c681d4ab4278f768690ed7, type: 3}
@@ -1341,5 +1351,15 @@ PrefabInstance:
       propertyPath: m_VolumeTrigger
       value: 
       objectReference: {fileID: 579558761}
+    - target: {fileID: 7449788007570023134, guid: f5e5e7d9de8270f41aab8a8feb5b7d40,
+        type: 3}
+      propertyPath: m_Pitch
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7449788007570023134, guid: f5e5e7d9de8270f41aab8a8feb5b7d40,
+        type: 3}
+      propertyPath: m_Volume
+      value: 0.5
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f5e5e7d9de8270f41aab8a8feb5b7d40, type: 3}

@@ -16,6 +16,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private LayerMask groundMask;
     [SerializeField] private Animator playerAnimator;
     [SerializeField] private AudioSource playerWalk;
+    [SerializeField] private AudioSource playerBreathing;
 
 
     private void Update()
@@ -54,7 +55,6 @@ public class PlayerMovement : MonoBehaviour
     public void Running()
     {
 
-
         if (Keyboard.current.shiftKey.isPressed)
         {
             playerAnimator.SetBool("IsRunning", true);
@@ -64,6 +64,7 @@ public class PlayerMovement : MonoBehaviour
         {
             playerAnimator.SetBool("IsRunning", false);
             playerWalk.pitch = 1f;
+            playerBreathing.Play();
         }
     }
 
