@@ -12,8 +12,6 @@ public class KeyScript : MonoBehaviour
 
     private bool pickUpAllowed = false;
 
-    private int TEST;
-
     // Use this for initialization
     private void Start()
     {
