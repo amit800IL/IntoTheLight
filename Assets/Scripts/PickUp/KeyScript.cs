@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityEngine.UI;
 
 public class KeyScript : MonoBehaviour
@@ -20,8 +21,11 @@ public class KeyScript : MonoBehaviour
     // Update is called once per frame
     private void Update()
     {
-        if (pickUpAllowed && Input.GetKeyDown(KeyCode.K))
+        if (pickUpAllowed && Keyboard.current.kKey.isPressed)
+        {
+            Debug.Log("K pressed");
             PickUp();
+        }
     }
 
     
@@ -45,6 +49,7 @@ public class KeyScript : MonoBehaviour
 
     private void PickUp()
     {
-        Destroy(this);
+        Debug.Log("pick up pressed");
+        Destroy(gameObject);
     }
 }
