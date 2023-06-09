@@ -21,7 +21,7 @@ public class KeyScript : MonoBehaviour
     // Update is called once per frame
     private void Update()
     {
-        if (pickUpAllowed && Keyboard.current.kKey.isPressed)
+        if (pickUpAllowed && Keyboard.current.qKey.isPressed)
         {
             Debug.Log("K pressed");
             PickUp();
@@ -51,5 +51,6 @@ public class KeyScript : MonoBehaviour
     {
         Debug.Log("pick up pressed");
         Destroy(gameObject);
+        pickUpText.gameObject.SetActive(false);
     }
 }
