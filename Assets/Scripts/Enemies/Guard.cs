@@ -17,7 +17,7 @@ public class Guard : MonoBehaviour
     [SerializeField] private AudioSource guardScream;
     [SerializeField] private AudioSource guardKillingScream;
     [SerializeField] private AudioSource guardFootSteps;
-    [SerializeField] private MeshRenderer guardMesh;
+    [SerializeField] private Animator guardAnimator;
 
 
     private void Start()
@@ -27,7 +27,6 @@ public class Guard : MonoBehaviour
     public IEnumerator CalculateRoute()
     {
 
-        guardMesh.forceRenderingOff = true;
 
         yield return new WaitForSeconds(1);
 
@@ -48,16 +47,17 @@ public class Guard : MonoBehaviour
 
                 if (distance <= 3)
                 {
-                    guardMesh.forceRenderingOff = false;
                     guardKillingScream.Play();
                     guardScream.pitch = 2f;
                     guardKillingScream.volume = 1f;
+                    guardAnimator.SetBool("IsAttacking", true);
                     yield return new WaitForSeconds(1);
                     SceneManager.LoadScene(SceneManager.GetActiveScene().name);
                 }
 
                 else
                 {
+                    guardAnimator.SetBool("IsAttacking", false);
                     guardScream.pitch = 1f;
                 }
 
