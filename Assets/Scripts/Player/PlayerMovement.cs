@@ -4,6 +4,7 @@ using UnityEngine.InputSystem;
 public class PlayerMovement : MonoBehaviour
 {
 
+    [field: SerializeField] public Animator playerAnimator { get; private set; }
     private Vector3 newMove;
     private float blendX, blendY;
     private bool isMovingBackwards;
@@ -14,9 +15,9 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private Rigidbody playerRigidBody;
     [SerializeField] private Transform GroundCheck;
     [SerializeField] private LayerMask groundMask;
-    [SerializeField] private Animator playerAnimator;
     [SerializeField] private AudioSource playerWalk;
     [SerializeField] private AudioSource playerBreathing;
+
 
 
     private void Update()

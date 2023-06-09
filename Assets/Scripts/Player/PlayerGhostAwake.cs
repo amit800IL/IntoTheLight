@@ -1,6 +1,7 @@
 using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement;
 
 public class PlayerGhostAwake : MonoBehaviour
 {
@@ -36,7 +37,6 @@ public class PlayerGhostAwake : MonoBehaviour
         if (other.gameObject.CompareTag("GhostLight"))
         {
             isInRangeOfGhost = false;
- 
         }
     }
 
@@ -80,6 +80,7 @@ public class PlayerGhostAwake : MonoBehaviour
         while (playerStats.HP > 0)
         {
             playerStats.HP -= 8f;
+
             yield return new WaitForSeconds(1);
         }
     }

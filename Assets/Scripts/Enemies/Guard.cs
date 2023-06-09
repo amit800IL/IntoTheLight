@@ -24,19 +24,15 @@ public class Guard : MonoBehaviour
     {
         StartCoroutine(CalculateRoute());
     }
+
     public IEnumerator CalculateRoute()
     {
 
-
         yield return new WaitForSeconds(1);
-
-        guardFootSteps.Play();
-
-
 
         while (true)
         {
-           
+
             distance = Vector3.Distance(transform.position, GameManager.Instance.Player.transform.position);
 
             if (agent != null && distance <= enemyLight.range)
@@ -45,19 +41,21 @@ public class Guard : MonoBehaviour
                 agent.SetDestination(GameManager.Instance.Player.transform.position);
                 agent.updateRotation = true;
 
-                if (distance <= 3)
+                if (distance <= 5)
                 {
-                    guardKillingScream.Play();
-                    guardScream.pitch = 2f;
-                    guardKillingScream.volume = 1f;
-                    guardAnimator.SetBool("IsAttacking", true);
-                    yield return new WaitForSeconds(1);
-                    SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+                    GuardKill();
+
+                    if (GameManager.Instance.PlayerStats.HP <= 0)
+                    {
+                        yield return new WaitForSeconds(2);
+                        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+                    }
                 }
 
                 else
                 {
                     guardAnimator.SetBool("IsAttacking", false);
+                    GameManager.Instance.PlayerMovement.playerAnimator.SetBool("IsAttacked", false);
                     guardScream.pitch = 1f;
                 }
 
@@ -74,5 +72,20 @@ public class Guard : MonoBehaviour
             }
             yield return new WaitForSeconds(2);
         }
+    }
+
+    private void GuardKill()
+    {
+        guardKillingScream.Play();
+        guardScream.pitch = 2f;
+        guardKillingScream.volume = 1f;
+        Vector3 targetPosition = GameManager.Instance.Player.transform.position;
+        targetPosition.y = transform.position.y;
+        transform.LookAt(targetPosition);
+        agent.isStopped = true;
+        guardAnimator.SetBool("IsAttacking", true);
+        GameManager.Instance.PlayerStats.HP -= 80;
+        GameManager.Instance.playerScream.Play();
+        GameManager.Instance.PlayerMovement.playerAnimator.SetBool("IsAttacked", true);
     }
 }

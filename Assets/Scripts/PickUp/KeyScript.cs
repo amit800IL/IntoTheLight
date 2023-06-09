@@ -12,13 +12,11 @@ public class KeyScript : MonoBehaviour
 
     private bool pickUpAllowed = false;
 
-    // Use this for initialization
     private void Start()
     {
         pickUpText.gameObject.SetActive(false);
     }
 
-    // Update is called once per frame
     private void Update()
     {
         if (pickUpAllowed && Keyboard.current.kKey.isPressed)

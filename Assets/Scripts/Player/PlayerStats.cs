@@ -7,7 +7,7 @@ public class PlayerStats : MonoBehaviour
 
     private void Update()
     {
-        if (HP > 100)
+        if (HP >= 100)
         {
             HP = maxHp;
         }
