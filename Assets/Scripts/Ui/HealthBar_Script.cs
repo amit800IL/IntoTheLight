@@ -4,19 +4,17 @@ using UnityEngine.UI;
 public class HealthBar_Script : MonoBehaviour
 {
     private Image HealthBar;
-    public float CurHealth;
-    public float MaxHealth = 100f;
-    PlayerStats stats;
+    [HideInInspector] public float CurHealth;
+    [HideInInspector] public float MaxHealth = 100f;
 
 
     private void Start()
     {
         HealthBar = GetComponent<Image>();
-        stats = FindObjectOfType<PlayerStats>();
     }
     private void Update()
     {
-        CurHealth = stats.HP;
-        HealthBar.fillAmount = CurHealth / MaxHealth;
+        CurHealth = GameManager.Instance.PlayerStats.HP;
+        HealthBar.fillAmount = CurHealth / GameManager.Instance.PlayerStats.maxHp;
     }
 }

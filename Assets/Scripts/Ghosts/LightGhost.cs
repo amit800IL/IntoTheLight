@@ -4,8 +4,9 @@ using UnityEngine.InputSystem;
 
 public class LightGhost : MonoBehaviour
 {
-
     [field: SerializeField] public Light Light { get; private set; }
+
+    [SerializeField] private ParticleSystem GhostHealingLight;
 
     private bool IsGhostAwake = false;
 
@@ -41,13 +42,12 @@ public class LightGhost : MonoBehaviour
 
     public void OnPlayerAwakeGhost()
     {
-        Light.spotAngle = 200f;
-        Light.intensity = 140;
-
+        GhostHealingLight.Play();
     }
 
     public void OnGhostGoToSleep()
     {
+        GhostHealingLight.Stop();
         Light.spotAngle = 40f;
         Light.intensity = 40f;
         IsGhostAwake = false;

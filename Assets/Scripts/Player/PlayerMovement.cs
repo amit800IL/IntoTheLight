@@ -1,24 +1,31 @@
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
 public class PlayerMovement : MonoBehaviour
 {
-
+   
     [field: SerializeField] public Animator playerAnimator { get; private set; }
-    private Vector3 newMove;
-    private float blendX, blendY;
-    private bool isMovingBackwards;
-    [SerializeField] private float AnimationAccelrator;
-    [SerializeField] private float blendSpeed;
-    [SerializeField] private float playerSpeed;
-    [SerializeField] private float GroundDistance;
+
+    [Header("General")]
     [SerializeField] private Rigidbody playerRigidBody;
+    private Vector3 newMove;
+    private bool isMovingBackwards;
+
+    [Header("Numbers")]
+    [SerializeField] private float AnimationAccelrator;
+    [SerializeField] private float playerSpeed;
+    private float blendX, blendY;
+    private float blendSpeed = 1;
+
+    [Header("Ground Check")]
+    [SerializeField] private float GroundDistance;
     [SerializeField] private Transform GroundCheck;
     [SerializeField] private LayerMask groundMask;
+
+    [Header("Audio Sources")]
     [SerializeField] private AudioSource playerWalk;
     [SerializeField] private AudioSource playerBreathing;
-
-
 
     private void Update()
     {
@@ -26,10 +33,9 @@ public class PlayerMovement : MonoBehaviour
 
         AnimationBlend();
 
-        Evasion();
+        //Evasion();
 
         Running();
-
     }
 
     private void AnimationBlend()
@@ -41,17 +47,17 @@ public class PlayerMovement : MonoBehaviour
         playerAnimator.SetFloat("Vertical", blendY);
     }
 
-    public void Evasion()
-    {
-        if (Keyboard.current.eKey.isPressed)
-        {
-            playerAnimator.SetBool("IsEvading", true);
-        }
-        else
-        {
-            playerAnimator.SetBool("IsEvading", false);
-        }
-    }
+    //public void Evasion()
+    //{
+    //    if (Keyboard.current.eKey.isPressed)
+    //    {
+    //        playerAnimator.SetBool("IsEvading", true);
+    //    }
+    //    else
+    //    {
+    //        playerAnimator.SetBool("IsEvading", false);
+    //    }
+    //}
 
     public void Running()
     {
@@ -76,6 +82,19 @@ public class PlayerMovement : MonoBehaviour
         playerWalk.Play();
         playerWalk.volume = 0.5f;
 
+        CameraAndMovingHandling();
+
+        PlayerWalk();
+
+        if (newMove.magnitude > 1)
+        {
+            newMove.Normalize();
+        }
+
+    }
+
+    private void CameraAndMovingHandling()
+    {
         Vector3 Forward = Camera.main.transform.forward;
         Forward.y = 0f;
         Forward.Normalize();
@@ -87,6 +106,10 @@ public class PlayerMovement : MonoBehaviour
         Vector3 moveDirection = newMove.x * Right + newMove.y * Forward;
         moveDirection.y = 0f;
 
+        playerRigidBody.velocity = moveDirection * playerSpeed;
+    }
+    private void PlayerWalk()
+    {
         if (newMove.magnitude < 0.1f)
         {
             playerWalk.Stop();
@@ -100,20 +123,9 @@ public class PlayerMovement : MonoBehaviour
 
         else
         {
-
             playerAnimator.SetBool("IsWalking", true);
-
         }
-
-
-        if (newMove.magnitude > 1)
-        {
-            newMove.Normalize();
-        }
-        playerRigidBody.velocity = moveDirection * playerSpeed;
-
     }
-
 
 
     public void IsGrounded() => Physics.CheckSphere(GroundCheck.position, GroundDistance, groundMask);

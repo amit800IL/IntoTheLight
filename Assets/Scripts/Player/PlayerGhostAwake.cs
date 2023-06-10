@@ -5,17 +5,23 @@ using UnityEngine.SceneManagement;
 
 public class PlayerGhostAwake : MonoBehaviour
 {
-    [SerializeField] private PlayerStats playerStats;
+    [Header("General")]
+    [SerializeField] private ParticleSystem particle;
     private bool keypress;
     private bool isInRangeOfGhost = false;
+
+    [Header("Coroutines")]
     private Coroutine healingCourtuine;
     private Coroutine decayCourtuine;
+
+    [Header("Health Up and Down")]
+    [SerializeField] private float SanityUpNumber;
+    [SerializeField] private float SanityDownNumber;
 
 
     private void Start()
     {
         decayCourtuine = StartCoroutine(HealthDownGrduadly());
-
     }
 
     private void Update()
@@ -44,11 +50,15 @@ public class PlayerGhostAwake : MonoBehaviour
     {
         while (isInRangeOfGhost)
         {
+
             if (keypress && healingCourtuine == null)
             {
+                particle.Play();
                 healingCourtuine = StartCoroutine(HealthUpGrduadly());
                 StopCoroutine(decayCourtuine);
                 decayCourtuine = null;
+                yield return new WaitForSeconds(10);
+                particle.Stop();
             }
 
             yield return null;
@@ -59,6 +69,7 @@ public class PlayerGhostAwake : MonoBehaviour
 
         if (decayCourtuine == null)
         {
+            particle.Stop();
             decayCourtuine = StartCoroutine(HealthDownGrduadly());
         }
 
@@ -67,9 +78,9 @@ public class PlayerGhostAwake : MonoBehaviour
     }
     private IEnumerator HealthUpGrduadly()
     {
-        while (playerStats.HP < playerStats.maxHp)
+        while (GameManager.Instance.PlayerStats.HP < GameManager.Instance.PlayerStats.maxHp)
         {
-            playerStats.HP += 8f;
+            GameManager.Instance.PlayerStats.HP += SanityUpNumber;
             yield return new WaitForSeconds(1);
         }
 
@@ -77,10 +88,9 @@ public class PlayerGhostAwake : MonoBehaviour
 
     private IEnumerator HealthDownGrduadly()
     {
-        while (playerStats.HP > 0)
+        while (GameManager.Instance.PlayerStats.HP > 0)
         {
-            playerStats.HP -= 8f;
-
+            GameManager.Instance.PlayerStats.HP -= SanityDownNumber;
             yield return new WaitForSeconds(1);
         }
     }

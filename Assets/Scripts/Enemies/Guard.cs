@@ -1,5 +1,4 @@
 using System.Collections;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.SceneManagement;
@@ -8,27 +7,44 @@ using UnityEngine.SceneManagement;
 public class Guard : MonoBehaviour
 {
     private float distance;
+
+    [Header("General")]
     [SerializeField] private GameObject guard;
-    [SerializeField] private float jumpToPlayerDistance;
     [SerializeField] private NavMeshAgent agent;
     [SerializeField] private Light enemyLight;
+
+    [Header("Numbers")]
+    [SerializeField] private float jumpToPlayerDistance;
     [SerializeField] private float speed;
     [SerializeField] private float speedMultiplier;
+    [SerializeField] private float KillingDistance;
+
+    [Header("Audio Sources")]
     [SerializeField] private AudioSource guardScream;
     [SerializeField] private AudioSource guardKillingScream;
-    [SerializeField] private AudioSource guardFootSteps;
+    [SerializeField] private AudioSource guardFlySound;
     [SerializeField] private Animator guardAnimator;
+
+    [Header("Renderers")]
+    [SerializeField] private SkinnedMeshRenderer guardMeshRenderer;
+    [SerializeField] private MeshRenderer guardWeaponMeshRenderer;
 
 
     private void Start()
     {
+        guardMeshRenderer.forceRenderingOff = true;
+        guardWeaponMeshRenderer.forceRenderingOff = true;
+
         StartCoroutine(CalculateRoute());
     }
 
     public IEnumerator CalculateRoute()
     {
 
-        yield return new WaitForSeconds(1);
+        yield return new WaitForSeconds(5);
+
+
+        guardFlySound.Play();
 
         while (true)
         {
@@ -37,17 +53,23 @@ public class Guard : MonoBehaviour
 
             if (agent != null && distance <= enemyLight.range)
             {
-                guardScream.Play(); 
+                guardMeshRenderer.forceRenderingOff = true;
+                guardWeaponMeshRenderer.forceRenderingOff = true;
+                guardScream.Play();
                 agent.SetDestination(GameManager.Instance.Player.transform.position);
                 agent.updateRotation = true;
 
-                if (distance <= 5)
+                if (distance <= KillingDistance)
                 {
+                    guardMeshRenderer.forceRenderingOff = false;
+                    guardWeaponMeshRenderer.forceRenderingOff = false;
+
                     GuardKill();
+
+                    yield return new WaitForSeconds(1);
 
                     if (GameManager.Instance.PlayerStats.HP <= 0)
                     {
-                        yield return new WaitForSeconds(2);
                         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
                     }
                 }
@@ -70,12 +92,13 @@ public class Guard : MonoBehaviour
 
                 agent.Warp(GameManager.Instance.Player.transform.position + offset);
             }
-            yield return new WaitForSeconds(2);
+            yield return new WaitForSeconds(1);
         }
     }
 
     private void GuardKill()
     {
+        Camera.main.transform.LookAt(transform.position);
         guardKillingScream.Play();
         guardScream.pitch = 2f;
         guardKillingScream.volume = 1f;
@@ -84,7 +107,7 @@ public class Guard : MonoBehaviour
         transform.LookAt(targetPosition);
         agent.isStopped = true;
         guardAnimator.SetBool("IsAttacking", true);
-        GameManager.Instance.PlayerStats.HP -= 80;
+        GameManager.Instance.PlayerStats.HP -= 100;
         GameManager.Instance.playerScream.Play();
         GameManager.Instance.PlayerMovement.playerAnimator.SetBool("IsAttacked", true);
     }

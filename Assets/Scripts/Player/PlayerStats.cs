@@ -1,10 +1,15 @@
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class PlayerStats : MonoBehaviour
 {
-    public float HP;
-    public float maxHp = 100;
+    [HideInInspector] public float HP;
+    [HideInInspector] public float maxHp = 100;
 
+    private void Start()
+    {
+        HP = maxHp;
+    }
     private void Update()
     {
         if (HP >= 100)
