@@ -446,6 +446,7 @@ MonoBehaviour:
   guard: {fileID: 2622723936624136694}
   agent: {fileID: 2622723936624136695}
   enemyLight: {fileID: 2622723935895056479}
+  offsetDistance: {x: 10, y: 0, z: 0}
   jumpToPlayerDistance: 10
   speed: 4
   speedMultiplier: 4

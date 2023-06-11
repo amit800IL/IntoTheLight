@@ -25,7 +25,6 @@ public class PlayerMovement : MonoBehaviour
 
     [Header("Audio Sources")]
     [SerializeField] private AudioSource playerWalk;
-    [SerializeField] private AudioSource playerBreathing;
 
     private void Update()
     {
@@ -71,7 +70,6 @@ public class PlayerMovement : MonoBehaviour
         {
             playerAnimator.SetBool("IsRunning", false);
             playerWalk.pitch = 1f;
-            playerBreathing.Play();
         }
     }
 

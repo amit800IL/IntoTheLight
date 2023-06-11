@@ -81,6 +81,11 @@ public class PlayerGhostAwake : MonoBehaviour
         while (GameManager.Instance.PlayerStats.HP < GameManager.Instance.PlayerStats.maxHp)
         {
             GameManager.Instance.PlayerStats.HP += SanityUpNumber;
+            GameManager.Instance.playerBreathing.volume -= 0.1f;
+            if (GameManager.Instance.playerBreathing.volume == 0.5f)
+            {
+                GameManager.Instance.playerBreathing.volume = 0.5f;
+            }
             yield return new WaitForSeconds(1);
         }
 
@@ -91,6 +96,27 @@ public class PlayerGhostAwake : MonoBehaviour
         while (GameManager.Instance.PlayerStats.HP > 0)
         {
             GameManager.Instance.PlayerStats.HP -= SanityDownNumber;
+            GameManager.Instance.playerBreathing.volume += 0.1f;
+
+            if (GameManager.Instance.playerBreathing.volume == 0.5f)
+            {
+                GameManager.Instance.playerBreathing.volume = 1f;
+            }
+
+            if (GameManager.Instance.PlayerStats.HP < 10f)
+            {
+                GameManager.Instance.playerScream.Play();
+                GameManager.Instance.secondPlayerScream.Play();
+                GameManager.Instance.PlayerMovement.playerAnimator.SetBool("IsAttacked", true);
+                GameManager.Instance.playerBreathing.Stop();
+
+                yield return new WaitForSeconds(1);
+
+                if (GameManager.Instance.PlayerStats.HP <= 0)
+                {
+                    SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+                }
+            }
             yield return new WaitForSeconds(1);
         }
     }

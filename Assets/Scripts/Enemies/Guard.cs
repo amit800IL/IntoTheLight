@@ -12,6 +12,7 @@ public class Guard : MonoBehaviour
     [SerializeField] private GameObject guard;
     [SerializeField] private NavMeshAgent agent;
     [SerializeField] private Light enemyLight;
+    [SerializeField] private Vector3 offsetDistance;
 
     [Header("Numbers")]
     [SerializeField] private float jumpToPlayerDistance;
@@ -86,7 +87,7 @@ public class Guard : MonoBehaviour
             {
                 yield return new WaitForSeconds(1);
 
-                Vector3 offset = Random.onUnitSphere * speed;
+                Vector3 offset = Random.onUnitSphere * speed + offsetDistance;
 
                 offset.y = 0;
 

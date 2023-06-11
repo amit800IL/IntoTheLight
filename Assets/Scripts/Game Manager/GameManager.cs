@@ -1,7 +1,4 @@
-
-using System.Collections;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
@@ -11,6 +8,9 @@ public class GameManager : MonoBehaviour
     [field: SerializeField] public PlayerStats PlayerStats { get; private set; }
     [field: SerializeField] public GameObject Ghost { get; private set; }
     [field: SerializeField] public AudioSource playerScream { get; private set; }
+    [field: SerializeField] public AudioSource playerBreathing { get; private set; }
+    [field: SerializeField] public AudioSource secondPlayerScream { get; private set; }
+
 
     private void Awake()
     {
