@@ -110,6 +110,8 @@ public class Guard : MonoBehaviour
         guardAnimator.SetBool("IsAttacking", true);
         GameManager.Instance.PlayerStats.HP -= 100;
         GameManager.Instance.playerScream.Play();
+        GameManager.Instance.secondPlayerScream.Play();
         GameManager.Instance.PlayerMovement.playerAnimator.SetBool("IsAttacked", true);
     }
+
 }

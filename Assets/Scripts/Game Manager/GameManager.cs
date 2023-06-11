@@ -11,7 +11,6 @@ public class GameManager : MonoBehaviour
     [field: SerializeField] public AudioSource playerBreathing { get; private set; }
     [field: SerializeField] public AudioSource secondPlayerScream { get; private set; }
 
-
     private void Awake()
     {
 
@@ -25,4 +24,6 @@ public class GameManager : MonoBehaviour
         }
 
     }
+
+
 }

@@ -8,6 +8,8 @@ TagManager:
   - GhostLight
   - Door
   - PlayerHide
+  - Target
+  - Guard
   layers:
   - Default
   - TransparentFX

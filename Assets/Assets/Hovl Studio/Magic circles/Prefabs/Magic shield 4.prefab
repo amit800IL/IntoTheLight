@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 4496354713845932318}
   m_Layer: 0
   m_Name: Light
-  m_TagString: Untagged
+  m_TagString: PlayerHide
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -10059,7 +10059,7 @@ GameObject:
   - component: {fileID: 199927738921744428}
   m_Layer: 0
   m_Name: GroundWaves
-  m_TagString: Untagged
+  m_TagString: PlayerHide
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -14939,9 +14939,10 @@ GameObject:
   - component: {fileID: 4737992014623324}
   - component: {fileID: 198095634025200850}
   - component: {fileID: 199932514279900912}
+  - component: {fileID: 5497393758711363799}
   m_Layer: 0
   m_Name: Shield2
-  m_TagString: Untagged
+  m_TagString: PlayerHide
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -19810,6 +19811,19 @@ ParticleSystemRenderer:
   m_MeshWeighting2: 1
   m_MeshWeighting3: 1
   m_MaskInteraction: 0
+--- !u!135 &5497393758711363799
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1425471982668642}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 3.5475225
+  m_Center: {x: 0, y: 0, z: 0.71248627}
 --- !u!1 &1447495081342108
 GameObject:
   m_ObjectHideFlags: 0
@@ -24705,7 +24719,7 @@ GameObject:
   - component: {fileID: 199773618527651750}
   m_Layer: 0
   m_Name: Magic shield 4
-  m_TagString: Untagged
+  m_TagString: PlayerHide
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -24747,7 +24761,7 @@ ParticleSystem:
   ringBufferLoopRange: {x: 0, y: 1}
   emitterVelocityMode: 0
   looping: 1
-  prewarm: 0
+  prewarm: 1
   playOnAwake: 0
   useUnscaledTime: 0
   autoRandomSeed: 1
@@ -28368,9 +28382,9 @@ ParticleSystem:
         m_NumAlphaKeys: 2
     range: {x: 0, y: 1}
   CollisionModule:
-    enabled: 0
+    enabled: 1
     serializedVersion: 4
-    type: 0
+    type: 1
     collisionMode: 0
     colliderForce: 0
     multiplyColliderForceByParticleSize: 0

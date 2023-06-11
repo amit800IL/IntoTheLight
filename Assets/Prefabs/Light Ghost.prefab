@@ -101,7 +101,7 @@ Light:
   m_InnerSpotAngle: 24.615776
   m_CookieSize: 10
   m_Shadows:
-    m_Type: 0
+    m_Type: 2
     m_Resolution: -1
     m_CustomResolution: -1
     m_Strength: 1
@@ -189,10 +189,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Magic shield 4
       objectReference: {fileID: 0}
-    - target: {fileID: 1598533638775410, guid: 8d9acef849f7240468daa95c1c7f14c4, type: 3}
-      propertyPath: m_TagString
-      value: PlayerHide
-      objectReference: {fileID: 0}
     - target: {fileID: 4985127113715788, guid: 8d9acef849f7240468daa95c1c7f14c4, type: 3}
       propertyPath: m_RootOrder
       value: 2
@@ -237,39 +233,9 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 198095634025200850, guid: 8d9acef849f7240468daa95c1c7f14c4,
+    - target: {fileID: 5497393758711363799, guid: 8d9acef849f7240468daa95c1c7f14c4,
         type: 3}
-      propertyPath: CollisionModule.enabled
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 198095634025200850, guid: 8d9acef849f7240468daa95c1c7f14c4,
-        type: 3}
-      propertyPath: InitialModule.startColor.maxColor.a
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 198534080018704606, guid: 8d9acef849f7240468daa95c1c7f14c4,
-        type: 3}
-      propertyPath: prewarm
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 198534080018704606, guid: 8d9acef849f7240468daa95c1c7f14c4,
-        type: 3}
-      propertyPath: CollisionModule.type
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 198534080018704606, guid: 8d9acef849f7240468daa95c1c7f14c4,
-        type: 3}
-      propertyPath: CollisionModule.enabled
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 198534080018704606, guid: 8d9acef849f7240468daa95c1c7f14c4,
-        type: 3}
-      propertyPath: InitialModule.startColor.maxColor.a
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 198534080018704606, guid: 8d9acef849f7240468daa95c1c7f14c4,
-        type: 3}
-      propertyPath: InitialModule.startColor.maxColor.r
+      propertyPath: m_IsTrigger
       value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
