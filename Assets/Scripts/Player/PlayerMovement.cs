@@ -4,9 +4,9 @@ using UnityEngine.InputSystem;
 public class PlayerMovement : MonoBehaviour
 {
 
-    [field: SerializeField] public Animator playerAnimator { get; private set; }
 
-    [Header("General")]
+    [field: Header("General")]
+    [field: SerializeField] public Animator playerAnimator { get; private set; }
     [SerializeField] private Rigidbody playerRigidBody;
     private Vector3 newMove;
     private bool isMovingBackwards;
