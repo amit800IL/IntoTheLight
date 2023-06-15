@@ -13,6 +13,7 @@ public class Guard : MonoBehaviour
     [SerializeField] private NavMeshAgent agent;
     [SerializeField] private Light enemyLight;
     [SerializeField] private Vector3 offsetDistance;
+    [SerializeField] private PlayerGhostAwake ghostAwake;
 
     [Header("Numbers")]
     [SerializeField] private float jumpToPlayerDistance;
@@ -60,14 +61,16 @@ public class Guard : MonoBehaviour
                 agent.SetDestination(GameManager.Instance.Player.transform.position);
                 agent.updateRotation = true;
 
-                if (distance <= KillingDistance)
+                if (distance <= KillingDistance && !ghostAwake.isInRangeOfGhost)
                 {
+
                     guardMeshRenderer.forceRenderingOff = false;
                     guardWeaponMeshRenderer.forceRenderingOff = false;
 
+
                     GuardKill();
 
-                    yield return new WaitForSeconds(1);
+                    yield return new WaitForSeconds(3);
 
                     if (GameManager.Instance.PlayerStats.HP <= 0)
                     {
@@ -85,7 +88,7 @@ public class Guard : MonoBehaviour
             }
             else if (distance >= jumpToPlayerDistance)
             {
-                yield return new WaitForSeconds(1);
+                yield return new WaitForSeconds(5);
 
                 Vector3 offset = Random.onUnitSphere * speed + offsetDistance;
 
@@ -112,6 +115,32 @@ public class Guard : MonoBehaviour
         GameManager.Instance.playerScream.Play();
         GameManager.Instance.secondPlayerScream.Play();
         GameManager.Instance.PlayerMovement.playerAnimator.SetBool("IsAttacked", true);
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.CompareTag("GhostLight"))
+        {
+            StopCoroutine(CalculateRoute());
+        }
+
+        if (collision.gameObject.CompareTag("SafeRoom"))
+        {
+            StopCoroutine(CalculateRoute());
+        }
+
+        if (collision.gameObject.CompareTag("Player"))
+        {
+            Physics.IgnoreCollision(GameManager.Instance.playerCollider, GameManager.Instance.GuardCollider);
+        }
+    }
+
+    private void OnCollisionExit(Collision collision)
+    {
+        if (collision.gameObject.CompareTag("GhostLight"))
+        {
+            StartCoroutine(CalculateRoute());
+        }
     }
 
 }

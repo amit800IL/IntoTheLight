@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Experimental.GlobalIllumination;
 
 public class GameManager : MonoBehaviour
 {
@@ -10,6 +11,11 @@ public class GameManager : MonoBehaviour
     [field: SerializeField] public AudioSource playerScream { get; private set; }
     [field: SerializeField] public AudioSource playerBreathing { get; private set; }
     [field: SerializeField] public AudioSource secondPlayerScream { get; private set; }
+    [field: SerializeField] public Collider playerCollider { get; private set; }
+    [field: SerializeField] public Collider[] ghostCollider { get; private set; }
+    [field: SerializeField] public Collider[] safeRoomDoor { get; private set; }
+    [field: SerializeField] public Collider GuardCollider { get; private set; }
+
 
     private void Awake()
     {
@@ -24,6 +30,5 @@ public class GameManager : MonoBehaviour
         }
 
     }
-
 
 }

@@ -12,6 +12,8 @@ public class KeyScript : MonoBehaviour
 
     private bool pickUpAllowed = false;
 
+    public bool Haskey = false;
+
     private void Start()
     {
         pickUpText.gameObject.SetActive(false);
@@ -29,7 +31,7 @@ public class KeyScript : MonoBehaviour
     
     private void OnTriggerEnter(Collider collision)
     {
-        if (collision.gameObject.name.Equals("NewPlayer"))
+        if (collision.gameObject.name.Equals("Player"))
         {
             pickUpText.gameObject.SetActive(true);
             pickUpAllowed = true;
@@ -38,7 +40,7 @@ public class KeyScript : MonoBehaviour
 
     private void OnTriggerExit(Collider collision)
     {
-        if (collision.gameObject.name.Equals("NewPlayer"))
+        if (collision.gameObject.name.Equals("Player"))
         {
             pickUpText.gameObject.SetActive(false);
             pickUpAllowed = false;
@@ -49,5 +51,6 @@ public class KeyScript : MonoBehaviour
     {
         Debug.Log("pick up pressed");
         Destroy(gameObject);
+        Haskey = true;
     }
 }

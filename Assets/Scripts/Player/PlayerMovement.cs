@@ -1,10 +1,9 @@
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
 public class PlayerMovement : MonoBehaviour
 {
-   
+
     [field: SerializeField] public Animator playerAnimator { get; private set; }
 
     [Header("General")]
@@ -32,7 +31,7 @@ public class PlayerMovement : MonoBehaviour
 
         AnimationBlend();
 
-        //Evasion();
+        Evasion();
 
         Running();
     }
@@ -46,17 +45,17 @@ public class PlayerMovement : MonoBehaviour
         playerAnimator.SetFloat("Vertical", blendY);
     }
 
-    //public void Evasion()
-    //{
-    //    if (Keyboard.current.eKey.isPressed)
-    //    {
-    //        playerAnimator.SetBool("IsEvading", true);
-    //    }
-    //    else
-    //    {
-    //        playerAnimator.SetBool("IsEvading", false);
-    //    }
-    //}
+    public void Evasion()
+    {
+        if (Keyboard.current.eKey.isPressed)
+        {
+            playerAnimator.SetBool("IsEvading", true);
+        }
+        else
+        {
+            playerAnimator.SetBool("IsEvading", false);
+        }
+    }
 
     public void Running()
     {
@@ -128,7 +127,25 @@ public class PlayerMovement : MonoBehaviour
 
     public void IsGrounded() => Physics.CheckSphere(GroundCheck.position, GroundDistance, groundMask);
 
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.CompareTag("GhostLight"))
+        {
+            foreach (Collider ghostCollider in GameManager.Instance.ghostCollider)
+            {
+                Physics.IgnoreCollision(GameManager.Instance.playerCollider, ghostCollider);
+            }
+        }
 
+        if (collision.gameObject.CompareTag("SafeRoom"))
+        {
+
+            foreach (Collider safeRoomDoor in GameManager.Instance.safeRoomDoor)
+            {
+                Physics.IgnoreCollision(GameManager.Instance.playerCollider, safeRoomDoor);
+            }
+        }
+    }
 
 
 }

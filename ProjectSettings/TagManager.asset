@@ -10,6 +10,9 @@ TagManager:
   - PlayerHide
   - Target
   - Guard
+  - OpenDoor
+  - KeyRoom
+  - SafeRoom
   layers:
   - Default
   - TransparentFX

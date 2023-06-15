@@ -5,10 +5,11 @@ using UnityEngine.SceneManagement;
 
 public class PlayerGhostAwake : MonoBehaviour
 {
+    [field: SerializeField] public bool isInRangeOfGhost { get; private set; } = false;
+
     [Header("General")]
     [SerializeField] private ParticleSystem particle;
     private bool keypress;
-    private bool isInRangeOfGhost = false;
 
     [Header("Coroutines")]
     private Coroutine healingCourtuine;
@@ -98,17 +99,25 @@ public class PlayerGhostAwake : MonoBehaviour
             GameManager.Instance.PlayerStats.HP -= SanityDownNumber;
             GameManager.Instance.playerBreathing.volume += 0.1f;
 
-            if (GameManager.Instance.playerBreathing.volume == 0.5f)
+            if (GameManager.Instance.playerBreathing.volume > 0.5f)
             {
-                GameManager.Instance.playerBreathing.volume = 1f;
+                GameManager.Instance.playerBreathing.volume = 0.5f;
             }
 
-            if (GameManager.Instance.PlayerStats.HP < 10f)
+            if (GameManager.Instance.PlayerStats.HP <= 30f)
             {
+                GameManager.Instance.playerBreathing.pitch = 2f;
+                GameManager.Instance.playerBreathing.volume = 1f;
+                GameManager.Instance.PlayerMovement.playerAnimator.SetBool("IsStunned", true);
+            }
+
+            if (GameManager.Instance.PlayerStats.HP <= 10f)
+            {
+                GameManager.Instance.PlayerMovement.playerAnimator.SetBool("IsAttacked", true);
+                GameManager.Instance.PlayerMovement.playerAnimator.SetBool("IsStunned", false);
+                GameManager.Instance.playerBreathing.Stop();
                 GameManager.Instance.playerScream.Play();
                 GameManager.Instance.secondPlayerScream.Play();
-                GameManager.Instance.PlayerMovement.playerAnimator.SetBool("IsAttacked", true);
-                GameManager.Instance.playerBreathing.Stop();
 
                 yield return new WaitForSeconds(1);
 

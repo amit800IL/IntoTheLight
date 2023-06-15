@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 1468748692}
   m_Layer: 0
   m_Name: GuardFootSteps
-  m_TagString: Untagged
+  m_TagString: Guard
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -144,7 +144,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1635947393
 Transform:
   m_ObjectHideFlags: 0
@@ -269,7 +269,7 @@ GameObject:
   - component: {fileID: 2622723935895056478}
   m_Layer: 0
   m_Name: GuardLight
-  m_TagString: Untagged
+  m_TagString: Guard
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 1
   m_StaticEditorFlags: 8
@@ -382,6 +382,7 @@ GameObject:
   - component: {fileID: 2622723936624136691}
   - component: {fileID: 2622723936624136695}
   - component: {fileID: 3889241675234091641}
+  - component: {fileID: 6551558723611212046}
   m_Layer: 0
   m_Name: Guard
   m_TagString: Guard
@@ -397,7 +398,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2622723936624136694}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.681, y: 0.84, z: -0.26}
+  m_LocalPosition: {x: 0.623, y: 0.84, z: -0.26}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -447,6 +448,7 @@ MonoBehaviour:
   agent: {fileID: 2622723936624136695}
   enemyLight: {fileID: 2622723935895056479}
   offsetDistance: {x: 10, y: 0, z: 0}
+  ghostAwake: {fileID: 0}
   jumpToPlayerDistance: 10
   speed: 4
   speedMultiplier: 4
@@ -457,6 +459,20 @@ MonoBehaviour:
   guardAnimator: {fileID: 8714730552874021818}
   guardMeshRenderer: {fileID: 5484072537115273969}
   guardWeaponMeshRenderer: {fileID: 3985353784876580586}
+--- !u!136 &6551558723611212046
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2622723936624136694}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  m_Radius: 2.5993338
+  m_Height: 5.198668
+  m_Direction: 1
+  m_Center: {x: -0.34512138, y: -0.15567303, z: -0.36093357}
 --- !u!1 &8565821928459959725
 GameObject:
   m_ObjectHideFlags: 0
@@ -469,7 +485,7 @@ GameObject:
   - component: {fileID: 2197136318618090400}
   m_Layer: 0
   m_Name: GuardKillingScream
-  m_TagString: Untagged
+  m_TagString: Guard
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -592,6 +608,41 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 2622723936624136691}
     m_Modifications:
+    - target: {fileID: 771403822082921011, guid: 8146374d820c3ac45baeed5014144363,
+        type: 3}
+      propertyPath: m_TagString
+      value: Guard
+      objectReference: {fileID: 0}
+    - target: {fileID: 891957722177419005, guid: 8146374d820c3ac45baeed5014144363,
+        type: 3}
+      propertyPath: m_TagString
+      value: Guard
+      objectReference: {fileID: 0}
+    - target: {fileID: 981163442623043622, guid: 8146374d820c3ac45baeed5014144363,
+        type: 3}
+      propertyPath: m_TagString
+      value: Guard
+      objectReference: {fileID: 0}
+    - target: {fileID: 1748010989584258028, guid: 8146374d820c3ac45baeed5014144363,
+        type: 3}
+      propertyPath: m_TagString
+      value: Guard
+      objectReference: {fileID: 0}
+    - target: {fileID: 2376081808438084318, guid: 8146374d820c3ac45baeed5014144363,
+        type: 3}
+      propertyPath: m_TagString
+      value: Guard
+      objectReference: {fileID: 0}
+    - target: {fileID: 3698828718276235669, guid: 8146374d820c3ac45baeed5014144363,
+        type: 3}
+      propertyPath: m_TagString
+      value: Guard
+      objectReference: {fileID: 0}
+    - target: {fileID: 3951236348288968915, guid: 8146374d820c3ac45baeed5014144363,
+        type: 3}
+      propertyPath: m_TagString
+      value: Guard
+      objectReference: {fileID: 0}
     - target: {fileID: 4581718618250850181, guid: 8146374d820c3ac45baeed5014144363,
         type: 3}
       propertyPath: m_Constraints
@@ -656,6 +707,21 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: G1_Black
+      objectReference: {fileID: 0}
+    - target: {fileID: 4581718618250850183, guid: 8146374d820c3ac45baeed5014144363,
+        type: 3}
+      propertyPath: m_TagString
+      value: Guard
+      objectReference: {fileID: 0}
+    - target: {fileID: 7405884483957000919, guid: 8146374d820c3ac45baeed5014144363,
+        type: 3}
+      propertyPath: m_TagString
+      value: Guard
+      objectReference: {fileID: 0}
+    - target: {fileID: 7450911739169022872, guid: 8146374d820c3ac45baeed5014144363,
+        type: 3}
+      propertyPath: m_TagString
+      value: Guard
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 4581718618250850180, guid: 8146374d820c3ac45baeed5014144363, type: 3}
