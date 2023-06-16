@@ -1170,21 +1170,6 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 8
   playerWalk: {fileID: 1489013855}
-  playerCollider: {fileID: 6250810433284146720}
-  ghostCollider:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
 --- !u!114 &2599596959583585859
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4802,17 +4787,33 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1147674315953803344}
     m_Modifications:
+    - target: {fileID: 1034533664582828, guid: 721cfe8018b2cd04abd0748143d2a312, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1093731104432700, guid: 721cfe8018b2cd04abd0748143d2a312, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1575541251535090, guid: 721cfe8018b2cd04abd0748143d2a312, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1592372973558972, guid: 721cfe8018b2cd04abd0748143d2a312, type: 3}
       propertyPath: m_Name
       value: Heal
       objectReference: {fileID: 0}
     - target: {fileID: 1638467063357568, guid: 721cfe8018b2cd04abd0748143d2a312, type: 3}
       propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1725364029384458, guid: 721cfe8018b2cd04abd0748143d2a312, type: 3}
+      propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1944988366733038, guid: 721cfe8018b2cd04abd0748143d2a312, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4843259840985632, guid: 721cfe8018b2cd04abd0748143d2a312, type: 3}
       propertyPath: m_RootOrder

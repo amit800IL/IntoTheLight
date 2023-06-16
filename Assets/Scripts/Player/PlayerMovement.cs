@@ -12,17 +12,20 @@ public class PlayerMovement : MonoBehaviour
     private bool isMovingBackwards;
 
     [Header("Numbers")]
+
     [SerializeField] private float AnimationAccelrator;
     [SerializeField] private float playerSpeed;
     private float blendX, blendY;
     private float blendSpeed = 1;
 
     [Header("Ground Check")]
+
     [SerializeField] private float GroundDistance;
     [SerializeField] private Transform GroundCheck;
     [SerializeField] private LayerMask groundMask;
 
     [Header("Audio Sources")]
+
     [SerializeField] private AudioSource playerWalk;
 
     private void Update()

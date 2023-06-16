@@ -4,9 +4,13 @@ public class Compass : MonoBehaviour
 {
     private Vector3 positionToLocate;
 
+    private float distance;
+
     [SerializeField] private Transform[] doors;
 
     [SerializeField] GameObject arrow;
+
+
 
     private void Update()
     {
@@ -17,9 +21,16 @@ public class Compass : MonoBehaviour
     {
         foreach (Transform door in doors)
         {
-            Vector3 direction = (arrow.transform.position - door.transform.position).normalized;
-            float Angle = Mathf.Atan2(direction.x, direction.y) * Mathf.Rad2Deg;
-            transform.rotation = Quaternion.Euler(Angle, 0, 0);
+            distance = Vector3.Distance(arrow.transform.position, door.transform.position);
+
+            Debug.Log(distance);
+
+            if (distance > 5 && distance < 30)
+            {
+                positionToLocate = (arrow.transform.position - door.transform.position).normalized;
+                float Angle = Mathf.Atan2(positionToLocate.x, positionToLocate.z) * Mathf.Rad2Deg;
+                arrow.transform.rotation = Quaternion.Euler(Angle, 0, 0);
+            }
         }
     }
 }

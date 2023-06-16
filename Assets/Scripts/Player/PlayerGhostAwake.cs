@@ -5,17 +5,22 @@ using UnityEngine.SceneManagement;
 
 public class PlayerGhostAwake : MonoBehaviour
 {
-    [field: SerializeField] public bool isInRangeOfGhost { get; private set; } = false;
+    public bool isInRangeOfGhost { get; private set; } = false;
+
+    private bool HasAwaknedGhost = false;
 
     [Header("General")]
+
     [SerializeField] private ParticleSystem particle;
     private bool keypress;
 
     [Header("Coroutines")]
+
     private Coroutine healingCourtuine;
     private Coroutine decayCourtuine;
 
     [Header("Health Up and Down")]
+
     [SerializeField] private float SanityUpNumber;
     [SerializeField] private float SanityDownNumber;
 
@@ -46,34 +51,34 @@ public class PlayerGhostAwake : MonoBehaviour
             isInRangeOfGhost = false;
         }
     }
-
     private IEnumerator CheckPlayerInput(Collider other)
     {
+
         while (isInRangeOfGhost)
         {
-
-            if (keypress && healingCourtuine == null)
+            if (keypress && healingCourtuine == null && !HasAwaknedGhost)
             {
                 particle.Play();
                 healingCourtuine = StartCoroutine(HealthUpGrduadly());
                 StopCoroutine(decayCourtuine);
                 decayCourtuine = null;
+                HasAwaknedGhost = true;
                 yield return new WaitForSeconds(10);
                 particle.Stop();
-            }
-
+                StopCoroutine(healingCourtuine);
+                healingCourtuine = null;
+            } 
             yield return null;
         }
 
-        StopCoroutine(healingCourtuine);
-        healingCourtuine = null;
-
+       
         if (decayCourtuine == null)
         {
             particle.Stop();
             decayCourtuine = StartCoroutine(HealthDownGrduadly());
         }
-
+        yield return new WaitForSeconds(5);    
+        HasAwaknedGhost = false;
         yield return null;
 
     }

@@ -457,8 +457,8 @@ MonoBehaviour:
   guardKillingScream: {fileID: 2197136318618090400}
   guardFlySound: {fileID: 1468748692}
   guardAnimator: {fileID: 0}
-  guardMeshRenderer: {fileID: 0}
-  guardWeaponMeshRenderer: {fileID: 0}
+  guardMeshRenderer: {fileID: 2485689423383856596}
+  guardFaceMeshRenderer: {fileID: 3050782000200719976}
 --- !u!136 &6551558723611212046
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -673,6 +673,18 @@ PrefabInstance:
 --- !u!4 &1024937015763790686 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 5f26563eedf1a0f43af2dc2c72b33093,
+    type: 3}
+  m_PrefabInstance: {fileID: 699174721434062005}
+  m_PrefabAsset: {fileID: 0}
+--- !u!23 &2485689423383856596 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: -6067185528594298527, guid: 5f26563eedf1a0f43af2dc2c72b33093,
+    type: 3}
+  m_PrefabInstance: {fileID: 699174721434062005}
+  m_PrefabAsset: {fileID: 0}
+--- !u!23 &3050782000200719976 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 2586607309129781981, guid: 5f26563eedf1a0f43af2dc2c72b33093,
     type: 3}
   m_PrefabInstance: {fileID: 699174721434062005}
   m_PrefabAsset: {fileID: 0}

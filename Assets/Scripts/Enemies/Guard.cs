@@ -25,17 +25,16 @@ public class Guard : MonoBehaviour
     [SerializeField] private AudioSource guardScream;
     [SerializeField] private AudioSource guardKillingScream;
     [SerializeField] private AudioSource guardFlySound;
-    [SerializeField] private Animator guardAnimator;
 
     [Header("Renderers")]
-    [SerializeField] private SkinnedMeshRenderer guardMeshRenderer;
-    [SerializeField] private MeshRenderer guardWeaponMeshRenderer;
+    [SerializeField] private MeshRenderer guardMeshRenderer;
+    [SerializeField] private MeshRenderer guardFaceMeshRenderer;
 
 
     private void Start()
     {
         guardMeshRenderer.forceRenderingOff = true;
-        guardWeaponMeshRenderer.forceRenderingOff = true;
+        guardFaceMeshRenderer.forceRenderingOff = true;
 
         StartCoroutine(CalculateRoute());
     }
@@ -43,7 +42,7 @@ public class Guard : MonoBehaviour
     public IEnumerator CalculateRoute()
     {
 
-        yield return new WaitForSeconds(5);
+        yield return new WaitForSeconds(10);
 
 
         guardFlySound.Play();
@@ -56,7 +55,7 @@ public class Guard : MonoBehaviour
             if (agent != null && distance <= enemyLight.range)
             {
                 guardMeshRenderer.forceRenderingOff = true;
-                guardWeaponMeshRenderer.forceRenderingOff = true;
+                guardFaceMeshRenderer.forceRenderingOff = true;
                 guardScream.Play();
                 agent.SetDestination(GameManager.Instance.Player.transform.position);
                 agent.updateRotation = true;
@@ -65,7 +64,7 @@ public class Guard : MonoBehaviour
                 {
 
                     guardMeshRenderer.forceRenderingOff = false;
-                    guardWeaponMeshRenderer.forceRenderingOff = false;
+                    guardFaceMeshRenderer.forceRenderingOff = false;
 
 
                     GuardKill();
@@ -80,7 +79,6 @@ public class Guard : MonoBehaviour
 
                 else
                 {
-                    guardAnimator.SetBool("IsAttacking", false);
                     GameManager.Instance.PlayerMovement.playerAnimator.SetBool("IsAttacked", false);
                     guardScream.pitch = 1f;
                 }
@@ -88,7 +86,7 @@ public class Guard : MonoBehaviour
             }
             else if (distance >= jumpToPlayerDistance)
             {
-                yield return new WaitForSeconds(5);
+                yield return new WaitForSeconds(2);
 
                 Vector3 offset = Random.onUnitSphere * speed + offsetDistance;
 
@@ -110,7 +108,6 @@ public class Guard : MonoBehaviour
         targetPosition.y = transform.position.y;
         transform.LookAt(targetPosition);
         agent.isStopped = true;
-        guardAnimator.SetBool("IsAttacking", true);
         GameManager.Instance.PlayerStats.HP -= 100;
         GameManager.Instance.playerScream.Play();
         GameManager.Instance.secondPlayerScream.Play();
@@ -141,6 +138,12 @@ public class Guard : MonoBehaviour
         {
             StartCoroutine(CalculateRoute());
         }
+
+        if (collision.gameObject.CompareTag("SafeRoom"))
+        {
+            StartCoroutine(CalculateRoute());
+        }
+
     }
 
 }
