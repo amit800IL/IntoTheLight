@@ -260,7 +260,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1237605430
 Transform:
   m_ObjectHideFlags: 0
@@ -1161,6 +1161,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   <playerAnimator>k__BackingField: {fileID: 1058032021454214390}
+  <playerCollider>k__BackingField: {fileID: 6250810433284146720}
   playerRigidBody: {fileID: 1575560974512497516}
   AnimationAccelrator: 30
   playerSpeed: 50
@@ -1925,8 +1926,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   particle: {fileID: 7194494073829039786}
-  SanityUpNumber: 2
-  SanityDownNumber: 2
+  <playerBreathing>k__BackingField: {fileID: 7449788007570023134}
+  <playerScream>k__BackingField: {fileID: 1716326299201623417}
+  <secondPlayerScream>k__BackingField: {fileID: 674727606}
+  SanityUpNumber: 3
+  SanityDownNumber: 3
 --- !u!1 &2571342425886035879
 GameObject:
   m_ObjectHideFlags: 0

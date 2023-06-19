@@ -7,12 +7,17 @@ public class PlayerGhostAwake : MonoBehaviour
 {
     public bool isInRangeOfGhost { get; private set; } = false;
 
-    private bool HasAwaknedGhost = false;
+    [HideInInspector] public bool HasAwaknedGhost { get; set; } = false;
 
     [Header("General")]
 
     [SerializeField] private ParticleSystem particle;
     private bool keypress;
+
+    [field: Header("Audio Sources Refernces")]
+    [field: SerializeField] public AudioSource playerBreathing { get; private set; }
+    [field: SerializeField] public AudioSource playerScream { get; private set; }
+    [field: SerializeField] public AudioSource secondPlayerScream { get; private set; }
 
     [Header("Coroutines")]
 
@@ -51,7 +56,7 @@ public class PlayerGhostAwake : MonoBehaviour
             isInRangeOfGhost = false;
         }
     }
-    private IEnumerator CheckPlayerInput(Collider other)
+    public IEnumerator CheckPlayerInput(Collider other)
     {
 
         while (isInRangeOfGhost)
@@ -63,34 +68,34 @@ public class PlayerGhostAwake : MonoBehaviour
                 StopCoroutine(decayCourtuine);
                 decayCourtuine = null;
                 HasAwaknedGhost = true;
-                yield return new WaitForSeconds(10);
+                yield return new WaitForSeconds(7);
                 particle.Stop();
                 StopCoroutine(healingCourtuine);
                 healingCourtuine = null;
-            } 
+            }
             yield return null;
         }
 
-       
+
         if (decayCourtuine == null)
         {
             particle.Stop();
             decayCourtuine = StartCoroutine(HealthDownGrduadly());
         }
-        yield return new WaitForSeconds(5);    
+        yield return new WaitForSeconds(7);
         HasAwaknedGhost = false;
         yield return null;
 
     }
     private IEnumerator HealthUpGrduadly()
     {
-        while (GameManager.Instance.PlayerStats.HP < GameManager.Instance.PlayerStats.maxHp)
+        while (GameManager.Instance.PlayerStats.HP < GameManager.Instance.PlayerStats.maxHp && isInRangeOfGhost)
         {
             GameManager.Instance.PlayerStats.HP += SanityUpNumber;
-            GameManager.Instance.playerBreathing.volume -= 0.1f;
-            if (GameManager.Instance.playerBreathing.volume == 0.5f)
+            playerBreathing.volume -= 0.1f;
+            if (playerBreathing.volume == 0.5f)
             {
-                GameManager.Instance.playerBreathing.volume = 0.5f;
+                playerBreathing.volume = 0.5f;
             }
             yield return new WaitForSeconds(1);
         }
@@ -102,27 +107,32 @@ public class PlayerGhostAwake : MonoBehaviour
         while (GameManager.Instance.PlayerStats.HP > 0)
         {
             GameManager.Instance.PlayerStats.HP -= SanityDownNumber;
-            GameManager.Instance.playerBreathing.volume += 0.1f;
+            playerBreathing.volume += 0.1f;
 
-            if (GameManager.Instance.playerBreathing.volume > 0.5f)
+            if (playerBreathing.volume > 0.5f)
             {
-                GameManager.Instance.playerBreathing.volume = 0.5f;
+                playerBreathing.volume = 0.5f;
             }
 
-            if (GameManager.Instance.PlayerStats.HP <= 30f)
+            if (GameManager.Instance.PlayerStats.HP <= 15f)
             {
-                GameManager.Instance.playerBreathing.pitch = 2f;
-                GameManager.Instance.playerBreathing.volume = 1f;
+                playerBreathing.pitch = 2f;
+                playerBreathing.volume = 1f;
+                GameManager.Instance.PlayerMovement.playerAnimator.SetBool("IsRunning", false);
+                GameManager.Instance.PlayerMovement.playerAnimator.SetBool("IsWalking", false);
                 GameManager.Instance.PlayerMovement.playerAnimator.SetBool("IsStunned", true);
             }
 
-            if (GameManager.Instance.PlayerStats.HP <= 10f)
+            if (GameManager.Instance.PlayerStats.HP <= 5f)
             {
                 GameManager.Instance.PlayerMovement.playerAnimator.SetBool("IsAttacked", true);
+                GameManager.Instance.PlayerMovement.playerAnimator.SetBool("IsRunning", false);
+                GameManager.Instance.PlayerMovement.playerAnimator.SetBool("IsWalking", false);
                 GameManager.Instance.PlayerMovement.playerAnimator.SetBool("IsStunned", false);
-                GameManager.Instance.playerBreathing.Stop();
-                GameManager.Instance.playerScream.Play();
-                GameManager.Instance.secondPlayerScream.Play();
+                Camera.main.transform.LookAt(transform.position);
+                playerBreathing.Stop();
+                playerScream.Play();
+                secondPlayerScream.Play();
 
                 yield return new WaitForSeconds(1);
 

@@ -38,6 +38,7 @@ public class PlayerOpenDoor : MonoBehaviour
             if (keyPress && keyScript.Haskey)
             {
                 Door.transform.Translate(0, 10000, 0);
+                Application.Quit();
             }
 
             else if (keyPress && !keyScript.Haskey)

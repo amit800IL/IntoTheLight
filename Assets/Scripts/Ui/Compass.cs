@@ -2,15 +2,15 @@ using UnityEngine;
 
 public class Compass : MonoBehaviour
 {
-    private Vector3 positionToLocate;
+    private Vector2 positionToLocate;
 
-    private float distance;
+    private float Closestdistance = Mathf.Infinity;
+
+    private Transform closestDoor;
 
     [SerializeField] private Transform[] doors;
 
     [SerializeField] GameObject arrow;
-
-
 
     private void Update()
     {
@@ -19,18 +19,32 @@ public class Compass : MonoBehaviour
 
     private void LocateDoor()
     {
+        Closestdistance = Mathf.Infinity;
+        closestDoor = null;
+
         foreach (Transform door in doors)
         {
-            distance = Vector3.Distance(arrow.transform.position, door.transform.position);
+            float Distance = Vector3.Distance(GameManager.Instance.PlayerMovement.transform.position, door.transform.position);
+            Debug.Log(Distance);
 
-            Debug.Log(distance);
-
-            if (distance > 5 && distance < 30)
+            if (Distance < Closestdistance)
             {
-                positionToLocate = (arrow.transform.position - door.transform.position).normalized;
-                float Angle = Mathf.Atan2(positionToLocate.x, positionToLocate.z) * Mathf.Rad2Deg;
-                arrow.transform.rotation = Quaternion.Euler(Angle, 0, 0);
+                Closestdistance = Distance;
+
+                closestDoor = door;
             }
+
+        }
+    }
+
+    private void UpdateDoorLocation()
+    {
+        if (closestDoor != null && Closestdistance > 5 && Closestdistance < 30)
+        {
+            positionToLocate = (arrow.transform.position - closestDoor.transform.position).normalized;
+            float angle = Mathf.Atan2(positionToLocate.y, positionToLocate.x) * Mathf.Rad2Deg;
+            Quaternion rotation = GameManager.Instance.PlayerMovement.transform.rotation;
+            arrow.transform.rotation = Quaternion.Euler(0, 0, -angle) * rotation;
         }
     }
 }

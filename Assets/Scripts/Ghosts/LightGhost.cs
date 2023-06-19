@@ -20,7 +20,7 @@ public class LightGhost : MonoBehaviour
     }
     private void CheckIfGhostAwake()
     {
-        if (!IsGhostAwake)
+        if (!IsGhostAwake && !GameManager.Instance.PlayerGhostAwake.HasAwaknedGhost)
         {
             Light.spotAngle = 40f;
             Light.intensity = 40f;
@@ -31,10 +31,11 @@ public class LightGhost : MonoBehaviour
     {
         bool keyPress = Keyboard.current.fKey.isPressed;
 
-        if (keyPress && !IsGhostAwake && Vector3.Distance(transform.position, GameManager.Instance.Player.transform.position) < 2f)
+        if (keyPress && !IsGhostAwake && Vector3.Distance(transform.position, GameManager.Instance.Player.transform.position) < 2f && !GameManager.Instance.PlayerGhostAwake.HasAwaknedGhost)
         {
             IsGhostAwake = true;
             StartCoroutine(GhostFromWakeToSleep());
+            GameManager.Instance.PlayerGhostAwake.HasAwaknedGhost = false;
         }
     }
 
@@ -43,6 +44,7 @@ public class LightGhost : MonoBehaviour
     public void OnPlayerAwakeGhost()
     {
         GhostHealingLight.Play();
+        GameManager.Instance.PlayerGhostAwake.HasAwaknedGhost = true;
     }
 
     public void OnGhostGoToSleep()
@@ -56,12 +58,9 @@ public class LightGhost : MonoBehaviour
     public IEnumerator GhostFromWakeToSleep()
     {
         OnPlayerAwakeGhost();
-        yield return new WaitForSeconds(10);
+        yield return new WaitForSeconds(7);
         OnGhostGoToSleep();
     }
-
-
-
 }
 
 

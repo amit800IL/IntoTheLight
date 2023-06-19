@@ -1,14 +1,18 @@
+using System.Collections;
+using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
 
-public class KeyScript : MonoBehaviour
+public class FakeKeyScript : MonoBehaviour
 {
-    [HideInInspector] public bool Haskey { get; private set; } = false;
-
-    [SerializeField] private Text pickUpText;
+    [SerializeField]
+    private Text pickUpText;
 
     private bool pickUpAllowed = false;
+
+    [SerializeField] private Guard guard;
 
     private void Start()
     {
@@ -24,7 +28,7 @@ public class KeyScript : MonoBehaviour
         }
     }
 
-
+    
     private void OnTriggerEnter(Collider collision)
     {
         if (collision.gameObject.name.Equals("Player"))
@@ -40,6 +44,7 @@ public class KeyScript : MonoBehaviour
         {
             pickUpText.gameObject.SetActive(false);
             pickUpAllowed = false;
+            guard.StartCoroutine(guard.CalculateRoute());
         }
     }
 
@@ -47,6 +52,5 @@ public class KeyScript : MonoBehaviour
     {
         Debug.Log("pick up pressed");
         Destroy(gameObject);
-        Haskey = true;
     }
 }

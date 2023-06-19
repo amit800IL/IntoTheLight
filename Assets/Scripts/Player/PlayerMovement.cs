@@ -4,9 +4,10 @@ using UnityEngine.InputSystem;
 public class PlayerMovement : MonoBehaviour
 {
 
-
     [field: Header("General")]
     [field: SerializeField] public Animator playerAnimator { get; private set; }
+    [field: SerializeField] public Collider playerCollider { get; private set; }
+
     [SerializeField] private Rigidbody playerRigidBody;
     private Vector3 newMove;
     private bool isMovingBackwards;
@@ -136,7 +137,7 @@ public class PlayerMovement : MonoBehaviour
         {
             foreach (Collider ghostCollider in GameManager.Instance.ghostCollider)
             {
-                Physics.IgnoreCollision(GameManager.Instance.playerCollider, ghostCollider);
+                Physics.IgnoreCollision(playerCollider, ghostCollider);
             }
         }
 
@@ -145,7 +146,7 @@ public class PlayerMovement : MonoBehaviour
 
             foreach (Collider safeRoomDoor in GameManager.Instance.safeRoomDoor)
             {
-                Physics.IgnoreCollision(GameManager.Instance.playerCollider, safeRoomDoor);
+                Physics.IgnoreCollision(playerCollider, safeRoomDoor);
             }
         }
     }

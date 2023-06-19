@@ -444,11 +444,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 943ca3bb0c8d54c4eadb404f862f4994, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  <GuardCollider>k__BackingField: {fileID: 6551558723611212046}
   guard: {fileID: 2622723936624136694}
   agent: {fileID: 2622723936624136695}
   enemyLight: {fileID: 2622723935895056479}
   offsetDistance: {x: 10, y: 0, z: 0}
-  ghostAwake: {fileID: 0}
   jumpToPlayerDistance: 10
   speed: 4
   speedMultiplier: 4
@@ -456,7 +456,6 @@ MonoBehaviour:
   guardScream: {fileID: 1635947392}
   guardKillingScream: {fileID: 2197136318618090400}
   guardFlySound: {fileID: 1468748692}
-  guardAnimator: {fileID: 0}
   guardMeshRenderer: {fileID: 2485689423383856596}
   guardFaceMeshRenderer: {fileID: 3050782000200719976}
 --- !u!136 &6551558723611212046

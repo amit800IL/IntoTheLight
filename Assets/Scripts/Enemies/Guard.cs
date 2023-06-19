@@ -8,12 +8,13 @@ public class Guard : MonoBehaviour
 {
     private float distance;
 
-    [Header("General")]
+
+    [field : Header("General")]
+    [field: SerializeField] public Collider GuardCollider { get; private set; }
     [SerializeField] private GameObject guard;
     [SerializeField] private NavMeshAgent agent;
     [SerializeField] private Light enemyLight;
     [SerializeField] private Vector3 offsetDistance;
-    [SerializeField] private PlayerGhostAwake ghostAwake;
 
     [Header("Numbers")]
     [SerializeField] private float jumpToPlayerDistance;
@@ -60,7 +61,7 @@ public class Guard : MonoBehaviour
                 agent.SetDestination(GameManager.Instance.Player.transform.position);
                 agent.updateRotation = true;
 
-                if (distance <= KillingDistance && !ghostAwake.isInRangeOfGhost)
+                if (distance <= KillingDistance && !GameManager.Instance.PlayerGhostAwake.isInRangeOfGhost)
                 {
 
                     guardMeshRenderer.forceRenderingOff = false;
@@ -109,8 +110,8 @@ public class Guard : MonoBehaviour
         transform.LookAt(targetPosition);
         agent.isStopped = true;
         GameManager.Instance.PlayerStats.HP -= 100;
-        GameManager.Instance.playerScream.Play();
-        GameManager.Instance.secondPlayerScream.Play();
+        GameManager.Instance.PlayerGhostAwake.playerScream.Play();
+        GameManager.Instance.PlayerGhostAwake.secondPlayerScream.Play();
         GameManager.Instance.PlayerMovement.playerAnimator.SetBool("IsAttacked", true);
     }
 
@@ -128,7 +129,7 @@ public class Guard : MonoBehaviour
 
         if (collision.gameObject.CompareTag("Player"))
         {
-            Physics.IgnoreCollision(GameManager.Instance.playerCollider, GameManager.Instance.GuardCollider);
+            Physics.IgnoreCollision(GameManager.Instance.PlayerMovement.playerCollider, GuardCollider);
         }
     }
 
