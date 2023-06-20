@@ -10,11 +10,12 @@ public class Compass : MonoBehaviour
 
     [SerializeField] private Transform[] doors;
 
-    [SerializeField] GameObject arrow;
+    [SerializeField] private GameObject arrow;
 
     private void Update()
     {
         LocateDoor();
+        UpdateDoorLocation();
     }
 
     private void LocateDoor()

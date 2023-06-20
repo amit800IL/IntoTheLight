@@ -1,3 +1,4 @@
+using System.Linq;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -135,15 +136,18 @@ public class PlayerMovement : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("GhostLight"))
         {
-            foreach (Collider ghostCollider in GameManager.Instance.ghostCollider)
+            LightGhost[] ghostColliders = FindObjectsOfType<LightGhost>();
+            Collider[] allChildrenColliders = ghostColliders.SelectMany(ghost => ghost.GetComponentsInChildren<Collider>()).ToArray();
+
+            foreach (Collider childCollider in allChildrenColliders)
             {
-                Physics.IgnoreCollision(playerCollider, ghostCollider);
+                Physics.IgnoreCollision(playerCollider, childCollider);
             }
+
         }
 
         if (collision.gameObject.CompareTag("SafeRoom"))
         {
-
             foreach (Collider safeRoomDoor in GameManager.Instance.safeRoomDoor)
             {
                 Physics.IgnoreCollision(playerCollider, safeRoomDoor);

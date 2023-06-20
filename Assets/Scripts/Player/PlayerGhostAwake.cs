@@ -58,31 +58,48 @@ public class PlayerGhostAwake : MonoBehaviour
     }
     public IEnumerator CheckPlayerInput(Collider other)
     {
+        bool shouldHeal = true;
 
-        while (isInRangeOfGhost)
+        while (isInRangeOfGhost && shouldHeal)
         {
+
             if (keypress && healingCourtuine == null && !HasAwaknedGhost)
             {
                 particle.Play();
                 healingCourtuine = StartCoroutine(HealthUpGrduadly());
                 StopCoroutine(decayCourtuine);
                 decayCourtuine = null;
-                HasAwaknedGhost = true;
-                yield return new WaitForSeconds(7);
+                float coundDown = 7f;
+                float elapsedTime = 0f;
+                while (elapsedTime < coundDown)
+                {
+                    elapsedTime += Time.deltaTime;  
+                    yield return null;
+
+                    if (!isInRangeOfGhost)
+                    {
+                        shouldHeal = false;
+                        break;
+                    }
+
+                }
                 particle.Stop();
                 StopCoroutine(healingCourtuine);
                 healingCourtuine = null;
+
+                HasAwaknedGhost = true;
             }
             yield return null;
         }
 
+        shouldHeal = false;
 
         if (decayCourtuine == null)
         {
             particle.Stop();
             decayCourtuine = StartCoroutine(HealthDownGrduadly());
         }
-        yield return new WaitForSeconds(7);
+        yield return new WaitForSeconds(5);
         HasAwaknedGhost = false;
         yield return null;
 

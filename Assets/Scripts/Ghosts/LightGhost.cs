@@ -35,7 +35,6 @@ public class LightGhost : MonoBehaviour
         {
             IsGhostAwake = true;
             StartCoroutine(GhostFromWakeToSleep());
-            GameManager.Instance.PlayerGhostAwake.HasAwaknedGhost = false;
         }
     }
 
@@ -44,7 +43,7 @@ public class LightGhost : MonoBehaviour
     public void OnPlayerAwakeGhost()
     {
         GhostHealingLight.Play();
-        GameManager.Instance.PlayerGhostAwake.HasAwaknedGhost = true;
+        //GameManager.Instance.PlayerGhostAwake.HasAwaknedGhost = true;
     }
 
     public void OnGhostGoToSleep()
