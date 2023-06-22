@@ -17,7 +17,11 @@ public class KeyScript : MonoBehaviour
 
     private void Update()
     {
+<<<<<<< Updated upstream
         if (pickUpAllowed && Keyboard.current.kKey.isPressed)
+=======
+        if (pickUpAllowed && Keyboard.current.eKey.isPressed)
+>>>>>>> Stashed changes
         {
             Debug.Log("K pressed");
             PickUp();
