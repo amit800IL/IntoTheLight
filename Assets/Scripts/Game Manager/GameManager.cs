@@ -1,17 +1,17 @@
-
-using System.Collections;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
-    [field: SerializeField] public static GameManager Instance { get; private set; }
+    public static GameManager Instance { get; private set; }
+
+    [field: Header("Player Scripts Refernces")]
     [field: SerializeField] public Transform Player { get; private set; }
+    [field: SerializeField] public PlayerMovement PlayerMovement { get; private set; }
     [field: SerializeField] public PlayerStats PlayerStats { get; private set; }
-    [field: SerializeField] public GameObject Ghost { get; private set; }
+    [field: SerializeField] public PlayerGhostAwake PlayerGhostAwake { get; private set; }
 
-
-
+    [field: Header("Colliders Refernces")]
+    [field: SerializeField] public Collider[] safeRoomDoor { get; private set; }
 
     private void Awake()
     {
@@ -26,27 +26,5 @@ public class GameManager : MonoBehaviour
         }
 
     }
-
-    private void Start()
-    {
-        PlayerStats.HP = 100;
-    }
-
-    private void Update()
-    {
-        Death();
-       
-    }
-
-    
-    public void Death()
-    {
-        if (PlayerStats.HP <= 0)
-        {
-            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
-        }
-
-    }
-
 
 }

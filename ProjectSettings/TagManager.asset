@@ -6,6 +6,13 @@ TagManager:
   tags:
   - Ghost
   - GhostLight
+  - Door
+  - PlayerHide
+  - Target
+  - Guard
+  - OpenDoor
+  - KeyRoom
+  - SafeRoom
   layers:
   - Default
   - TransparentFX
