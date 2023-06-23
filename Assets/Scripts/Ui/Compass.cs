@@ -26,7 +26,7 @@ public class Compass : MonoBehaviour
         foreach (Transform door in doors)
         {
             float Distance = Vector3.Distance(GameManager.Instance.PlayerMovement.transform.position, door.transform.position);
-            Debug.Log(Distance);
+            //Debug.Log(Distance);
 
             if (Distance < Closestdistance)
             {

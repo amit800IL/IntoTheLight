@@ -7,17 +7,14 @@ public class PlayerGhostAwake : MonoBehaviour
 {
     public bool isInRangeOfGhost { get; private set; } = false;
 
-    [HideInInspector] public bool HasAwaknedGhost { get; set; } = false;
+    public bool HasAwaknedGhost { get; private set; } = false;
 
     [Header("General")]
 
-    [SerializeField] private ParticleSystem particle;
+    [SerializeField] private ParticleSystem playerHealingEffect;
     private bool keypress;
 
     [field: Header("Audio Sources Refernces")]
-    [field: SerializeField] public AudioSource playerBreathing { get; private set; }
-    [field: SerializeField] public AudioSource playerScream { get; private set; }
-    [field: SerializeField] public AudioSource secondPlayerScream { get; private set; }
 
     [Header("Coroutines")]
 
@@ -37,7 +34,7 @@ public class PlayerGhostAwake : MonoBehaviour
 
     private void Update()
     {
-        keypress = Keyboard.current.fKey.isPressed;
+        keypress = Keyboard.current.eKey.isPressed;
     }
     private void OnTriggerEnter(Collider other)
     {
@@ -65,7 +62,10 @@ public class PlayerGhostAwake : MonoBehaviour
 
             if (keypress && healingCourtuine == null && !HasAwaknedGhost)
             {
-                particle.Play();
+                GameManager.Instance.PlayerVoice.ghostRangeVoice.Play();
+                GameManager.Instance.PlayerVoice.GuardGettingCloser.Stop();
+                GameManager.Instance.PlayerVoice.PlayerOhNoScream.Stop();
+                playerHealingEffect.Play();
                 healingCourtuine = StartCoroutine(HealthUpGrduadly());
                 StopCoroutine(decayCourtuine);
                 decayCourtuine = null;
@@ -73,7 +73,7 @@ public class PlayerGhostAwake : MonoBehaviour
                 float elapsedTime = 0f;
                 while (elapsedTime < coundDown)
                 {
-                    elapsedTime += Time.deltaTime;  
+                    elapsedTime += Time.deltaTime;
                     yield return null;
 
                     if (!isInRangeOfGhost)
@@ -83,10 +83,10 @@ public class PlayerGhostAwake : MonoBehaviour
                     }
 
                 }
-                particle.Stop();
+                playerHealingEffect.Stop();
                 StopCoroutine(healingCourtuine);
                 healingCourtuine = null;
-
+                GameManager.Instance.PlayerVoice.ghostRangeVoice.gameObject.SetActive(false);
                 HasAwaknedGhost = true;
             }
             yield return null;
@@ -96,7 +96,7 @@ public class PlayerGhostAwake : MonoBehaviour
 
         if (decayCourtuine == null)
         {
-            particle.Stop();
+            playerHealingEffect.Stop();
             decayCourtuine = StartCoroutine(HealthDownGrduadly());
         }
         yield return new WaitForSeconds(5);
@@ -109,10 +109,10 @@ public class PlayerGhostAwake : MonoBehaviour
         while (GameManager.Instance.PlayerStats.HP < GameManager.Instance.PlayerStats.maxHp && isInRangeOfGhost)
         {
             GameManager.Instance.PlayerStats.HP += SanityUpNumber;
-            playerBreathing.volume -= 0.1f;
-            if (playerBreathing.volume == 0.5f)
+            GameManager.Instance.PlayerVoice.playerBreathing.volume -= 0.1f;
+            if (GameManager.Instance.PlayerVoice.playerBreathing.volume == 0.5f)
             {
-                playerBreathing.volume = 0.5f;
+                GameManager.Instance.PlayerVoice.playerBreathing.volume = 0.5f;
             }
             yield return new WaitForSeconds(1);
         }
@@ -124,17 +124,17 @@ public class PlayerGhostAwake : MonoBehaviour
         while (GameManager.Instance.PlayerStats.HP > 0)
         {
             GameManager.Instance.PlayerStats.HP -= SanityDownNumber;
-            playerBreathing.volume += 0.1f;
+            GameManager.Instance.PlayerVoice.playerBreathing.volume += 0.1f;
 
-            if (playerBreathing.volume > 0.5f)
+            if (GameManager.Instance.PlayerVoice.playerBreathing.volume > 0.5f)
             {
-                playerBreathing.volume = 0.5f;
+                GameManager.Instance.PlayerVoice.playerBreathing.volume = 0.5f;
             }
 
             if (GameManager.Instance.PlayerStats.HP <= 15f)
             {
-                playerBreathing.pitch = 2f;
-                playerBreathing.volume = 1f;
+                GameManager.Instance.PlayerVoice.playerBreathing.pitch = 2f;
+                GameManager.Instance.PlayerVoice.playerBreathing.volume = 1f;
                 GameManager.Instance.PlayerMovement.playerAnimator.SetBool("IsRunning", false);
                 GameManager.Instance.PlayerMovement.playerAnimator.SetBool("IsWalking", false);
                 GameManager.Instance.PlayerMovement.playerAnimator.SetBool("IsStunned", true);
@@ -147,9 +147,10 @@ public class PlayerGhostAwake : MonoBehaviour
                 GameManager.Instance.PlayerMovement.playerAnimator.SetBool("IsWalking", false);
                 GameManager.Instance.PlayerMovement.playerAnimator.SetBool("IsStunned", false);
                 Camera.main.transform.LookAt(transform.position);
-                playerBreathing.Stop();
-                playerScream.Play();
-                secondPlayerScream.Play();
+                GameManager.Instance.PlayerVoice.playerBreathing.Stop();
+                GameManager.Instance.PlayerVoice.playerScream.Play();
+                GameManager.Instance.PlayerVoice.secondPlayerScream.Play();
+                //GameManager.Instance.PlayerVoice.PlayerOhNoScream.Stop();
 
                 yield return new WaitForSeconds(1);
 

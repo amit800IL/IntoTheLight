@@ -36,30 +36,16 @@ public class PlayerMovement : MonoBehaviour
 
         AnimationBlend();
 
-        Evasion();
-
         Running();
     }
 
-    private void AnimationBlend()
+    public void AnimationBlend()
     {
         blendX = Mathf.MoveTowards(blendX, -newMove.x, blendSpeed * Time.deltaTime * AnimationAccelrator);
         blendY = Mathf.MoveTowards(blendY, newMove.y, blendSpeed * Time.deltaTime * AnimationAccelrator);
 
         playerAnimator.SetFloat("Horizontal", blendX);
         playerAnimator.SetFloat("Vertical", blendY);
-    }
-
-    public void Evasion()
-    {
-        if (Keyboard.current.eKey.isPressed)
-        {
-            playerAnimator.SetBool("IsEvading", true);
-        }
-        else
-        {
-            playerAnimator.SetBool("IsEvading", false);
-        }
     }
 
     public void Running()
@@ -93,6 +79,7 @@ public class PlayerMovement : MonoBehaviour
             newMove.Normalize();
         }
 
+
     }
 
     private void CameraAndMovingHandling()
@@ -105,7 +92,7 @@ public class PlayerMovement : MonoBehaviour
         Right.y = 0f;
         Right.Normalize();
 
-        Vector3 moveDirection = newMove.x * Right + newMove.y * Forward;
+        Vector3 moveDirection = (newMove.x * Right + newMove.y * Forward).normalized;
         moveDirection.y = 0f;
 
         playerRigidBody.velocity = moveDirection * playerSpeed;

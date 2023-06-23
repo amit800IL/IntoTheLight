@@ -9,7 +9,7 @@ public class Guard : MonoBehaviour
     private float distance;
 
 
-    [field : Header("General")]
+    [field: Header("General")]
     [field: SerializeField] public Collider GuardCollider { get; private set; }
     [SerializeField] private GameObject guard;
     [SerializeField] private NavMeshAgent agent;
@@ -43,10 +43,14 @@ public class Guard : MonoBehaviour
     public IEnumerator CalculateRoute()
     {
 
-        yield return new WaitForSeconds(10);
+        yield return new WaitForSeconds(2);
 
 
         guardFlySound.Play();
+
+        yield return new WaitForSeconds(3);
+
+        GameManager.Instance.PlayerVoice.PlayerOhNoScream.Play();
 
         while (true)
         {
@@ -60,7 +64,7 @@ public class Guard : MonoBehaviour
                 guardScream.Play();
                 agent.SetDestination(GameManager.Instance.Player.transform.position);
                 agent.updateRotation = true;
-
+                GameManager.Instance.PlayerVoice.GuardGettingCloser.Play();
                 if (distance <= KillingDistance && !GameManager.Instance.PlayerGhostAwake.isInRangeOfGhost)
                 {
 
@@ -101,6 +105,8 @@ public class Guard : MonoBehaviour
 
     private void GuardKill()
     {
+        GameManager.Instance.PlayerVoice.GuardGettingCloser.Stop();
+        GameManager.Instance.PlayerVoice.PlayerOhNoScream.Stop();
         Camera.main.transform.LookAt(transform.position);
         guardKillingScream.Play();
         guardScream.pitch = 2f;
@@ -110,8 +116,8 @@ public class Guard : MonoBehaviour
         transform.LookAt(targetPosition);
         agent.isStopped = true;
         GameManager.Instance.PlayerStats.HP -= 100;
-        GameManager.Instance.PlayerGhostAwake.playerScream.Play();
-        GameManager.Instance.PlayerGhostAwake.secondPlayerScream.Play();
+        GameManager.Instance.PlayerVoice.playerScream.Play();
+        GameManager.Instance.PlayerVoice.secondPlayerScream.Play();
         GameManager.Instance.PlayerMovement.playerAnimator.SetBool("IsAttacked", true);
     }
 

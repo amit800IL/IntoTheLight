@@ -21,9 +21,9 @@ public class FakeKeyScript : MonoBehaviour
 
     private void Update()
     {
-        if (pickUpAllowed && Keyboard.current.kKey.isPressed)
+        if (pickUpAllowed && Keyboard.current.eKey.isPressed)
         {
-            Debug.Log("K pressed");
+            Debug.Log("e pressed");
             PickUp();
         }
     }

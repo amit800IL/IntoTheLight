@@ -29,7 +29,7 @@ public class LightGhost : MonoBehaviour
 
     public void AwakeGhost()
     {
-        bool keyPress = Keyboard.current.fKey.isPressed;
+        bool keyPress = Keyboard.current.eKey.isPressed;
 
         if (keyPress && !IsGhostAwake && Vector3.Distance(transform.position, GameManager.Instance.Player.transform.position) < 2f && !GameManager.Instance.PlayerGhostAwake.HasAwaknedGhost)
         {
@@ -43,7 +43,6 @@ public class LightGhost : MonoBehaviour
     public void OnPlayerAwakeGhost()
     {
         GhostHealingLight.Play();
-        //GameManager.Instance.PlayerGhostAwake.HasAwaknedGhost = true;
     }
 
     public void OnGhostGoToSleep()
