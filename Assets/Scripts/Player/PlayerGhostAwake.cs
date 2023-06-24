@@ -62,13 +62,12 @@ public class PlayerGhostAwake : MonoBehaviour
 
             if (keypress && healingCourtuine == null && !HasAwaknedGhost)
             {
-                GameManager.Instance.PlayerVoice.ghostRangeVoice.Play();
-                GameManager.Instance.PlayerVoice.GuardGettingCloser.Stop();
-                GameManager.Instance.PlayerVoice.PlayerOhNoScream.Stop();
                 playerHealingEffect.Play();
                 healingCourtuine = StartCoroutine(HealthUpGrduadly());
                 StopCoroutine(decayCourtuine);
                 decayCourtuine = null;
+                GameManager.Instance.PlayerVoice.GuardGettingCloser.Stop();
+                GameManager.Instance.PlayerVoice.PlayerOhNoScream.Stop();
                 float coundDown = 7f;
                 float elapsedTime = 0f;
                 while (elapsedTime < coundDown)
@@ -86,7 +85,6 @@ public class PlayerGhostAwake : MonoBehaviour
                 playerHealingEffect.Stop();
                 StopCoroutine(healingCourtuine);
                 healingCourtuine = null;
-                GameManager.Instance.PlayerVoice.ghostRangeVoice.gameObject.SetActive(false);
                 HasAwaknedGhost = true;
             }
             yield return null;
@@ -109,10 +107,10 @@ public class PlayerGhostAwake : MonoBehaviour
         while (GameManager.Instance.PlayerStats.HP < GameManager.Instance.PlayerStats.maxHp && isInRangeOfGhost)
         {
             GameManager.Instance.PlayerStats.HP += SanityUpNumber;
-            GameManager.Instance.PlayerVoice.playerBreathing.volume -= 0.1f;
             if (GameManager.Instance.PlayerVoice.playerBreathing.volume == 0.5f)
             {
-                GameManager.Instance.PlayerVoice.playerBreathing.volume = 0.5f;
+                GameManager.Instance.PlayerVoice.playerBreathing.volume = 1f;
+                GameManager.Instance.PlayerVoice.playerBreathing.volume -= 0.1f;
             }
             yield return new WaitForSeconds(1);
         }
@@ -124,11 +122,10 @@ public class PlayerGhostAwake : MonoBehaviour
         while (GameManager.Instance.PlayerStats.HP > 0)
         {
             GameManager.Instance.PlayerStats.HP -= SanityDownNumber;
-            GameManager.Instance.PlayerVoice.playerBreathing.volume += 0.1f;
 
             if (GameManager.Instance.PlayerVoice.playerBreathing.volume > 0.5f)
             {
-                GameManager.Instance.PlayerVoice.playerBreathing.volume = 0.5f;
+                GameManager.Instance.PlayerVoice.playerBreathing.volume = 1f;
             }
 
             if (GameManager.Instance.PlayerStats.HP <= 15f)

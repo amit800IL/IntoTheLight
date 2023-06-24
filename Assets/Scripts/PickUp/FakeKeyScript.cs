@@ -44,7 +44,12 @@ public class FakeKeyScript : MonoBehaviour
         {
             pickUpText.gameObject.SetActive(false);
             pickUpAllowed = false;
-            guard.StartCoroutine(guard.CalculateRoute());
+
+            Vector3 offset = Random.onUnitSphere * guard.Speed + guard.OffsetDistance;
+
+            offset.y = 0;
+
+            guard.agent.Warp(GameManager.Instance.Player.transform.position + offset);
         }
     }
 

@@ -13,6 +13,7 @@ TagManager:
   - OpenDoor
   - KeyRoom
   - SafeRoom
+  - SoundTrigger
   layers:
   - Default
   - TransparentFX

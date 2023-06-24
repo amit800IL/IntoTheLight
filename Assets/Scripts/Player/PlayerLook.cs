@@ -1,3 +1,4 @@
+
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -25,7 +26,6 @@ public class PlayerLook : MonoBehaviour
         {
             newLook.Normalize();
         }
-
     }
 
     public void AnimationBlend()

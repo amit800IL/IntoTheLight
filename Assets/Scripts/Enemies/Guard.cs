@@ -10,9 +10,13 @@ public class Guard : MonoBehaviour
 
 
     [field: Header("General")]
+    public Vector3 OffsetDistance { get; private set; }
+    public float Speed { get; private set; }
+
+    public bool isChasingPlayer;
     [field: SerializeField] public Collider GuardCollider { get; private set; }
-    [SerializeField] private GameObject guard;
-    [SerializeField] private NavMeshAgent agent;
+    [field: SerializeField] public NavMeshAgent agent { get; private set; }
+
     [SerializeField] private Light enemyLight;
     [SerializeField] private Vector3 offsetDistance;
 
@@ -42,30 +46,35 @@ public class Guard : MonoBehaviour
 
     public IEnumerator CalculateRoute()
     {
+        isChasingPlayer = false;
 
-        yield return new WaitForSeconds(2);
+        yield return new WaitForSeconds(10);
 
 
         guardFlySound.Play();
 
-        yield return new WaitForSeconds(3);
-
         GameManager.Instance.PlayerVoice.PlayerOhNoScream.Play();
+        yield return new WaitForSeconds(5);
+        GameManager.Instance.PlayerVoice.PlayerOhNoScream.gameObject.SetActive(false);
+
+        isChasingPlayer = true;
+
 
         while (true)
         {
-
             distance = Vector3.Distance(transform.position, GameManager.Instance.Player.transform.position);
 
-            if (agent != null && distance <= enemyLight.range)
+            if (agent != null && distance <= enemyLight.range && isChasingPlayer)
             {
+                isChasingPlayer = true;
+                GameManager.Instance.PlayerVoice.GuardGettingCloser.Play();
+                yield return new WaitForSeconds(1);
+                GameManager.Instance.PlayerVoice.GuardGettingCloser.gameObject.SetActive(false);
                 guardMeshRenderer.forceRenderingOff = true;
                 guardFaceMeshRenderer.forceRenderingOff = true;
-                guardScream.Play();
                 agent.SetDestination(GameManager.Instance.Player.transform.position);
                 agent.updateRotation = true;
-                GameManager.Instance.PlayerVoice.GuardGettingCloser.Play();
-                if (distance <= KillingDistance && !GameManager.Instance.PlayerGhostAwake.isInRangeOfGhost)
+                if (distance <= KillingDistance && !GameManager.Instance.PlayerGhostAwake.isInRangeOfGhost && isChasingPlayer)
                 {
 
                     guardMeshRenderer.forceRenderingOff = false;
@@ -93,7 +102,7 @@ public class Guard : MonoBehaviour
             {
                 yield return new WaitForSeconds(2);
 
-                Vector3 offset = Random.onUnitSphere * speed + offsetDistance;
+                Vector3 offset = Random.onUnitSphere * Speed + OffsetDistance;
 
                 offset.y = 0;
 
@@ -113,7 +122,7 @@ public class Guard : MonoBehaviour
         guardKillingScream.volume = 1f;
         Vector3 targetPosition = GameManager.Instance.Player.transform.position;
         targetPosition.y = transform.position.y;
-        transform.LookAt(targetPosition);
+        Camera.main.transform.LookAt(targetPosition);
         agent.isStopped = true;
         GameManager.Instance.PlayerStats.HP -= 100;
         GameManager.Instance.PlayerVoice.playerScream.Play();
@@ -125,12 +134,12 @@ public class Guard : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("GhostLight"))
         {
-            StopCoroutine(CalculateRoute());
+            isChasingPlayer = false;
         }
 
         if (collision.gameObject.CompareTag("SafeRoom"))
         {
-            StopCoroutine(CalculateRoute());
+            isChasingPlayer = false;
         }
 
         if (collision.gameObject.CompareTag("Player"))
@@ -143,12 +152,12 @@ public class Guard : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("GhostLight"))
         {
-            StartCoroutine(CalculateRoute());
+            isChasingPlayer = true;
         }
 
         if (collision.gameObject.CompareTag("SafeRoom"))
         {
-            StartCoroutine(CalculateRoute());
+            isChasingPlayer = true;
         }
 
     }

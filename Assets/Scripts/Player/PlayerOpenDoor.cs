@@ -12,7 +12,7 @@ public class PlayerOpenDoor : MonoBehaviour
 
     private void Update()
     {
-        keyPress = Keyboard.current.fKey.isPressed;
+        keyPress = Keyboard.current.eKey.isPressed;
     }
     private void OnTriggerEnter(Collider other)
     {

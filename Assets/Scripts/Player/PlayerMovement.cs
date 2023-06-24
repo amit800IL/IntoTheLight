@@ -1,3 +1,5 @@
+using System.Collections;
+using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -12,6 +14,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private Rigidbody playerRigidBody;
     private Vector3 newMove;
     private bool isMovingBackwards;
+    [SerializeField] private AudioSource playerAudioSource;
 
     [Header("Numbers")]
 
@@ -141,6 +144,5 @@ public class PlayerMovement : MonoBehaviour
             }
         }
     }
-
 
 }
