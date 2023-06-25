@@ -8,6 +8,8 @@ public class Guard : MonoBehaviour
 {
     private float distance;
 
+    private Vector3 Returnposition;
+
 
     [field: Header("General")]
     public Vector3 OffsetDistance { get; private set; }
@@ -35,51 +37,44 @@ public class Guard : MonoBehaviour
     [SerializeField] private MeshRenderer guardMeshRenderer;
     [SerializeField] private MeshRenderer guardFaceMeshRenderer;
 
-
+    public Coroutine chaseCoroutine;
     private void Start()
     {
-        guardMeshRenderer.forceRenderingOff = true;
-        guardFaceMeshRenderer.forceRenderingOff = true;
-
-        StartCoroutine(CalculateRoute());
+        Returnposition = transform.position;
+        chaseCoroutine = StartCoroutine(ChasePlayer());
     }
 
-    public IEnumerator CalculateRoute()
+    private void GoToPlayer()
+    {
+        Vector3 targetPosition = GameManager.Instance.Player.transform.position;
+        targetPosition.y = transform.position.y;
+        transform.LookAt(targetPosition);
+        transform.position = Vector3.MoveTowards(transform.position, targetPosition, speed * speedMultiplier * Time.deltaTime);
+    }
+    public IEnumerator ChasePlayer()
     {
         isChasingPlayer = false;
-
-        yield return new WaitForSeconds(10);
-
-
         guardFlySound.Play();
 
         GameManager.Instance.PlayerVoice.PlayerOhNoScream.Play();
-        yield return new WaitForSeconds(5);
+        yield return new WaitForSeconds(1);
         GameManager.Instance.PlayerVoice.PlayerOhNoScream.gameObject.SetActive(false);
-
         isChasingPlayer = true;
 
 
-        while (true)
+        while (isChasingPlayer)
         {
             distance = Vector3.Distance(transform.position, GameManager.Instance.Player.transform.position);
 
-            if (agent != null && distance <= enemyLight.range && isChasingPlayer)
+            if (agent != null && distance <= 5)
             {
-                isChasingPlayer = true;
                 GameManager.Instance.PlayerVoice.GuardGettingCloser.Play();
                 yield return new WaitForSeconds(1);
                 GameManager.Instance.PlayerVoice.GuardGettingCloser.gameObject.SetActive(false);
-                guardMeshRenderer.forceRenderingOff = true;
-                guardFaceMeshRenderer.forceRenderingOff = true;
-                agent.SetDestination(GameManager.Instance.Player.transform.position);
-                agent.updateRotation = true;
+                GoToPlayer();
+
                 if (distance <= KillingDistance && !GameManager.Instance.PlayerGhostAwake.isInRangeOfGhost && isChasingPlayer)
                 {
-
-                    guardMeshRenderer.forceRenderingOff = false;
-                    guardFaceMeshRenderer.forceRenderingOff = false;
-
 
                     GuardKill();
 
@@ -98,17 +93,12 @@ public class Guard : MonoBehaviour
                 }
 
             }
-            else if (distance >= jumpToPlayerDistance)
+            else if (distance >= jumpToPlayerDistance && isChasingPlayer)
             {
-                yield return new WaitForSeconds(2);
-
-                Vector3 offset = Random.onUnitSphere * Speed + OffsetDistance;
-
-                offset.y = 0;
-
-                agent.Warp(GameManager.Instance.Player.transform.position + offset);
+                GoToPlayer();
             }
             yield return new WaitForSeconds(1);
+
         }
     }
 
@@ -135,31 +125,13 @@ public class Guard : MonoBehaviour
         if (collision.gameObject.CompareTag("GhostLight"))
         {
             isChasingPlayer = false;
-        }
-
-        if (collision.gameObject.CompareTag("SafeRoom"))
-        {
-            isChasingPlayer = false;
+            agent.isStopped = true;
         }
 
         if (collision.gameObject.CompareTag("Player"))
         {
             Physics.IgnoreCollision(GameManager.Instance.PlayerMovement.playerCollider, GuardCollider);
         }
-    }
-
-    private void OnCollisionExit(Collision collision)
-    {
-        if (collision.gameObject.CompareTag("GhostLight"))
-        {
-            isChasingPlayer = true;
-        }
-
-        if (collision.gameObject.CompareTag("SafeRoom"))
-        {
-            isChasingPlayer = true;
-        }
-
     }
 
 }

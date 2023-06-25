@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -73,15 +71,14 @@ public class PlayerMovement : MonoBehaviour
         playerWalk.Play();
         playerWalk.volume = 0.5f;
 
-        CameraAndMovingHandling();
-
-        PlayerWalk();
-
         if (newMove.magnitude > 1)
         {
             newMove.Normalize();
         }
 
+        CameraAndMovingHandling();
+
+        PlayerWalk();
 
     }
 
@@ -96,7 +93,6 @@ public class PlayerMovement : MonoBehaviour
         Right.Normalize();
 
         Vector3 moveDirection = (newMove.x * Right + newMove.y * Forward).normalized;
-        moveDirection.y = 0f;
 
         playerRigidBody.velocity = moveDirection * playerSpeed;
     }
@@ -141,6 +137,19 @@ public class PlayerMovement : MonoBehaviour
             foreach (Collider safeRoomDoor in GameManager.Instance.safeRoomDoor)
             {
                 Physics.IgnoreCollision(playerCollider, safeRoomDoor);
+                GameManager.Instance.guard.gameObject.SetActive(false);
+            }
+        }
+    }
+
+    private void OnCollisionExit(Collision collision)
+    {
+        if (collision.gameObject.CompareTag("SafeRoom"))
+        {
+            foreach (Collider safeRoomDoor in GameManager.Instance.safeRoomDoor)
+            {
+                Physics.IgnoreCollision(playerCollider, safeRoomDoor);
+                GameManager.Instance.guard.gameObject.SetActive(true);
             }
         }
     }

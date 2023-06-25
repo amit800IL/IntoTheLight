@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class PlayerVoiceTriggers : MonoBehaviour
 {
-    public VoiceTriggers[] voiceTriggers;
+    private VoiceTriggers[] voiceTriggers;
 
     private void Awake()
     {
@@ -28,9 +28,9 @@ public class PlayerVoiceTriggers : MonoBehaviour
 
     private IEnumerator GuardOn(Collider other)
     {
-        int triggersToActivate = 3;
+        int triggersToActivate = 2;
         float triggerRadius = 5f;
-        float deactivationDelay = 3f; 
+        float deactivationDelay = 3f;
 
 
         Dictionary<VoiceTriggers, float> triggerDistances = new Dictionary<VoiceTriggers, float>();
@@ -73,7 +73,7 @@ public class PlayerVoiceTriggers : MonoBehaviour
                 }
             }
             yield return null;
-        } 
+        }
     }
 
     private IEnumerator GuardOff(Collider other)

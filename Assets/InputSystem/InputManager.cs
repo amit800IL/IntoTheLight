@@ -1,6 +1,4 @@
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.Events;
 using UnityEngine.InputSystem;
 using UnityEngine.Windows;
 
@@ -11,6 +9,8 @@ public class InputManager : MonoBehaviour
     public IntoTheLight InputActions { get => inputActions; private set => inputActions = value; }
     public static InputManager Instance { get; private set; }
 
+    [SerializeField] private PlayerLook playerLook;
+
     private void Awake()
     {
         if (Instance == null)
@@ -19,23 +19,21 @@ public class InputManager : MonoBehaviour
         }
         else
         {
-            Destroy(Instance);
+            Destroy(gameObject);
         }
     }
 
     private void Start()
     {
-        Instance = this;
-        InputActions = new();
+        InputActions = new IntoTheLight();
         InputActions.Enable();
-
     }
 
     public Vector2 GetMoveValue(InputValue input) => input.Get<Vector2>();
-    public Vector2 GetLookValue(InputValue input) => input.Get<Vector2>();
+    public Vector2 GetMouseDelta(InputValue input) => input.Get<Vector2>();
 
 }
 
-        
+
 
 

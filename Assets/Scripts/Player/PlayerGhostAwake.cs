@@ -9,6 +9,8 @@ public class PlayerGhostAwake : MonoBehaviour
 
     public bool HasAwaknedGhost { get; private set; } = false;
 
+    private LightGhost ghost;
+
     [Header("General")]
 
     [SerializeField] private ParticleSystem playerHealingEffect;
@@ -26,7 +28,6 @@ public class PlayerGhostAwake : MonoBehaviour
     [SerializeField] private float SanityUpNumber;
     [SerializeField] private float SanityDownNumber;
 
-
     private void Start()
     {
         decayCourtuine = StartCoroutine(HealthDownGrduadly());
@@ -38,9 +39,10 @@ public class PlayerGhostAwake : MonoBehaviour
     }
     private void OnTriggerEnter(Collider other)
     {
-
         if (other.gameObject.CompareTag("GhostLight"))
         {
+            Debug.Log("fddf");
+            ghost = other.GetComponentInParent<LightGhost>();
             isInRangeOfGhost = true;
             StartCoroutine(CheckPlayerInput(other));
         }
@@ -50,6 +52,8 @@ public class PlayerGhostAwake : MonoBehaviour
     {
         if (other.gameObject.CompareTag("GhostLight"))
         {
+            ghost.OnGhostGoToSleep();
+            ghost = null;
             isInRangeOfGhost = false;
         }
     }
@@ -59,11 +63,14 @@ public class PlayerGhostAwake : MonoBehaviour
 
         while (isInRangeOfGhost && shouldHeal)
         {
+            ghost.transform.rotation = transform.rotation;
 
             if (keypress && healingCourtuine == null && !HasAwaknedGhost)
             {
+                HasAwaknedGhost = true;
                 playerHealingEffect.Play();
                 healingCourtuine = StartCoroutine(HealthUpGrduadly());
+                Debug.Log(GameManager.Instance.guard.isActiveAndEnabled);
                 StopCoroutine(decayCourtuine);
                 decayCourtuine = null;
                 GameManager.Instance.PlayerVoice.GuardGettingCloser.Stop();
@@ -72,6 +79,7 @@ public class PlayerGhostAwake : MonoBehaviour
                 float elapsedTime = 0f;
                 while (elapsedTime < coundDown)
                 {
+                    ghost.transform.rotation = transform.rotation;
                     elapsedTime += Time.deltaTime;
                     yield return null;
 
@@ -85,7 +93,7 @@ public class PlayerGhostAwake : MonoBehaviour
                 playerHealingEffect.Stop();
                 StopCoroutine(healingCourtuine);
                 healingCourtuine = null;
-                HasAwaknedGhost = true;
+
             }
             yield return null;
         }
@@ -97,8 +105,10 @@ public class PlayerGhostAwake : MonoBehaviour
             playerHealingEffect.Stop();
             decayCourtuine = StartCoroutine(HealthDownGrduadly());
         }
+
         yield return new WaitForSeconds(5);
         HasAwaknedGhost = false;
+        Debug.Log(GameManager.Instance.guard.isActiveAndEnabled);
         yield return null;
 
     }
@@ -147,7 +157,6 @@ public class PlayerGhostAwake : MonoBehaviour
                 GameManager.Instance.PlayerVoice.playerBreathing.Stop();
                 GameManager.Instance.PlayerVoice.playerScream.Play();
                 GameManager.Instance.PlayerVoice.secondPlayerScream.Play();
-                //GameManager.Instance.PlayerVoice.PlayerOhNoScream.Stop();
 
                 yield return new WaitForSeconds(1);
 

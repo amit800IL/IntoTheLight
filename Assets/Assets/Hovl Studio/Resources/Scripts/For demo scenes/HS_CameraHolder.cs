@@ -1,8 +1,13 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using System.Runtime.Serialization.Formatters;
+﻿using System.Collections.Generic;
+using
+/* Unmerged change from project 'Assembly-CSharp.Player'
+Before:
 using System;
 using UnityEngine;
+After:
+using UnityEngine;
+*/
+UnityEngine;
 
 public class HS_CameraHolder : MonoBehaviour
 {

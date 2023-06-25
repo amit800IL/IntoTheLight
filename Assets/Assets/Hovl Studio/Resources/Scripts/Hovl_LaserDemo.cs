@@ -1,8 +1,20 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using System.Runtime.Serialization.Formatters;
+﻿
+/* Unmerged change from project 'Assembly-CSharp.Player'
+Before:
+using System.Collections;
+After:
+using System;
+using System.Collections;
+*/
+using
+/* Unmerged change from project 'Assembly-CSharp.Player'
+Before:
 using System;
 using UnityEngine;
+After:
+using UnityEngine;
+*/
+UnityEngine;
 
 public class Hovl_LaserDemo : MonoBehaviour
 {
@@ -17,7 +29,7 @@ public class Hovl_LaserDemo : MonoBehaviour
 
     public float MainTextureLength = 1f;
     public float NoiseTextureLength = 1f;
-    private Vector4 Length = new Vector4(1,1,1,1);
+    private Vector4 Length = new Vector4(1, 1, 1, 1);
     //private Vector4 LaserSpeed = new Vector4(0, 0, 0, 0); {DISABLED AFTER UPDATE}
     //private Vector4 LaserStartSpeed; {DISABLED AFTER UPDATE}
     //One activation per shoot
@@ -27,7 +39,7 @@ public class Hovl_LaserDemo : MonoBehaviour
     private ParticleSystem[] Effects;
     private ParticleSystem[] Hit;
 
-    void Start ()
+    void Start()
     {
         //Get LineRender and ParticleSystem components from current prefab;  
         Laser = GetComponent<LineRenderer>();
@@ -43,7 +55,7 @@ public class Hovl_LaserDemo : MonoBehaviour
     {
         //if (Laser.material.HasProperty("_SpeedMainTexUVNoiseZW")) Laser.material.SetVector("_SpeedMainTexUVNoiseZW", LaserSpeed);
         //SetVector("_TilingMainTexUVNoiseZW", Length); - old code, _TilingMainTexUVNoiseZW no more exist
-        Laser.material.SetTextureScale("_MainTex", new Vector2(Length[0], Length[1]));                    
+        Laser.material.SetTextureScale("_MainTex", new Vector2(Length[0], Length[1]));
         Laser.material.SetTextureScale("_Noise", new Vector2(Length[2], Length[3]));
         //To set LineRender position
         if (Laser != null && UpdateSaver == false)
@@ -56,7 +68,7 @@ public class Hovl_LaserDemo : MonoBehaviour
                 //End laser position if collides with object
                 Laser.SetPosition(1, hit.point);
 
-                    HitEffect.transform.position = hit.point + hit.normal * HitOffset;
+                HitEffect.transform.position = hit.point + hit.normal * HitOffset;
                 if (useLaserRotation)
                     HitEffect.transform.rotation = transform.rotation;
                 else
@@ -101,7 +113,7 @@ public class Hovl_LaserDemo : MonoBehaviour
                 LaserSaver = true;
                 Laser.enabled = true;
             }
-        }  
+        }
     }
 
     public void DisablePrepare()

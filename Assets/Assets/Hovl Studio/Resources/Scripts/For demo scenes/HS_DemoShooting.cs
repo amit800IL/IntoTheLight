@@ -1,8 +1,20 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using System.Runtime.Serialization.Formatters;
+﻿
+/* Unmerged change from project 'Assembly-CSharp.Player'
+Before:
+using System.Collections;
+After:
+using System;
+using System.Collections;
+*/
+using
+/* Unmerged change from project 'Assembly-CSharp.Player'
+Before:
 using System;
 using UnityEngine;
+After:
+using UnityEngine;
+*/
+UnityEngine;
 
 public class HS_DemoShooting : MonoBehaviour
 {

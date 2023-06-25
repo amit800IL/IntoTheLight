@@ -3,7 +3,7 @@ using UnityEngine;
 public class PlayerVoice : MonoBehaviour
 {
 
-    [field : Header("Player AI Voice Acting")]
+    [field: Header("Player AI Voice Acting")]
     [field: SerializeField] public AudioSource PlayerOhNoScream { get; private set; }
     [field: SerializeField] public AudioSource GuardGettingCloser { get; private set; }
 
@@ -11,16 +11,5 @@ public class PlayerVoice : MonoBehaviour
     [field: SerializeField] public AudioSource playerBreathing { get; private set; }
     [field: SerializeField] public AudioSource playerScream { get; private set; }
     [field: SerializeField] public AudioSource secondPlayerScream { get; private set; }
-
-
-    //public void GettingCloserToDoor()
-    //{
-    //    float Distance = Vector3.Distance(transform.position, GameManager.Instance.openDoor.Door.transform.position);
-
-    //    if (Distance < 10)
-    //    {
-    //        closeToKeyRoom.Play();
-    //    }
-    //}
 
 }

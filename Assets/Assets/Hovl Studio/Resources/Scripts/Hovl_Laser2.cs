@@ -1,13 +1,25 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using System.Runtime.Serialization.Formatters;
+﻿
+/* Unmerged change from project 'Assembly-CSharp.Player'
+Before:
+using System.Collections;
+After:
+using System;
+using System.Collections;
+*/
+using
+/* Unmerged change from project 'Assembly-CSharp.Player'
+Before:
 using System;
 using UnityEngine;
+After:
+using UnityEngine;
+*/
+UnityEngine;
 
 public class Hovl_Laser2 : MonoBehaviour
 {
     public float laserScale = 1;
-    public Color laserColor = new Vector4(1,1,1,1);
+    public Color laserColor = new Vector4(1, 1, 1, 1);
     public GameObject HitEffect;
     public GameObject FlashEffect;
     public float HitOffset = 0;
@@ -91,13 +103,13 @@ public class Hovl_Laser2 : MonoBehaviour
                         if (AllPs.isPlaying) AllPs.Stop();
                     }
                 }
-            }          
+            }
         }
 
         if (startDissovle)
         {
             dissovleTimer += Time.deltaTime;
-            laserMat.SetFloat("_Dissolve", dissovleTimer*5);
+            laserMat.SetFloat("_Dissolve", dissovleTimer * 5);
         }
     }
 
@@ -143,4 +155,3 @@ public class Hovl_Laser2 : MonoBehaviour
         }
     }
 }
- 

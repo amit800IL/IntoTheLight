@@ -16,7 +16,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &674727605
 Transform:
   m_ObjectHideFlags: 0
@@ -653,7 +653,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &2019290542
 Transform:
   m_ObjectHideFlags: 0
@@ -1255,9 +1255,10 @@ GameObject:
   - component: {fileID: 1575560974512497516}
   - component: {fileID: 6250810433284146720}
   - component: {fileID: 6250810433284146721}
-  - component: {fileID: 4900590674605045033}
   - component: {fileID: 655875169863995507}
   - component: {fileID: 655875169863995508}
+  - component: {fileID: 655875169863995514}
+  - component: {fileID: 3793275236806142455}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -1409,21 +1410,6 @@ MonoBehaviour:
   m_DefaultActionMap: Player
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 5839926824862602583}
---- !u!114 &4900590674605045033
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1151173029364569866}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e028801766a65bd43a94f76d5084a231, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  LookSpeed: 10
-  orientation: {fileID: 2798869438148834181}
-  AnimationAccelrator: 10
 --- !u!114 &655875169863995507
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1454,6 +1440,33 @@ MonoBehaviour:
   <playerBreathing>k__BackingField: {fileID: 7449788007570023134}
   <playerScream>k__BackingField: {fileID: 1716326299201623417}
   <secondPlayerScream>k__BackingField: {fileID: 674727606}
+--- !u!114 &655875169863995514
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1151173029364569866}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2e1ac4affe9f0cf409758f4c0bba146b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &3793275236806142455
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1151173029364569866}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e028801766a65bd43a94f76d5084a231, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  LookSpeed: 10
+  orientation: {fileID: 2798869438148834181}
+  AnimationAccelrator: 10
 --- !u!1 &1300131754879727946
 GameObject:
   m_ObjectHideFlags: 0
@@ -1817,7 +1830,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &8636253650126344302
 Transform:
   m_ObjectHideFlags: 0
@@ -2063,7 +2076,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &2752278409772071514
 Transform:
   m_ObjectHideFlags: 0
@@ -2192,7 +2205,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &8870302261371695549
 Transform:
   m_ObjectHideFlags: 0
@@ -3440,7 +3453,6 @@ GameObject:
   - component: {fileID: 5839926824862602583}
   - component: {fileID: 5839926824862602600}
   - component: {fileID: 5839926824862602601}
-  - component: {fileID: 5839926825841586800}
   m_Layer: 6
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -3547,21 +3559,6 @@ MonoBehaviour:
   m_RequiresDepthTexture: 0
   m_RequiresColorTexture: 0
   m_Version: 2
---- !u!114 &5839926825841586800
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5839926824862602604}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e028801766a65bd43a94f76d5084a231, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  LookSpeed: 0
-  orientation: {fileID: 0}
-  AnimationAccelrator: 0
 --- !u!1 &5850967544056745083
 GameObject:
   m_ObjectHideFlags: 0

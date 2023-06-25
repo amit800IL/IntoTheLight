@@ -1,4 +1,3 @@
-
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -18,7 +17,7 @@ public class PlayerLook : MonoBehaviour
 
     public void OnLook(InputValue value)
     {
-        newLook = InputManager.Instance.GetLookValue(value);
+        newLook = InputManager.Instance.GetMouseDelta(value);
 
         transform.Rotate(0, newLook.x * LookSpeed * Time.deltaTime, 0);
 
@@ -26,6 +25,7 @@ public class PlayerLook : MonoBehaviour
         {
             newLook.Normalize();
         }
+
     }
 
     public void AnimationBlend()
@@ -36,4 +36,3 @@ public class PlayerLook : MonoBehaviour
     }
 
 }
-

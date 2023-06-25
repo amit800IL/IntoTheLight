@@ -10,6 +10,8 @@ public class LightGhost : MonoBehaviour
 
     private bool IsGhostAwake = false;
 
+    private Coroutine WakeCourtine;
+
     private void Start()
     {
         CheckIfGhostAwake();
@@ -34,11 +36,9 @@ public class LightGhost : MonoBehaviour
         if (keyPress && !IsGhostAwake && Vector3.Distance(transform.position, GameManager.Instance.Player.transform.position) < 2f && !GameManager.Instance.PlayerGhostAwake.HasAwaknedGhost)
         {
             IsGhostAwake = true;
-            StartCoroutine(GhostFromWakeToSleep());
+            WakeCourtine = StartCoroutine(GhostFromWakeToSleep());
         }
     }
-
-
 
     public void OnPlayerAwakeGhost()
     {
@@ -47,7 +47,14 @@ public class LightGhost : MonoBehaviour
 
     public void OnGhostGoToSleep()
     {
+        if (WakeCourtine != null)
+        {
+            StopCoroutine(WakeCourtine);
+            WakeCourtine = null;
+        }
         GhostHealingLight.Stop();
+        GhostHealingLight.gameObject.SetActive(false);
+        GhostHealingLight.gameObject.SetActive(true);
         Light.spotAngle = 40f;
         Light.intensity = 40f;
         IsGhostAwake = false;
