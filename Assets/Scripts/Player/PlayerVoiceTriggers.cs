@@ -12,8 +12,8 @@ public class PlayerVoiceTriggers : MonoBehaviour
         voiceTriggers = FindObjectsOfType<VoiceTriggers>();
         foreach (VoiceTriggers voiceTrigger in voiceTriggers)
         {
+            voiceTrigger.fakeGuardLight.gameObject.SetActive(false);
             voiceTrigger.meshRenderer.forceRenderingOff = true;
-            voiceTrigger.meshRenderer2.forceRenderingOff = true;
         }
     }
     private void OnTriggerEnter(Collider other)
@@ -51,7 +51,7 @@ public class PlayerVoiceTriggers : MonoBehaviour
             {
                 voiceTrigger.audioSource.Play();
                 voiceTrigger.meshRenderer.forceRenderingOff = false;
-                voiceTrigger.meshRenderer2.forceRenderingOff = false;
+                voiceTrigger.fakeGuardLight.gameObject.SetActive(true);
                 activatedTriggers++;
                 activeTriggers.Add(voiceTrigger);
             }
@@ -67,8 +67,8 @@ public class PlayerVoiceTriggers : MonoBehaviour
                 {
                     yield return new WaitForSeconds(deactivationDelay);
                     voiceTrigger.audioSource.Stop();
+                    voiceTrigger.fakeGuardLight.gameObject.SetActive(false);
                     voiceTrigger.meshRenderer.forceRenderingOff = true;
-                    voiceTrigger.meshRenderer2.forceRenderingOff = true;
                     activeTriggers.RemoveAt(i);
                 }
             }
@@ -84,7 +84,6 @@ public class PlayerVoiceTriggers : MonoBehaviour
             {
                 Random.Range(0, voiceTriggers.Length);
                 voiceTrigger.meshRenderer.forceRenderingOff = true;
-                voiceTrigger.meshRenderer2.forceRenderingOff = true;
                 yield return new WaitForSeconds(3);
                 voiceTrigger.audioSource.Stop();
 

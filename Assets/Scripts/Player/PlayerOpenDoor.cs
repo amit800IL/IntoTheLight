@@ -7,7 +7,7 @@ public class PlayerOpenDoor : MonoBehaviour
     private bool keyPress;
     private bool isInDoorTrigger;
     [SerializeField] private KeyScript keyScript;
-    [SerializeField] public Transform Door { get; private set; }
+    [SerializeField] private Transform Door;
 
 
     private void Update()

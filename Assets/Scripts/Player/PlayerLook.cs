@@ -10,21 +10,20 @@ public class PlayerLook : MonoBehaviour
     private float blendX;
     private float blendSpeed = 1f;
 
-    private void Update()
-    {
-        AnimationBlend();
-    }
+
 
     public void OnLook(InputValue value)
     {
         newLook = InputManager.Instance.GetMouseDelta(value);
 
-        transform.Rotate(0, newLook.x * LookSpeed * Time.deltaTime, 0);
+        //if (newLook.magnitude > 1)
+        //{
+        //    newLook.Normalize();
+        //}
 
-        if (newLook.magnitude > 1)
-        {
-            newLook.Normalize();
-        }
+        AnimationBlend();
+
+        transform.Rotate(0, newLook.x * LookSpeed * Time.deltaTime, 0);
 
     }
 

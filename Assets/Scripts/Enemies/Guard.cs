@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.SceneManagement;
@@ -35,24 +36,30 @@ public class Guard : MonoBehaviour
 
     [Header("Renderers")]
     [SerializeField] private MeshRenderer guardMeshRenderer;
-    [SerializeField] private MeshRenderer guardFaceMeshRenderer;
 
     public Coroutine chaseCoroutine;
     private void Start()
     {
+        guardMeshRenderer.forceRenderingOff = true;
         Returnposition = transform.position;
         chaseCoroutine = StartCoroutine(ChasePlayer());
     }
 
+    private void Update()
+    {
+        Collide();
+    }
     private void GoToPlayer()
     {
         Vector3 targetPosition = GameManager.Instance.Player.transform.position;
         targetPosition.y = transform.position.y;
         transform.LookAt(targetPosition);
+        transform.Rotate(targetPosition);
         transform.position = Vector3.MoveTowards(transform.position, targetPosition, speed * speedMultiplier * Time.deltaTime);
     }
     public IEnumerator ChasePlayer()
     {
+        yield return new WaitForSeconds(5);
         isChasingPlayer = false;
         guardFlySound.Play();
 
@@ -75,6 +82,8 @@ public class Guard : MonoBehaviour
 
                 if (distance <= KillingDistance && !GameManager.Instance.PlayerGhostAwake.isInRangeOfGhost && isChasingPlayer)
                 {
+
+                    guardMeshRenderer.forceRenderingOff = false;
 
                     GuardKill();
 
@@ -120,18 +129,36 @@ public class Guard : MonoBehaviour
         GameManager.Instance.PlayerMovement.playerAnimator.SetBool("IsAttacked", true);
     }
 
-    private void OnCollisionEnter(Collision collision)
+    private void Collide()
     {
-        if (collision.gameObject.CompareTag("GhostLight"))
-        {
-            isChasingPlayer = false;
-            agent.isStopped = true;
-        }
+        LightGhost[] ghostColliders = FindObjectsOfType<LightGhost>();
+        Collider[] allChildrenColliders = ghostColliders.SelectMany(ghost => ghost.GetComponentsInChildren<Collider>()).ToArray();
 
-        if (collision.gameObject.CompareTag("Player"))
+        foreach (Collider collider in allChildrenColliders)
         {
-            Physics.IgnoreCollision(GameManager.Instance.PlayerMovement.playerCollider, GuardCollider);
+            if (Vector3.Distance(collider.gameObject.transform.position, GuardCollider.transform.position) <= 0.1f && GameManager.Instance.PlayerGhostAwake.HasAwaknedGhost && GameManager.Instance.PlayerGhostAwake.HasAwaknedGhost)
+            {
+                isChasingPlayer = false;
+                agent.isStopped = true;
+            }
         }
     }
 
-}
+        private void OnCollisionEnter(Collision collision)
+        {
+
+
+            if (collision.gameObject.CompareTag("SafeRoom"))
+            {
+                Debug.Log("dfdfdfdfdfdf");
+                isChasingPlayer = false;
+                agent.isStopped = true;
+            }
+
+            if (collision.gameObject.CompareTag("Player"))
+            {
+                Physics.IgnoreCollision(GameManager.Instance.PlayerMovement.playerCollider, GuardCollider);
+            }
+        }
+
+    }
