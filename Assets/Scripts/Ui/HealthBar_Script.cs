@@ -6,6 +6,7 @@ public class HealthBar_Script : MonoBehaviour
     private Image HealthBar;
     [HideInInspector] public float CurHealth;
     [HideInInspector] public float MaxHealth = 100f;
+    [SerializeField] private PlayerStats playerStats;
 
 
     private void Start()
@@ -14,7 +15,7 @@ public class HealthBar_Script : MonoBehaviour
     }
     private void Update()
     {
-        CurHealth = GameManager.Instance.PlayerStats.HP;
-        HealthBar.fillAmount = CurHealth / GameManager.Instance.PlayerStats.maxHp;
+        CurHealth = playerStats.HP;
+        HealthBar.fillAmount = CurHealth / playerStats.maxHp;
     }
 }

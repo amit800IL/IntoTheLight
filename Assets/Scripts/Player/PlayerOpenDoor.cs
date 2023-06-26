@@ -2,7 +2,7 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class PlayerOpenDoor : MonoBehaviour
+public class PlayerOpenDoor : MonoBehaviour, Iinteraction
 {
     private bool keyPress;
     private bool isInDoorTrigger;
@@ -31,7 +31,7 @@ public class PlayerOpenDoor : MonoBehaviour
         }
     }
 
-    private IEnumerator CheckPlayerInput(Collider other)
+    public IEnumerator CheckPlayerInput(Collider other)
     {
         while (isInDoorTrigger)
         {

@@ -2,17 +2,18 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class PlayerMovement : MonoBehaviour
+public class PlayerMovement : MonoBehaviour, IAnimationBlender
 {
 
     [field: Header("General")]
+
+    private Vector3 newMove;
     [field: SerializeField] public Animator playerAnimator { get; private set; }
     [field: SerializeField] public Collider playerCollider { get; private set; }
 
+    [SerializeField] private Guard guard;
+
     [SerializeField] private Rigidbody playerRigidBody;
-    private Vector3 newMove;
-    private bool isMovingBackwards;
-    [SerializeField] private AudioSource playerAudioSource;
 
     [Header("Numbers")]
 
@@ -27,9 +28,9 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private Transform GroundCheck;
     [SerializeField] private LayerMask groundMask;
 
-    [Header("Audio Sources")]
+    [Header("Audio")]
 
-    [SerializeField] private AudioSource playerWalk;
+    [SerializeField] private PlayerVoice playerVoice;
 
     private void Update()
     {
@@ -55,12 +56,12 @@ public class PlayerMovement : MonoBehaviour
         if (Keyboard.current.shiftKey.isPressed)
         {
             playerAnimator.SetBool("IsRunning", true);
-            playerWalk.pitch = 2f;
+            playerVoice.playerWalk.pitch = 2f;
         }
         else
         {
             playerAnimator.SetBool("IsRunning", false);
-            playerWalk.pitch = 1f;
+            playerVoice.playerWalk.pitch = 1f;
         }
     }
 
@@ -68,8 +69,8 @@ public class PlayerMovement : MonoBehaviour
     {
         newMove = InputManager.Instance.GetMoveValue(value);
 
-        playerWalk.Play();
-        playerWalk.volume = 0.5f;
+        playerVoice.playerWalk.Play();
+        playerVoice.playerWalk.volume = 0.5f;
 
         if (newMove.magnitude > 1)
         {
@@ -100,7 +101,7 @@ public class PlayerMovement : MonoBehaviour
     {
         if (newMove.magnitude < 0.1f)
         {
-            playerWalk.Stop();
+            playerVoice.playerWalk.Stop();
             playerAnimator.SetBool("IsWalking", false);
         }
 
@@ -137,7 +138,7 @@ public class PlayerMovement : MonoBehaviour
             foreach (Collider safeRoomDoor in GameManager.Instance.safeRoomDoor)
             {
                 Physics.IgnoreCollision(playerCollider, safeRoomDoor);
-                GameManager.Instance.guard.gameObject.SetActive(false);
+                guard.gameObject.SetActive(false);
             }
         }
     }
@@ -149,7 +150,7 @@ public class PlayerMovement : MonoBehaviour
             foreach (Collider safeRoomDoor in GameManager.Instance.safeRoomDoor)
             {
                 Physics.IgnoreCollision(playerCollider, safeRoomDoor);
-                GameManager.Instance.guard.gameObject.SetActive(true);
+                guard.gameObject.SetActive(true);
             }
         }
     }

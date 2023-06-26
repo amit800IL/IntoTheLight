@@ -1326,8 +1326,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <playerAnimator>k__BackingField: {fileID: 1058032021454214390}
   <playerCollider>k__BackingField: {fileID: 6250810433284146720}
+  guard: {fileID: 0}
   playerRigidBody: {fileID: 1575560974512497516}
-  playerAudioSource: {fileID: 0}
   AnimationAccelrator: 30
   playerSpeed: 50
   GroundDistance: 5
@@ -1335,7 +1335,7 @@ MonoBehaviour:
   groundMask:
     serializedVersion: 2
     m_Bits: 8
-  playerWalk: {fileID: 1489013855}
+  playerVoice: {fileID: 655875169863995508}
 --- !u!114 &2599596959583585859
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1404,7 +1404,67 @@ MonoBehaviour:
   m_ControlsChangedEvent:
     m_PersistentCalls:
       m_Calls: []
-  m_ActionEvents: []
+  m_ActionEvents:
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 17eb5019-57a9-435a-9f14-36fb6ce00e5c
+    m_ActionName: Player/Move[/Keyboard/w,/Keyboard/upArrow,/Keyboard/s,/Keyboard/downArrow,/Keyboard/a,/Keyboard/leftArrow,/Keyboard/d,/Keyboard/rightArrow]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 283bfbfa-02c7-48c4-8751-e6a704a6a3eb
+    m_ActionName: Player/Look[/Mouse/delta]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: f01239e6-ea9c-47a4-9b5c-1ad86f35bcfc
+    m_ActionName: Player/Fire[/Mouse/leftButton]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: a6a2ac64-2e7b-4e1b-b608-6d5addebecf2
+    m_ActionName: Player/GhostWake[/Keyboard/f]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 4d2a7fa0-39af-430f-af54-e180e57a66b2
+    m_ActionName: Player/MouseDelta[/Mouse/delta]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 1ff9e397-4f12-4b71-a31f-a39c49cb892d
+    m_ActionName: UI/Navigate[/Keyboard/w,/Keyboard/upArrow,/Keyboard/s,/Keyboard/downArrow,/Keyboard/a,/Keyboard/leftArrow,/Keyboard/d,/Keyboard/rightArrow]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: f0746ea7-9938-42e8-8ef8-656e38a00b2e
+    m_ActionName: UI/Submit[/Keyboard/enter]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 1f3abf84-50ce-4561-a72f-133dec05949e
+    m_ActionName: UI/Cancel[/Keyboard/escape]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: ebfd7dae-a1e4-457b-a2a3-b6005025f71a
+    m_ActionName: UI/Point[/Mouse/position]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 02e1672c-e2ef-473d-9f3e-8c891054f77b
+    m_ActionName: UI/Click[/Mouse/leftButton]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: ae82ad1e-a8c7-4826-b10f-f6ae2f8b35aa
+    m_ActionName: UI/ScrollWheel[/Mouse/scroll]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 9ac6c225-8b05-4617-a8e5-4e16c2bf4dc8
+    m_ActionName: UI/MiddleClick[/Mouse/middleButton]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 7a306a37-6892-406e-b4b7-26408d80dee8
+    m_ActionName: UI/RightClick[/Mouse/rightButton]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 0bb9e4a6-ebd3-4463-bb91-b4471be5b3d2
+    m_ActionName: UI/TrackedDevicePosition
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 92c425cc-fad2-479e-b522-0b332a8a138c
+    m_ActionName: UI/TrackedDeviceOrientation
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Player
@@ -1441,6 +1501,7 @@ MonoBehaviour:
   <playerBreathing>k__BackingField: {fileID: 7449788007570023134}
   <playerScream>k__BackingField: {fileID: 1716326299201623417}
   <secondPlayerScream>k__BackingField: {fileID: 674727606}
+  <playerWalk>k__BackingField: {fileID: 1489013855}
 --- !u!114 &655875169863995514
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1468,6 +1529,7 @@ MonoBehaviour:
   LookSpeed: 10
   orientation: {fileID: 2798869438148834181}
   AnimationAccelrator: 10
+  playerMovement: {fileID: 4777247618900407462}
 --- !u!1 &1300131754879727946
 GameObject:
   m_ObjectHideFlags: 0
@@ -2249,6 +2311,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerHealingEffect: {fileID: 7194494073829039786}
+  playerMovement: {fileID: 4777247618900407462}
+  playerVoice: {fileID: 655875169863995508}
+  playerStats: {fileID: 2599596959583585859}
   SanityUpNumber: 3
   SanityDownNumber: 3
 --- !u!1 &2571342425886035879

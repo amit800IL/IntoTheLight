@@ -16,6 +16,10 @@ public class Guard : MonoBehaviour
     public Vector3 OffsetDistance { get; private set; }
     public float Speed { get; private set; }
 
+    [SerializeField] private PlayerMovement playerMovement;
+    [SerializeField] private PlayerVoice playerVoice;
+    [SerializeField] private PlayerStats playerStats;
+
     public bool isChasingPlayer;
     [field: SerializeField] public Collider GuardCollider { get; private set; }
     [field: SerializeField] public NavMeshAgent agent { get; private set; }
@@ -59,13 +63,15 @@ public class Guard : MonoBehaviour
     }
     public IEnumerator ChasePlayer()
     {
+        enemyLight.enabled = false;
         yield return new WaitForSeconds(5);
+        enemyLight.enabled = true;
         isChasingPlayer = false;
         guardFlySound.Play();
 
-        GameManager.Instance.PlayerVoice.PlayerOhNoScream.Play();
+        playerVoice.PlayerOhNoScream.Play();
         yield return new WaitForSeconds(1);
-        GameManager.Instance.PlayerVoice.PlayerOhNoScream.gameObject.SetActive(false);
+        playerVoice.PlayerOhNoScream.gameObject.SetActive(false);
         isChasingPlayer = true;
 
 
@@ -75,9 +81,9 @@ public class Guard : MonoBehaviour
 
             if (agent != null && distance <= 5)
             {
-                GameManager.Instance.PlayerVoice.GuardGettingCloser.Play();
+                playerVoice.GuardGettingCloser.Play();
                 yield return new WaitForSeconds(1);
-                GameManager.Instance.PlayerVoice.GuardGettingCloser.gameObject.SetActive(false);
+                playerVoice.GuardGettingCloser.gameObject.SetActive(false);
                 GoToPlayer();
 
                 if (distance <= KillingDistance && !GameManager.Instance.PlayerGhostAwake.isInRangeOfGhost && isChasingPlayer)
@@ -89,7 +95,7 @@ public class Guard : MonoBehaviour
 
                     yield return new WaitForSeconds(3);
 
-                    if (GameManager.Instance.PlayerStats.HP <= 0)
+                    if (playerStats.HP <= 0)
                     {
                         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
                     }
@@ -97,7 +103,7 @@ public class Guard : MonoBehaviour
 
                 else
                 {
-                    GameManager.Instance.PlayerMovement.playerAnimator.SetBool("IsAttacked", false);
+                    playerMovement.playerAnimator.SetBool("IsAttacked", false);
                     guardScream.pitch = 1f;
                 }
 
@@ -113,8 +119,8 @@ public class Guard : MonoBehaviour
 
     private void GuardKill()
     {
-        GameManager.Instance.PlayerVoice.GuardGettingCloser.Stop();
-        GameManager.Instance.PlayerVoice.PlayerOhNoScream.Stop();
+        playerVoice.GuardGettingCloser.Stop();
+        playerVoice.PlayerOhNoScream.Stop();
         Camera.main.transform.LookAt(transform.position);
         guardKillingScream.Play();
         guardScream.pitch = 2f;
@@ -123,10 +129,10 @@ public class Guard : MonoBehaviour
         targetPosition.y = transform.position.y;
         Camera.main.transform.LookAt(targetPosition);
         agent.isStopped = true;
-        GameManager.Instance.PlayerStats.HP -= 100;
-        GameManager.Instance.PlayerVoice.playerScream.Play();
-        GameManager.Instance.PlayerVoice.secondPlayerScream.Play();
-        GameManager.Instance.PlayerMovement.playerAnimator.SetBool("IsAttacked", true);
+        playerStats.HP -= 100;
+        playerVoice.playerScream.Play();
+        playerVoice.secondPlayerScream.Play();
+        playerMovement.playerAnimator.SetBool("IsAttacked", true);
     }
 
     private void Collide()
@@ -136,7 +142,7 @@ public class Guard : MonoBehaviour
 
         foreach (Collider collider in allChildrenColliders)
         {
-            if (Vector3.Distance(collider.gameObject.transform.position, GuardCollider.transform.position) <= 0.1f && GameManager.Instance.PlayerGhostAwake.HasAwaknedGhost && GameManager.Instance.PlayerGhostAwake.HasAwaknedGhost)
+            if (Vector3.Distance(collider.gameObject.transform.position, GuardCollider.transform.position) <= 0.1f && GameManager.Instance.PlayerGhostAwake.HasAwaknedGhost)
             {
                 isChasingPlayer = false;
                 agent.isStopped = true;
@@ -157,7 +163,7 @@ public class Guard : MonoBehaviour
 
             if (collision.gameObject.CompareTag("Player"))
             {
-                Physics.IgnoreCollision(GameManager.Instance.PlayerMovement.playerCollider, GuardCollider);
+                Physics.IgnoreCollision(playerMovement.playerCollider, GuardCollider);
             }
         }
 

@@ -3,20 +3,19 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 
-public class PlayerGhostAwake : MonoBehaviour
+public class PlayerGhostAwake : MonoBehaviour, Iinteraction
 {
     public bool isInRangeOfGhost { get; private set; } = false;
-
     public bool HasAwaknedGhost { get; private set; } = false;
-
-    private LightGhost ghost;
 
     [Header("General")]
 
-    [SerializeField] private ParticleSystem playerHealingEffect;
+    private LightGhost ghost;
     private bool keypress;
-
-    [field: Header("Audio Sources Refernces")]
+    [SerializeField] private ParticleSystem playerHealingEffect;
+    [SerializeField] private PlayerMovement playerMovement;
+    [SerializeField] private PlayerVoice playerVoice;
+    [SerializeField] private PlayerStats playerStats;
 
     [Header("Coroutines")]
 
@@ -41,7 +40,6 @@ public class PlayerGhostAwake : MonoBehaviour
     {
         if (other.gameObject.CompareTag("GhostLight"))
         {
-            Debug.Log("fddf");
             ghost = other.GetComponentInParent<LightGhost>();
             isInRangeOfGhost = true;
             StartCoroutine(CheckPlayerInput(other));
@@ -67,14 +65,14 @@ public class PlayerGhostAwake : MonoBehaviour
 
             if (keypress && healingCourtuine == null && !HasAwaknedGhost)
             {
+                ghost.transform.rotation = transform.rotation;
                 HasAwaknedGhost = true;
                 playerHealingEffect.Play();
                 healingCourtuine = StartCoroutine(HealthUpGrduadly());
-                Debug.Log(GameManager.Instance.guard.isActiveAndEnabled);
                 StopCoroutine(decayCourtuine);
                 decayCourtuine = null;
-                GameManager.Instance.PlayerVoice.GuardGettingCloser.Stop();
-                GameManager.Instance.PlayerVoice.PlayerOhNoScream.Stop();
+                playerVoice.GuardGettingCloser.Stop();
+                playerVoice.PlayerOhNoScream.Stop();
                 float coundDown = 7f;
                 float elapsedTime = 0f;
                 while (elapsedTime < coundDown)
@@ -108,19 +106,19 @@ public class PlayerGhostAwake : MonoBehaviour
 
         yield return new WaitForSeconds(5);
         HasAwaknedGhost = false;
-        Debug.Log(GameManager.Instance.guard.isActiveAndEnabled);
         yield return null;
 
     }
     private IEnumerator HealthUpGrduadly()
     {
-        while (GameManager.Instance.PlayerStats.HP < GameManager.Instance.PlayerStats.maxHp && isInRangeOfGhost)
+        while (playerStats.HP < playerStats.maxHp && isInRangeOfGhost)
         {
-            GameManager.Instance.PlayerStats.HP += SanityUpNumber;
-            if (GameManager.Instance.PlayerVoice.playerBreathing.volume == 0.5f)
+            playerStats.HP += SanityUpNumber;
+
+            if (playerVoice.playerBreathing.volume == 0.5f)
             {
-                GameManager.Instance.PlayerVoice.playerBreathing.volume = 1f;
-                GameManager.Instance.PlayerVoice.playerBreathing.volume -= 0.1f;
+                playerVoice.playerBreathing.volume = 1f;
+                playerVoice.playerBreathing.volume -= 0.1f;
             }
             yield return new WaitForSeconds(1);
         }
@@ -129,38 +127,38 @@ public class PlayerGhostAwake : MonoBehaviour
 
     private IEnumerator HealthDownGrduadly()
     {
-        while (GameManager.Instance.PlayerStats.HP > 0)
+        while (playerStats.HP > 0)
         {
-            GameManager.Instance.PlayerStats.HP -= SanityDownNumber;
+            playerStats.HP -= SanityDownNumber;
 
-            if (GameManager.Instance.PlayerVoice.playerBreathing.volume > 0.5f)
+            if (playerVoice.playerBreathing.volume > 0.5f)
             {
-                GameManager.Instance.PlayerVoice.playerBreathing.volume = 1f;
+                playerVoice.playerBreathing.volume = 1f;
             }
 
-            if (GameManager.Instance.PlayerStats.HP <= 15f)
+            if (playerStats.HP <= 15f)
             {
-                GameManager.Instance.PlayerVoice.playerBreathing.pitch = 2f;
-                GameManager.Instance.PlayerVoice.playerBreathing.volume = 1f;
-                GameManager.Instance.PlayerMovement.playerAnimator.SetBool("IsRunning", false);
-                GameManager.Instance.PlayerMovement.playerAnimator.SetBool("IsWalking", false);
-                GameManager.Instance.PlayerMovement.playerAnimator.SetBool("IsStunned", true);
+                playerVoice.playerBreathing.pitch = 2f;
+                playerVoice.playerBreathing.volume = 1f;
+                playerMovement.playerAnimator.SetBool("IsRunning", false);
+                playerMovement.playerAnimator.SetBool("IsWalking", false);
+                playerMovement.playerAnimator.SetBool("IsStunned", true);
             }
 
-            if (GameManager.Instance.PlayerStats.HP <= 5f)
+            if (playerStats.HP <= 5f)
             {
-                GameManager.Instance.PlayerMovement.playerAnimator.SetBool("IsAttacked", true);
-                GameManager.Instance.PlayerMovement.playerAnimator.SetBool("IsRunning", false);
-                GameManager.Instance.PlayerMovement.playerAnimator.SetBool("IsWalking", false);
-                GameManager.Instance.PlayerMovement.playerAnimator.SetBool("IsStunned", false);
+                playerMovement.playerAnimator.SetBool("IsAttacked", true);
+                playerMovement.playerAnimator.SetBool("IsRunning", false);
+                playerMovement.playerAnimator.SetBool("IsWalking", false);
+                playerMovement.playerAnimator.SetBool("IsStunned", false);
                 Camera.main.transform.LookAt(transform.position);
-                GameManager.Instance.PlayerVoice.playerBreathing.Stop();
-                GameManager.Instance.PlayerVoice.playerScream.Play();
-                GameManager.Instance.PlayerVoice.secondPlayerScream.Play();
+                playerVoice.playerBreathing.Stop();
+                playerVoice.playerScream.Play();
+                playerVoice.secondPlayerScream.Play();
 
                 yield return new WaitForSeconds(1);
 
-                if (GameManager.Instance.PlayerStats.HP <= 0)
+                if (playerStats.HP <= 0)
                 {
                     SceneManager.LoadScene(SceneManager.GetActiveScene().name);
                 }

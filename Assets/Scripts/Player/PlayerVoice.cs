@@ -11,5 +11,6 @@ public class PlayerVoice : MonoBehaviour
     [field: SerializeField] public AudioSource playerBreathing { get; private set; }
     [field: SerializeField] public AudioSource playerScream { get; private set; }
     [field: SerializeField] public AudioSource secondPlayerScream { get; private set; }
+    [field: SerializeField] public AudioSource playerWalk { get; private set; }
 
 }

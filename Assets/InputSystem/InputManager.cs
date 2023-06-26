@@ -1,6 +1,5 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
-using UnityEngine.Windows;
 
 [DefaultExecutionOrder(-1)]
 public class InputManager : MonoBehaviour
@@ -21,6 +20,8 @@ public class InputManager : MonoBehaviour
         {
             Destroy(gameObject);
         }
+
+     
     }
 
     private void Start()
