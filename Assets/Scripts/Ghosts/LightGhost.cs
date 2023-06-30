@@ -2,38 +2,59 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class LightGhost : MonoBehaviour
+public class LightGhost : MonoBehaviour, IInteractor
 {
-    [field: SerializeField] public Light Light { get; private set; }
-
+    [SerializeField] private Light Light;
     [SerializeField] private ParticleSystem GhostHealingLight;
+    [SerializeField] private PlayerEventsSO PlayerEvents;
+    [SerializeField] private GhostScriptableSO ghostScriptable;
+    [SerializeField] private GhostEventsSO ghostEvents;
+    [SerializeField] private PlayerVoiceSO playerVoiceScriptable;
+    [SerializeField] private InputActionsSO InputActions;
+    [SerializeField] private CoolDownSO coolDownDuration;
 
-    private bool IsGhostAwake = false;
+    public bool IsGhostAwake = false;
 
     private Coroutine WakeCourtine;
 
     private void Start()
     {
         CheckIfGhostAwake();
+        ghostEvents.OnGhostAwake += OnPlayerAwakeGhost;
+        PlayerEvents.OnPlayerAwakeGhost += OnPlayerAwakeGhost;
+        ghostEvents.OnGhostSleep += OnGhostGoToSleep;
     }
-    private void Update()
+
+    private void OnDestroy()
     {
-        AwakeGhost();
+        ghostEvents.OnGhostAwake -= OnPlayerAwakeGhost;
+        PlayerEvents.OnPlayerAwakeGhost -= OnPlayerAwakeGhost;
+        ghostEvents.OnGhostSleep -= OnGhostGoToSleep;
     }
+    private void OnEnable()
+    {
+        InputActions.Enable();
+        InputActions.Interaction.performed += OnInteraction;
+    }
+
+    private void OnDisable()
+    {
+        InputActions.Disable();
+        InputActions.Interaction.performed -= OnInteraction;
+    }
+
     private void CheckIfGhostAwake()
     {
-        if (!IsGhostAwake && !GameManager.Instance.PlayerGhostAwake.HasAwaknedGhost)
+        if (!IsGhostAwake && !ghostScriptable.HasPlayerAwakenGhost)
         {
             Light.spotAngle = 40f;
             Light.intensity = 40f;
         }
     }
 
-    public void AwakeGhost()
+    public void OnInteraction(InputAction.CallbackContext context)
     {
-        bool keyPress = Keyboard.current.eKey.isPressed;
-
-        if (keyPress && !IsGhostAwake && Vector3.Distance(transform.position, GameManager.Instance.Player.transform.position) < 2f && !GameManager.Instance.PlayerGhostAwake.HasAwaknedGhost)
+        if (InputActions.Interaction.triggered && !IsGhostAwake && Vector3.Distance(transform.position, GameManager.Instance.Player.transform.position) < 2f && !ghostScriptable.HasPlayerAwakenGhost)
         {
             IsGhostAwake = true;
             WakeCourtine = StartCoroutine(GhostFromWakeToSleep());
@@ -42,7 +63,9 @@ public class LightGhost : MonoBehaviour
 
     public void OnPlayerAwakeGhost()
     {
+        PlayerEvents.InvokePlayerHeal();
         GhostHealingLight.Play();
+        playerVoiceScriptable.playerOhNoScream.Play();
     }
 
     public void OnGhostGoToSleep()
@@ -62,10 +85,13 @@ public class LightGhost : MonoBehaviour
 
     public IEnumerator GhostFromWakeToSleep()
     {
-        OnPlayerAwakeGhost();
-        yield return new WaitForSeconds(7);
-        OnGhostGoToSleep();
+        PlayerEvents.InvokePlayerAwakeGhost();
+        ghostEvents.InvokeGhostAwake();
+        yield return new WaitForSeconds(coolDownDuration.CoolDownDuration);
+        ghostEvents.InvokeGhostSleep();
     }
+
+
 }
 
 

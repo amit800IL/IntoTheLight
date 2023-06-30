@@ -2,25 +2,21 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class PlayerMovement : MonoBehaviour, IAnimationBlender
+public class PlayerMovement : MonoBehaviour
 {
 
     [field: Header("General")]
 
     private Vector3 newMove;
-    [field: SerializeField] public Animator playerAnimator { get; private set; }
     [field: SerializeField] public Collider playerCollider { get; private set; }
 
-    [SerializeField] private Guard guard;
+    [SerializeField] private InputActionsSO InputActions;
 
     [SerializeField] private Rigidbody playerRigidBody;
 
-    [Header("Numbers")]
+    private bool isMoving = false;
 
-    [SerializeField] private float AnimationAccelrator;
-    [SerializeField] private float playerSpeed;
-    private float blendX, blendY;
-    private float blendSpeed = 1;
+    [SerializeField] private PlayerStatsSO playerStats;
 
     [Header("Ground Check")]
 
@@ -30,57 +26,47 @@ public class PlayerMovement : MonoBehaviour, IAnimationBlender
 
     [Header("Audio")]
 
-    [SerializeField] private PlayerVoice playerVoice;
+    [SerializeField] private PlayerVoiceSO playerVoice;
+
+    private void OnEnable()
+    {
+        InputActions.Enable();
+        InputActions.Move.performed += OnMove;
+        InputActions.Move.canceled += OnMove;
+    }
+
+    private void OnDisable()
+    {
+        InputActions.Disable();
+        InputActions.Move.performed -= OnMove;
+        InputActions.Move.canceled -= OnMove;
+    }
 
     private void Update()
     {
         IsGrounded();
-
-        AnimationBlend();
-
-        Running();
     }
 
-    public void AnimationBlend()
+    private void FixedUpdate()
     {
-        blendX = Mathf.MoveTowards(blendX, -newMove.x, blendSpeed * Time.deltaTime * AnimationAccelrator);
-        blendY = Mathf.MoveTowards(blendY, newMove.y, blendSpeed * Time.deltaTime * AnimationAccelrator);
-
-        playerAnimator.SetFloat("Horizontal", blendX);
-        playerAnimator.SetFloat("Vertical", blendY);
-    }
-
-    public void Running()
-    {
-
-        if (Keyboard.current.shiftKey.isPressed)
+        if (newMove != Vector3.zero)
         {
-            playerAnimator.SetBool("IsRunning", true);
-            playerVoice.playerWalk.pitch = 2f;
-        }
-        else
-        {
-            playerAnimator.SetBool("IsRunning", false);
-            playerVoice.playerWalk.pitch = 1f;
+            CameraAndMovingHandling();
         }
     }
 
-    private void OnMove(InputValue value)
+    private void OnMove(InputAction.CallbackContext context)
     {
-        newMove = InputManager.Instance.GetMoveValue(value);
+       newMove = context.ReadValue<Vector2>();
 
-        playerVoice.playerWalk.Play();
-        playerVoice.playerWalk.volume = 0.5f;
+        newMove = new Vector3(newMove.x, 0 , newMove.y);
 
         if (newMove.magnitude > 1)
         {
             newMove.Normalize();
         }
 
-        CameraAndMovingHandling();
-
         PlayerWalk();
-
     }
 
     private void CameraAndMovingHandling()
@@ -93,26 +79,23 @@ public class PlayerMovement : MonoBehaviour, IAnimationBlender
         Right.y = 0f;
         Right.Normalize();
 
-        Vector3 moveDirection = (newMove.x * Right + newMove.y * Forward).normalized;
-
-        playerRigidBody.velocity = moveDirection * playerSpeed;
+        Vector3 moveDirection = newMove.x * Right + newMove.z * Forward;
+        playerRigidBody.velocity = moveDirection * playerStats.speed;
     }
+
     private void PlayerWalk()
     {
         if (newMove.magnitude < 0.1f)
         {
+            isMoving = false;
             playerVoice.playerWalk.Stop();
-            playerAnimator.SetBool("IsWalking", false);
         }
-
-        if (playerRigidBody.velocity == Vector3.zero)
-        {
-            playerAnimator.SetBool("IsWalking", false);
-        }
-
         else
         {
-            playerAnimator.SetBool("IsWalking", true);
+            CameraAndMovingHandling();
+            isMoving = true;
+            playerVoice.playerWalk.Play();
+            playerVoice.playerWalk.volume = 0.5f;
         }
     }
 
@@ -138,7 +121,6 @@ public class PlayerMovement : MonoBehaviour, IAnimationBlender
             foreach (Collider safeRoomDoor in GameManager.Instance.safeRoomDoor)
             {
                 Physics.IgnoreCollision(playerCollider, safeRoomDoor);
-                guard.gameObject.SetActive(false);
             }
         }
     }
@@ -150,8 +132,17 @@ public class PlayerMovement : MonoBehaviour, IAnimationBlender
             foreach (Collider safeRoomDoor in GameManager.Instance.safeRoomDoor)
             {
                 Physics.IgnoreCollision(playerCollider, safeRoomDoor);
-                guard.gameObject.SetActive(true);
             }
+        }
+    }
+
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.CompareTag("EnemyTrigger"))
+        {
+            other.gameObject.SetActive(true);
+            other.gameObject.transform.position = transform.position + new Vector3(10f, 0, 0);
         }
     }
 

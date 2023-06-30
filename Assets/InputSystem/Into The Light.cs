@@ -31,7 +31,7 @@ public partial class @IntoTheLight: IInputActionCollection2, IDisposable
                     ""name"": ""Move"",
                     ""type"": ""Value"",
                     ""id"": ""17eb5019-57a9-435a-9f14-36fb6ce00e5c"",
-                    ""expectedControlType"": ""Vector2"",
+                    ""expectedControlType"": """",
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": true
@@ -55,7 +55,7 @@ public partial class @IntoTheLight: IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
-                    ""name"": ""GhostWake"",
+                    ""name"": ""PlayerInteraction"",
                     ""type"": ""Value"",
                     ""id"": ""a6a2ac64-2e7b-4e1b-b608-6d5addebecf2"",
                     ""expectedControlType"": ""Vector2"",
@@ -297,11 +297,11 @@ public partial class @IntoTheLight: IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""3836cad8-adec-415c-ba92-c1429d125386"",
-                    ""path"": ""<Keyboard>/f"",
+                    ""path"": ""<Keyboard>/e"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Keyboard&Mouse"",
-                    ""action"": ""GhostWake"",
+                    ""action"": ""PlayerInteraction"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -903,7 +903,7 @@ public partial class @IntoTheLight: IInputActionCollection2, IDisposable
         m_Player_Move = m_Player.FindAction("Move", throwIfNotFound: true);
         m_Player_Look = m_Player.FindAction("Look", throwIfNotFound: true);
         m_Player_Fire = m_Player.FindAction("Fire", throwIfNotFound: true);
-        m_Player_GhostWake = m_Player.FindAction("GhostWake", throwIfNotFound: true);
+        m_Player_PlayerInteraction = m_Player.FindAction("PlayerInteraction", throwIfNotFound: true);
         m_Player_MouseDelta = m_Player.FindAction("MouseDelta", throwIfNotFound: true);
         // UI
         m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
@@ -981,7 +981,7 @@ public partial class @IntoTheLight: IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_Move;
     private readonly InputAction m_Player_Look;
     private readonly InputAction m_Player_Fire;
-    private readonly InputAction m_Player_GhostWake;
+    private readonly InputAction m_Player_PlayerInteraction;
     private readonly InputAction m_Player_MouseDelta;
     public struct PlayerActions
     {
@@ -990,7 +990,7 @@ public partial class @IntoTheLight: IInputActionCollection2, IDisposable
         public InputAction @Move => m_Wrapper.m_Player_Move;
         public InputAction @Look => m_Wrapper.m_Player_Look;
         public InputAction @Fire => m_Wrapper.m_Player_Fire;
-        public InputAction @GhostWake => m_Wrapper.m_Player_GhostWake;
+        public InputAction @PlayerInteraction => m_Wrapper.m_Player_PlayerInteraction;
         public InputAction @MouseDelta => m_Wrapper.m_Player_MouseDelta;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
@@ -1010,9 +1010,9 @@ public partial class @IntoTheLight: IInputActionCollection2, IDisposable
             @Fire.started += instance.OnFire;
             @Fire.performed += instance.OnFire;
             @Fire.canceled += instance.OnFire;
-            @GhostWake.started += instance.OnGhostWake;
-            @GhostWake.performed += instance.OnGhostWake;
-            @GhostWake.canceled += instance.OnGhostWake;
+            @PlayerInteraction.started += instance.OnPlayerInteraction;
+            @PlayerInteraction.performed += instance.OnPlayerInteraction;
+            @PlayerInteraction.canceled += instance.OnPlayerInteraction;
             @MouseDelta.started += instance.OnMouseDelta;
             @MouseDelta.performed += instance.OnMouseDelta;
             @MouseDelta.canceled += instance.OnMouseDelta;
@@ -1029,9 +1029,9 @@ public partial class @IntoTheLight: IInputActionCollection2, IDisposable
             @Fire.started -= instance.OnFire;
             @Fire.performed -= instance.OnFire;
             @Fire.canceled -= instance.OnFire;
-            @GhostWake.started -= instance.OnGhostWake;
-            @GhostWake.performed -= instance.OnGhostWake;
-            @GhostWake.canceled -= instance.OnGhostWake;
+            @PlayerInteraction.started -= instance.OnPlayerInteraction;
+            @PlayerInteraction.performed -= instance.OnPlayerInteraction;
+            @PlayerInteraction.canceled -= instance.OnPlayerInteraction;
             @MouseDelta.started -= instance.OnMouseDelta;
             @MouseDelta.performed -= instance.OnMouseDelta;
             @MouseDelta.canceled -= instance.OnMouseDelta;
@@ -1220,7 +1220,7 @@ public partial class @IntoTheLight: IInputActionCollection2, IDisposable
         void OnMove(InputAction.CallbackContext context);
         void OnLook(InputAction.CallbackContext context);
         void OnFire(InputAction.CallbackContext context);
-        void OnGhostWake(InputAction.CallbackContext context);
+        void OnPlayerInteraction(InputAction.CallbackContext context);
         void OnMouseDelta(InputAction.CallbackContext context);
     }
     public interface IUIActions

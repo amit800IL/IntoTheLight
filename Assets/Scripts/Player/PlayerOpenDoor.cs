@@ -2,13 +2,12 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class PlayerOpenDoor : MonoBehaviour, Iinteraction
+public class PlayerOpenDoor : MonoBehaviour, IPlayerInput
 {
     private bool keyPress;
     private bool isInDoorTrigger;
     [SerializeField] private KeyScript keyScript;
     [SerializeField] private Transform Door;
-
 
     private void Update()
     {
@@ -31,7 +30,7 @@ public class PlayerOpenDoor : MonoBehaviour, Iinteraction
         }
     }
 
-    public IEnumerator CheckPlayerInput(Collider other)
+    public IEnumerator CheckPlayerInput(Collider other, LightGhost ghost = null)
     {
         while (isInDoorTrigger)
         {
@@ -49,4 +48,5 @@ public class PlayerOpenDoor : MonoBehaviour, Iinteraction
             yield return null;
         }
     }
+
 }

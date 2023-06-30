@@ -6,7 +6,6 @@ public class GameManager : MonoBehaviour
 
     [field: Header("Player Scripts Refernces")]
     [field: SerializeField] public Transform Player { get; private set; }
-    [field: SerializeField] public PlayerGhostAwake PlayerGhostAwake { get; private set; }
    
     [field: Header("Colliders Refernces")]
     [field: SerializeField] public Collider[] safeRoomDoor { get; private set; }

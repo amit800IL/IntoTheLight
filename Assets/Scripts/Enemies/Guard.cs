@@ -17,7 +17,7 @@ public class Guard : MonoBehaviour
     public float Speed { get; private set; }
 
     [SerializeField] private PlayerMovement playerMovement;
-    [SerializeField] private PlayerVoice playerVoice;
+    [SerializeField] private PlayerVoiceSO playerVoice;
     [SerializeField] private PlayerStats playerStats;
 
     public bool isChasingPlayer;
@@ -69,9 +69,9 @@ public class Guard : MonoBehaviour
         isChasingPlayer = false;
         guardFlySound.Play();
 
-        playerVoice.PlayerOhNoScream.Play();
+        playerVoice.playerOhNoScream.Play();
         yield return new WaitForSeconds(1);
-        playerVoice.PlayerOhNoScream.gameObject.SetActive(false);
+        playerVoice.playerOhNoScream.gameObject.SetActive(false);
         isChasingPlayer = true;
 
 
@@ -81,12 +81,12 @@ public class Guard : MonoBehaviour
 
             if (agent != null && distance <= 5)
             {
-                playerVoice.GuardGettingCloser.Play();
+                playerVoice.guardGettingCloser.Play();
                 yield return new WaitForSeconds(1);
-                playerVoice.GuardGettingCloser.gameObject.SetActive(false);
+                playerVoice.guardGettingCloser.gameObject.SetActive(false);
                 GoToPlayer();
 
-                if (distance <= KillingDistance && !GameManager.Instance.PlayerGhostAwake.isInRangeOfGhost && isChasingPlayer)
+                if (distance <= KillingDistance && /*!GameManager.Instance.PlayerGhostAwake.isInRangeOfGhost*/ isChasingPlayer)
                 {
 
                     guardMeshRenderer.forceRenderingOff = false;
@@ -103,7 +103,6 @@ public class Guard : MonoBehaviour
 
                 else
                 {
-                    playerMovement.playerAnimator.SetBool("IsAttacked", false);
                     guardScream.pitch = 1f;
                 }
 
@@ -119,8 +118,8 @@ public class Guard : MonoBehaviour
 
     private void GuardKill()
     {
-        playerVoice.GuardGettingCloser.Stop();
-        playerVoice.PlayerOhNoScream.Stop();
+        playerVoice.guardGettingCloser.Stop();
+        playerVoice.playerOhNoScream.Stop();
         Camera.main.transform.LookAt(transform.position);
         guardKillingScream.Play();
         guardScream.pitch = 2f;
@@ -132,22 +131,21 @@ public class Guard : MonoBehaviour
         playerStats.HP -= 100;
         playerVoice.playerScream.Play();
         playerVoice.secondPlayerScream.Play();
-        playerMovement.playerAnimator.SetBool("IsAttacked", true);
     }
 
     private void Collide()
     {
-        LightGhost[] ghostColliders = FindObjectsOfType<LightGhost>();
-        Collider[] allChildrenColliders = ghostColliders.SelectMany(ghost => ghost.GetComponentsInChildren<Collider>()).ToArray();
+        //LightGhost[] ghostColliders = FindObjectsOfType<LightGhost>();
+        //Collider[] allChildrenColliders = ghostColliders.SelectMany(ghost => ghost.GetComponentsInChildren<Collider>()).ToArray();
 
-        foreach (Collider collider in allChildrenColliders)
-        {
-            if (Vector3.Distance(collider.gameObject.transform.position, GuardCollider.transform.position) <= 0.1f && GameManager.Instance.PlayerGhostAwake.HasAwaknedGhost)
-            {
-                isChasingPlayer = false;
-                agent.isStopped = true;
-            }
-        }
+        //foreach (Collider collider in allChildrenColliders)
+        //{
+        //    if (Vector3.Distance(collider.gameObject.transform.position, GuardCollider.transform.position) <= 0.1f && GameManager.Instance.PlayerGhostAwake.HasAwaknedGhost)
+        //    {
+        //        isChasingPlayer = false;
+        //        agent.isStopped = true;
+        //    }
+        //}
     }
 
         private void OnCollisionEnter(Collision collision)

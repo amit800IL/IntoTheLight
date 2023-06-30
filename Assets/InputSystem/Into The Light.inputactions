@@ -9,7 +9,7 @@
                     "name": "Move",
                     "type": "Value",
                     "id": "17eb5019-57a9-435a-9f14-36fb6ce00e5c",
-                    "expectedControlType": "Vector2",
+                    "expectedControlType": "",
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": true
@@ -33,7 +33,7 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "GhostWake",
+                    "name": "PlayerInteraction",
                     "type": "Value",
                     "id": "a6a2ac64-2e7b-4e1b-b608-6d5addebecf2",
                     "expectedControlType": "Vector2",
@@ -275,11 +275,11 @@
                 {
                     "name": "",
                     "id": "3836cad8-adec-415c-ba92-c1429d125386",
-                    "path": "<Keyboard>/f",
+                    "path": "<Keyboard>/e",
                     "interactions": "",
                     "processors": "",
                     "groups": "Keyboard&Mouse",
-                    "action": "GhostWake",
+                    "action": "PlayerInteraction",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
