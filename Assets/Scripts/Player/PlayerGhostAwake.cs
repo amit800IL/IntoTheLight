@@ -95,7 +95,6 @@ public class PlayerGhostAwake : MonoBehaviour, IPlayerInput, IInteractor
 
         while (isInRangeOfGhost && shouldHeal)
         {
-
             StartCooldown();
 
             yield return null;
@@ -105,6 +104,10 @@ public class PlayerGhostAwake : MonoBehaviour, IPlayerInput, IInteractor
                 playerHealingEffect.Stop();
                 decayCoroutine = StartCoroutine(HealthDownGrduadly());
             }
+
+            InputAction.CallbackContext interactionContext = new();
+            OnInteraction(interactionContext);
+
 
             yield return new WaitForSeconds(cooldownSettings.CoolDownDuration);
             ghostScriptable.HasPlayerAwakenGhost = false;

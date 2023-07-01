@@ -847,10 +847,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c2aeabc5e51170c4298833bc66681728, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerStatsScriptable: {fileID: 11400000, guid: 6d553fd777e32964bab130b5382d9993,
-    type: 2}
-  HP: 100
-  maxHp: 100
+  playerStats: {fileID: 11400000, guid: 6d553fd777e32964bab130b5382d9993, type: 2}
 --- !u!54 &1575560974512497516
 Rigidbody:
   m_ObjectHideFlags: 0

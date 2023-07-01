@@ -2,24 +2,16 @@ using UnityEngine;
 
 public class PlayerStats : MonoBehaviour
 {
-    [SerializeField] private PlayerStatsSO playerStatsScriptable;
-    [HideInInspector] public float HP;
-    [HideInInspector] public float maxHp = 100;
-
-    private void Start()
-    {
-        playerStatsScriptable.maxHP = maxHp;
-        playerStatsScriptable.HP = HP;
-    }
+    [SerializeField] private PlayerStatsSO playerStats;
     private void Update()
     {
-        if (playerStatsScriptable.HP >= 100)
+        if (playerStats.HP >= 100)
         {
-            playerStatsScriptable.maxHP = maxHp;
+            playerStats.HP = playerStats.maxHP;
         }
-        else if (playerStatsScriptable.HP <= 0)
+        else if (playerStats.HP <= 0)
         {
-            playerStatsScriptable.HP = 0;
+            playerStats.HP = 0;
         }
     }
 }
