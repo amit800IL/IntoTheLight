@@ -8,7 +8,7 @@ public class LightGhost : MonoBehaviour
 
     [SerializeField] private ParticleSystem GhostHealingLight;
 
-    private bool IsGhostAwake = false;
+    public bool IsGhostAwake = false;
 
     private Coroutine WakeCourtine;
 
@@ -40,12 +40,12 @@ public class LightGhost : MonoBehaviour
         }
     }
 
-    public void OnPlayerAwakeGhost()
+    public void OnGhostAwake()
     {
         GhostHealingLight.Play();
     }
 
-    public void OnGhostGoToSleep()
+    public void OnGhostSleep()
     {
         if (WakeCourtine != null)
         {
@@ -62,9 +62,9 @@ public class LightGhost : MonoBehaviour
 
     public IEnumerator GhostFromWakeToSleep()
     {
-        OnPlayerAwakeGhost();
+        OnGhostAwake();
         yield return new WaitForSeconds(7);
-        OnGhostGoToSleep();
+        OnGhostSleep();
     }
 }
 

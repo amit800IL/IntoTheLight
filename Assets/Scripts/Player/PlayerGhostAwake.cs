@@ -50,7 +50,7 @@ public class PlayerGhostAwake : MonoBehaviour, Iinteraction
     {
         if (other.gameObject.CompareTag("GhostLight"))
         {
-            ghost.OnGhostGoToSleep();
+            ghost.OnGhostSleep();
             ghost = null;
             isInRangeOfGhost = false;
         }

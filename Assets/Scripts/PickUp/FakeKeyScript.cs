@@ -6,7 +6,7 @@ public class FakeKeyScript : MonoBehaviour
 {
     private bool pickUpAllowed = false;
 
-    [SerializeField] private Guard guard;
+    [SerializeField] private Enemy guard;
 
 
     private void Update()
@@ -32,7 +32,7 @@ public class FakeKeyScript : MonoBehaviour
         {
             pickUpAllowed = false;
 
-            Vector3 offset = Random.onUnitSphere * guard.Speed + guard.OffsetDistance;
+            Vector3 offset = Random.onUnitSphere * guard.enemyStats.EnemySpeed;
 
             offset.y = 0;
 

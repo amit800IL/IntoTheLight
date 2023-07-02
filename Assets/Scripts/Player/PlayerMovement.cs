@@ -11,9 +11,9 @@ public class PlayerMovement : MonoBehaviour, IAnimationBlender
     [field: SerializeField] public Animator playerAnimator { get; private set; }
     [field: SerializeField] public Collider playerCollider { get; private set; }
 
-    [SerializeField] private Guard guard;
-
     [SerializeField] private Rigidbody playerRigidBody;
+
+    [SerializeField] private Enemy enemy;
 
     [Header("Numbers")]
 
@@ -138,7 +138,7 @@ public class PlayerMovement : MonoBehaviour, IAnimationBlender
             foreach (Collider safeRoomDoor in GameManager.Instance.safeRoomDoor)
             {
                 Physics.IgnoreCollision(playerCollider, safeRoomDoor);
-                guard.gameObject.SetActive(false);
+                enemy.gameObject.SetActive(false);
             }
         }
     }
@@ -150,7 +150,7 @@ public class PlayerMovement : MonoBehaviour, IAnimationBlender
             foreach (Collider safeRoomDoor in GameManager.Instance.safeRoomDoor)
             {
                 Physics.IgnoreCollision(playerCollider, safeRoomDoor);
-                guard.gameObject.SetActive(true);
+                enemy.gameObject.SetActive(true);
             }
         }
     }
