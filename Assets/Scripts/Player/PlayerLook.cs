@@ -1,37 +1,30 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class PlayerLook : MonoBehaviour, IAnimationBlender
+public class PlayerLook : MonoBehaviour
 {
     private Vector3 newLook;
-    private float blendX;
-    private float blendSpeed = 1f;
-    [SerializeField] private float LookSpeed;
     [SerializeField] private Transform orientation;
-    [SerializeField] private float AnimationAccelrator;
-    [SerializeField] private PlayerMovement playerMovement;
+    [SerializeField] private InputActionsSO InputActions;
+    [SerializeField] private PlayerStats playerStats;
 
-    private void Update()
+    private void OnEnable()
     {
-        AnimationBlend();
+        InputActions.Enable();
+        InputActions.Look.performed += OnLook;
     }
 
-    public void OnLook(InputValue value)
+    private void OnDisable()
     {
-        newLook = InputManager.Instance.GetMouseDelta(value);
-
-        transform.Rotate(0, newLook.x * LookSpeed * Time.deltaTime, 0);
-
+        InputActions.Disable();
+        InputActions.Look.performed -= OnLook;
     }
 
-    public void AnimationBlend()
+    public void OnLook(InputAction.CallbackContext context)
     {
-        playerMovement.playerAnimator.SetBool("IsWalking", true);
+        newLook = context.ReadValue<Vector2>();
 
-        blendX = Mathf.MoveTowards(blendX, newLook.x, blendSpeed * Time.deltaTime * AnimationAccelrator);
-
-        playerMovement.playerAnimator.SetFloat("Horizontal", blendX);
-
+        transform.Rotate(0, newLook.x * playerStats.lookSpeed, 0);
     }
 
 }

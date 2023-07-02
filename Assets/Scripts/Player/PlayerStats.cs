@@ -2,8 +2,10 @@ using UnityEngine;
 
 public class PlayerStats : MonoBehaviour
 {
-    [HideInInspector] public float HP;
-    [HideInInspector] public float maxHp = 100;
+    public float HP;
+    public float maxHp = 100;
+    public float speed;
+    public float lookSpeed;
 
     private void Start()
     {

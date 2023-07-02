@@ -140,17 +140,11 @@ public class PlayerGhostAwake : MonoBehaviour, Iinteraction
             {
                 playerVoice.playerBreathing.pitch = 2f;
                 playerVoice.playerBreathing.volume = 1f;
-                playerMovement.playerAnimator.SetBool("IsRunning", false);
-                playerMovement.playerAnimator.SetBool("IsWalking", false);
-                playerMovement.playerAnimator.SetBool("IsStunned", true);
             }
 
             if (playerStats.HP <= 5f)
             {
-                playerMovement.playerAnimator.SetBool("IsAttacked", true);
-                playerMovement.playerAnimator.SetBool("IsRunning", false);
-                playerMovement.playerAnimator.SetBool("IsWalking", false);
-                playerMovement.playerAnimator.SetBool("IsStunned", false);
+              
                 Camera.main.transform.LookAt(transform.position);
                 playerVoice.playerBreathing.Stop();
                 playerVoice.playerScream.Play();
