@@ -1,5 +1,9 @@
 fileFormatVersion: 2
+<<<<<<<< HEAD:Assets/GhostManager.cs.meta
 guid: d4ecdf26e56465740aadd7cc779a3933
+========
+guid: 157fda3e1254817459ee03f901c5c3db
+>>>>>>>> Fixes:Assets/Scripts/Enemies/Enemy.cs.meta
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2

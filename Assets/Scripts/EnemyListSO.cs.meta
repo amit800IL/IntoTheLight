@@ -1,9 +1,5 @@
 fileFormatVersion: 2
-<<<<<<<< HEAD:Assets/EnemyListSO.cs.meta
 guid: e036bd7cf9cf4e74db58f60a27372c0f
-========
-guid: ce0bac0c0d36f6546b87e5ee250cfb88
->>>>>>>> Fixes:Assets/InputSystem/InputActionsSO.cs.meta
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2

@@ -1,5 +1,9 @@
 fileFormatVersion: 2
+<<<<<<<< HEAD:Assets/InputSystem/InputActionsSO.cs.meta
 guid: ce0bac0c0d36f6546b87e5ee250cfb88
+========
+guid: 3ce060d365ba14147bbdf6333113d895
+>>>>>>>> Fixes:Assets/Scripts/Enemies/SuitMan.cs.meta
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2

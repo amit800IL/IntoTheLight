@@ -16,6 +16,7 @@ public class LightGhost : MonoBehaviour, IInteractor
 
     private bool isPlayerInRange = false;
 
+<<<<<<< HEAD
     private bool isInteracting = false;
 
     [field: SerializeField] public bool IsGhostAwake { get; private set; } = false;
@@ -23,6 +24,13 @@ public class LightGhost : MonoBehaviour, IInteractor
     private Coroutine WakeCourtine;
 
     [SerializeField] private bool isAwake = false;
+=======
+    public bool IsGhostAwake = false;
+
+    private Coroutine WakeCourtine;
+
+    public EnemyListSO enemyList;
+>>>>>>> Fixes
 
     private void Start()
     {
@@ -52,16 +60,38 @@ public class LightGhost : MonoBehaviour, IInteractor
         }
     }
 
+<<<<<<< HEAD
     public void OnInteraction(InputAction.CallbackContext context)
+=======
+    public void SpawnEnemy()
+    {
+        int randomIndex = Random.Range(0, enemyList.enemyList.Count);
+        GameObject selectedEnemy = enemyList.enemyList[randomIndex];
+        Instantiate(selectedEnemy, transform.position + new Vector3(0, 0, 2), transform.rotation);
+        selectedEnemy.SetActive(true);
+    }
+
+    public void AwakeGhost()
+>>>>>>> Fixes
     {
         if (!isInteracting && !isAwake && GameManager.Instance.GhostManager.activeGhost == null)
         {
+<<<<<<< HEAD
             isInteracting = true;
             WakeCourtine = StartCoroutine(WakeUpGhost());
         }
     }
 
     public void SpawnEnemy()
+=======
+            IsGhostAwake = true;
+            SpawnEnemy();
+            WakeCourtine = StartCoroutine(GhostFromWakeToSleep());
+        }
+    }
+
+    public void OnGhostAwake()
+>>>>>>> Fixes
     {
         int randomIndex = Random.Range(0, enemyStats.enemyList.Count);
         GameObject selectedEnemy = enemyStats.enemyList[randomIndex];
@@ -69,6 +99,7 @@ public class LightGhost : MonoBehaviour, IInteractor
         selectedEnemy.SetActive(true);
     }
 
+<<<<<<< HEAD
     public void StartHealing()
     {
         if (isAwake && WakeCourtine == null)
@@ -78,6 +109,9 @@ public class LightGhost : MonoBehaviour, IInteractor
     }
 
     public void StopHealing()
+=======
+    public void OnGhostSleep()
+>>>>>>> Fixes
     {
         if (WakeCourtine != null)
         {
@@ -88,6 +122,7 @@ public class LightGhost : MonoBehaviour, IInteractor
 
     private IEnumerator WakeUpGhost()
     {
+<<<<<<< HEAD
         isAwake = true;
         GameManager.Instance.GhostManager.activeGhost = this;
 
@@ -111,6 +146,11 @@ public class LightGhost : MonoBehaviour, IInteractor
         Light.intensity = 30f;
 
         isInteracting = false;
+=======
+        OnGhostAwake();
+        yield return new WaitForSeconds(7);
+        OnGhostSleep();
+>>>>>>> Fixes
     }
 
     private IEnumerator HealPlayer()

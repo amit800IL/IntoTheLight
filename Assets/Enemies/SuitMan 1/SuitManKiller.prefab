@@ -259,7 +259,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &3427521229770411605
 Transform:
   m_ObjectHideFlags: 0
@@ -387,7 +387,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &2420476459805288630
 Transform:
   m_ObjectHideFlags: 0
@@ -553,9 +553,7 @@ MonoBehaviour:
   enemyLight: {fileID: 4019241146482662692}
   animator: {fileID: 6132642962525094964}
   playerMovement: {fileID: 0}
-  playerStats: {fileID: 11400000, guid: 6d553fd777e32964bab130b5382d9993, type: 2}
   enemyStats: {fileID: 11400000, guid: 66d53681dae73a2478b0adff3cef12bf, type: 2}
-  playerVoice: {fileID: 11400000, guid: f159d5952698ee941aa5dbda65c510fb, type: 2}
   guardKillingScream: {fileID: 85036350536011326}
   guardFlySound: {fileID: 4274505277907835150}
 --- !u!195 &6777421282977997086

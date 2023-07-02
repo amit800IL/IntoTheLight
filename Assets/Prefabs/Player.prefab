@@ -774,12 +774,14 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1147674315953803344}
+  - component: {fileID: 1058032021454214390}
   - component: {fileID: 4777247618900407462}
   - component: {fileID: 2599596959583585859}
   - component: {fileID: 1575560974512497516}
   - component: {fileID: 6250810433284146720}
   - component: {fileID: 6250810433284146721}
   - component: {fileID: 655875169863995507}
+  - component: {fileID: 655875169863995508}
   - component: {fileID: 3793275236806142455}
   m_Layer: 0
   m_Name: Player
@@ -813,6 +815,26 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: -183.428, z: 0}
+--- !u!95 &1058032021454214390
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1151173029364569866}
+  m_Enabled: 1
+  m_Avatar: {fileID: 9000000, guid: b8a7488d12adc39498433d60811eab1a, type: 3}
+  m_Controller: {fileID: 9100000, guid: c8b3680bba24d3641948fe80a59b94d0, type: 2}
+  m_CullingMode: 1
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 1
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
 --- !u!114 &4777247618900407462
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -828,13 +850,11 @@ MonoBehaviour:
   <playerCollider>k__BackingField: {fileID: 6250810433284146720}
   InputActions: {fileID: 11400000, guid: 32a8ba2bb0af2b44b801e74f479228ce, type: 2}
   playerRigidBody: {fileID: 1575560974512497516}
-  playerStats: {fileID: 11400000, guid: 6d553fd777e32964bab130b5382d9993, type: 2}
   GroundDistance: 5
   GroundCheck: {fileID: 745394639636663472}
   groundMask:
     serializedVersion: 2
     m_Bits: 8
-  playerVoice: {fileID: 11400000, guid: f159d5952698ee941aa5dbda65c510fb, type: 2}
 --- !u!114 &2599596959583585859
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -847,7 +867,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c2aeabc5e51170c4298833bc66681728, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerStats: {fileID: 11400000, guid: 6d553fd777e32964bab130b5382d9993, type: 2}
+  HP: 100
+  maxHp: 100
+  speed: 10
+  lookSpeed: 1.5
 --- !u!54 &1575560974512497516
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -982,6 +1005,24 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   keyScript: {fileID: 0}
   Door: {fileID: 0}
+--- !u!114 &655875169863995508
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1151173029364569866}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 185ead4b6227c01449cc69166bb7294f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  <PlayerOhNoScream>k__BackingField: {fileID: 2019290543}
+  <GuardGettingCloser>k__BackingField: {fileID: 6557822523980493833}
+  <playerBreathing>k__BackingField: {fileID: 7449788007570023134}
+  <playerScream>k__BackingField: {fileID: 1716326299201623417}
+  <secondPlayerScream>k__BackingField: {fileID: 674727606}
+  <playerWalk>k__BackingField: {fileID: 1489013855}
 --- !u!114 &3793275236806142455
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -996,7 +1037,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   orientation: {fileID: 2798869438148834181}
   InputActions: {fileID: 11400000, guid: 32a8ba2bb0af2b44b801e74f479228ce, type: 2}
-  playerStats: {fileID: 11400000, guid: 6d553fd777e32964bab130b5382d9993, type: 2}
 --- !u!1 &2226325889558927198
 GameObject:
   m_ObjectHideFlags: 0
@@ -1343,14 +1383,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 23b840ccb81c30f4685e317d9ca58d84, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerEvents: {fileID: 11400000, guid: 1289659c63aea2f47b2a01a9fb230b22, type: 2}
-  ghostEvents: {fileID: 11400000, guid: 55e89d54188db4d4d8f3f2b5543fb813, type: 2}
-  cooldownSettings: {fileID: 11400000, guid: c3994b195e1eef2449facbe29adb9cd2, type: 2}
-  PlayerStats: {fileID: 11400000, guid: 6d553fd777e32964bab130b5382d9993, type: 2}
-  PlayerVoice: {fileID: 11400000, guid: f159d5952698ee941aa5dbda65c510fb, type: 2}
-  ghostScriptable: {fileID: 11400000, guid: 7bc370d64eea7814cb1a7840d3fd3577, type: 2}
-  InputActions: {fileID: 11400000, guid: 32a8ba2bb0af2b44b801e74f479228ce, type: 2}
   playerHealingEffect: {fileID: 7194494073829039786}
+  playerMovement: {fileID: 4777247618900407462}
+  SanityUpNumber: 3
+  SanityDownNumber: 1.5
 --- !u!1 &3545011415133746878
 GameObject:
   m_ObjectHideFlags: 0
@@ -1398,7 +1434,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1572082414346913478
 Transform:
   m_ObjectHideFlags: 0
@@ -1537,7 +1573,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5839926824862602604}
   m_LocalRotation: {x: 0.107675634, y: -0.026617832, z: 0.015457116, w: 0.9937095}
-  m_LocalPosition: {x: -0.06, y: 1.35, z: 0.28}
+  m_LocalPosition: {x: 0.31, y: 1.65, z: -1.05}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

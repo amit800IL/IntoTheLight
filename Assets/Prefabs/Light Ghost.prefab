@@ -10,7 +10,6 @@ GameObject:
   m_Component:
   - component: {fileID: 5071565911600792371}
   - component: {fileID: 6476714479810726107}
-  - component: {fileID: -7517748468459892835}
   m_Layer: 0
   m_Name: Light Ghost
   m_TagString: GhostLight
@@ -48,30 +47,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7adc78c0a8501fc4dab2dd29deb6e00f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Light: {fileID: 8064291317547990248}
+  <Light>k__BackingField: {fileID: 8064291317547990248}
   GhostHealingLight: {fileID: 3905817655002730440}
-  enemyStats: {fileID: 11400000, guid: e38e457bf27ae674bb7ed303edddf1da, type: 2}
-  PlayerEvents: {fileID: 11400000, guid: 1289659c63aea2f47b2a01a9fb230b22, type: 2}
-  ghostEvents: {fileID: -7517748468459892835}
-  playerVoiceScriptable: {fileID: 11400000, guid: f159d5952698ee941aa5dbda65c510fb,
-    type: 2}
-  InputActions: {fileID: 11400000, guid: 32a8ba2bb0af2b44b801e74f479228ce, type: 2}
-  coolDownDuration: {fileID: 11400000, guid: c3994b195e1eef2449facbe29adb9cd2, type: 2}
-  playerStats: {fileID: 11400000, guid: 6d553fd777e32964bab130b5382d9993, type: 2}
-  <IsGhostAwake>k__BackingField: 0
-  isAwake: 0
---- !u!114 &-7517748468459892835
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5071565911600792375}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 75993698e41940c40a41e09a16d879b8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  IsGhostAwake: 0
+  enemyList: {fileID: 11400000, guid: e38e457bf27ae674bb7ed303edddf1da, type: 2}
 --- !u!1 &8016577237612224368
 GameObject:
   m_ObjectHideFlags: 0

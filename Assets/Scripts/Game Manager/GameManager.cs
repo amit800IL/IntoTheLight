@@ -8,6 +8,11 @@ public class GameManager : MonoBehaviour
 
     [field: Header("Player Scripts Refernces")]
     [field: SerializeField] public Transform Player { get; private set; }
+<<<<<<< HEAD
+=======
+    [field: SerializeField] public PlayerGhostAwake PlayerGhostAwake { get; private set; }
+    [field: SerializeField] public PlayerStats playerStats { get; private set; }
+>>>>>>> Fixes
 
     [field: Header("Colliders Refernces")]
     [field: SerializeField] public Collider[] safeRoomDoor { get; private set; }
