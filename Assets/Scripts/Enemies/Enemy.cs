@@ -33,6 +33,7 @@ public abstract class Enemy : MonoBehaviour
     {
         StartCoroutine(ChasePlayer());
     }
+
     protected virtual void GoToPlayer()
     {
         Vector3 targetPosition = GameManager.Instance.Player.transform.position;

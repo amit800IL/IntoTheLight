@@ -5,47 +5,47 @@ using UnityEngine.InputSystem;
 public class LightGhost : MonoBehaviour, IInteractor
 {
     [SerializeField] private Light Light;
-    [SerializeField] private ParticleSystem GhostHealingLight;
-    [SerializeField] private PlayerEventsSO PlayerEvents;
-    [SerializeField] private GhostScriptableSO ghostScriptable;
-    [SerializeField] private GhostEventsSO ghostEvents;
+    [SerializeField] public ParticleSystem GhostHealingLight;
+    [SerializeField] private EnemyListSO enemyStats;
+    [SerializeField] private PlayerEvents PlayerEvents;
+    [SerializeField] private GhostEvents ghostEvents;
     [SerializeField] private PlayerVoiceSO playerVoiceScriptable;
     [SerializeField] private InputActionsSO InputActions;
     [SerializeField] private CoolDownSO coolDownDuration;
+    [SerializeField] private PlayerStatsSO playerStats;
 
-    public bool IsGhostAwake = false;
+    private bool isPlayerInRange = false;
+
+    private bool isInteracting = false;
+
+    [field: SerializeField] public bool IsGhostAwake { get; private set; } = false;
 
     private Coroutine WakeCourtine;
 
+    [SerializeField] private bool isAwake = false;
+
     private void Start()
     {
+        GameManager.Instance.GhostManager.Ghosts.Add(this);
+        Debug.Log("LightGhost Start");
+        InputActions.Enable();
         CheckIfGhostAwake();
-        ghostEvents.OnGhostAwake += OnPlayerAwakeGhost;
-        PlayerEvents.OnPlayerAwakeGhost += OnPlayerAwakeGhost;
-        ghostEvents.OnGhostSleep += OnGhostGoToSleep;
+        ghostEvents.OnGhostAwake += OnGhostAwake;
+        ghostEvents.OnGhostSleep += OnGhostSleep;
+        InputActions.Interaction.performed += OnInteraction;
     }
 
     private void OnDestroy()
     {
-        ghostEvents.OnGhostAwake -= OnPlayerAwakeGhost;
-        PlayerEvents.OnPlayerAwakeGhost -= OnPlayerAwakeGhost;
-        ghostEvents.OnGhostSleep -= OnGhostGoToSleep;
-    }
-    private void OnEnable()
-    {
-        InputActions.Enable();
-        InputActions.Interaction.performed += OnInteraction;
-    }
-
-    private void OnDisable()
-    {
-        InputActions.Disable();
+        ghostEvents.OnGhostAwake -= OnGhostAwake;
+        ghostEvents.OnGhostSleep -= OnGhostSleep;
         InputActions.Interaction.performed -= OnInteraction;
+        InputActions.Disable();
     }
 
     private void CheckIfGhostAwake()
     {
-        if (!IsGhostAwake && !ghostScriptable.HasPlayerAwakenGhost)
+        if (!isAwake)
         {
             Light.spotAngle = 40f;
             Light.intensity = 40f;
@@ -54,44 +54,92 @@ public class LightGhost : MonoBehaviour, IInteractor
 
     public void OnInteraction(InputAction.CallbackContext context)
     {
-        if (InputActions.Interaction.triggered && !IsGhostAwake && Vector3.Distance(transform.position, GameManager.Instance.Player.transform.position) < 2f && !ghostScriptable.HasPlayerAwakenGhost)
+        if (!isInteracting && !isAwake && GameManager.Instance.GhostManager.activeGhost == null)
         {
-            IsGhostAwake = true;
-            WakeCourtine = StartCoroutine(GhostFromWakeToSleep());
+            isInteracting = true;
+            WakeCourtine = StartCoroutine(WakeUpGhost());
         }
     }
 
-    public void OnPlayerAwakeGhost()
+    public void SpawnEnemy()
     {
-        PlayerEvents.InvokePlayerHeal();
-        GhostHealingLight.Play();
-        playerVoiceScriptable.playerOhNoScream.Play();
+        int randomIndex = Random.Range(0, enemyStats.enemyList.Count);
+        GameObject selectedEnemy = enemyStats.enemyList[randomIndex];
+        Instantiate(selectedEnemy, transform.position + new Vector3(0, 0, 2), transform.rotation);
+        selectedEnemy.SetActive(true);
     }
 
-    public void OnGhostGoToSleep()
+    public void StartHealing()
+    {
+        if (isAwake && WakeCourtine == null)
+        {
+            WakeCourtine = StartCoroutine(HealPlayer());
+        }
+    }
+
+    public void StopHealing()
     {
         if (WakeCourtine != null)
         {
             StopCoroutine(WakeCourtine);
             WakeCourtine = null;
         }
-        GhostHealingLight.Stop();
-        GhostHealingLight.gameObject.SetActive(false);
-        GhostHealingLight.gameObject.SetActive(true);
-        Light.spotAngle = 40f;
-        Light.intensity = 40f;
-        IsGhostAwake = false;
     }
 
-    public IEnumerator GhostFromWakeToSleep()
+    private IEnumerator WakeUpGhost()
     {
-        PlayerEvents.InvokePlayerAwakeGhost();
+        isAwake = true;
+        GameManager.Instance.GhostManager.activeGhost = this;
+
+        GhostHealingLight.Play();
+        Light.spotAngle = 60f;
+        Light.intensity = 60f;
+
         ghostEvents.InvokeGhostAwake();
+        PlayerEvents.InvokePlayerHeal();
+
+        SpawnEnemy();
+
         yield return new WaitForSeconds(coolDownDuration.CoolDownDuration);
-        ghostEvents.InvokeGhostSleep();
+
+        isAwake = false;
+        GameManager.Instance.GhostManager.activeGhost = null;
+
+        GhostHealingLight.Stop();
+        GhostHealingLight.Clear();
+        Light.spotAngle = 30f;
+        Light.intensity = 30f;
+
+        isInteracting = false;
     }
 
+    private IEnumerator HealPlayer()
+    {
+        while (isAwake)
+        {
+            playerStats.HP += 3f;
+            yield return new WaitForSeconds(coolDownDuration.CoolDownDuration);
+
+            if (!isPlayerInRange)
+            {
+                break;
+            }
+        }
+    }
+
+    public void OnGhostAwake()
+    {
+        GhostHealingLight.Play();
+        Light.spotAngle = 60f;
+        Light.intensity = 60f;
+    }
+
+    public void OnGhostSleep()
+    {
+        GhostHealingLight.Stop();
+        GhostHealingLight.Clear();
+        Light.spotAngle = 30f;
+        Light.intensity = 30f;
+    }
 
 }
-
-

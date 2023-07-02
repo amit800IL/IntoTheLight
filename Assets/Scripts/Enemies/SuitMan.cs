@@ -20,7 +20,7 @@ public class SuitMan : Enemy
             
             ScarePlayer();
 
-            yield return new WaitForSeconds(20);
+            yield return new WaitForSeconds(2);
             
             GoToPlayer();
 

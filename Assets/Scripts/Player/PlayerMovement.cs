@@ -57,9 +57,9 @@ public class PlayerMovement : MonoBehaviour
 
     private void OnMove(InputAction.CallbackContext context)
     {
-       newMove = context.ReadValue<Vector2>();
+        newMove = context.ReadValue<Vector2>();
 
-        newMove = new Vector3(newMove.x, 0 , newMove.y);
+        newMove = new Vector3(newMove.x, 0, newMove.y);
 
         if (newMove.magnitude > 1)
         {

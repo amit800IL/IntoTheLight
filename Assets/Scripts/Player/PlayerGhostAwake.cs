@@ -3,187 +3,158 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 
-public class PlayerGhostAwake : MonoBehaviour, IPlayerInput, IInteractor
+public class PlayerGhostAwake : MonoBehaviour, IInteractor
 {
     private bool isInRangeOfGhost = false;
     private Coroutine healingCoroutine;
+    [SerializeField] public bool HasPlayerAwakenGhost = false;
     private Coroutine decayCoroutine;
-    [SerializeField] private PlayerEventsSO playerEvents;
-    [SerializeField] private GhostEventsSO ghostEvents;
+    private bool isHealingActive = false;
+    [SerializeField] private PlayerEvents playerEvents;
+    [SerializeField] private GhostEvents ghostEvents;
     [SerializeField] private CoolDownSO cooldownSettings;
     [SerializeField] private PlayerStatsSO PlayerStats;
     [SerializeField] private PlayerVoiceSO PlayerVoice;
-    [SerializeField] private GhostScriptableSO ghostScriptable;
     [SerializeField] private InputActionsSO InputActions;
     [SerializeField] private ParticleSystem playerHealingEffect;
 
     private void Start()
     {
+        InputActions.Enable();
+        InputActions.Interaction.Enable();
         playerEvents.OnPlayerHeal += OnPlayerHeal;
-        decayCoroutine = StartCoroutine(HealthDownGrduadly());
+        InputActions.Interaction.performed += OnInteraction;
+        decayCoroutine = StartCoroutine(DecayHealth());
     }
-
-
 
     private void OnDestroy()
     {
         playerEvents.OnPlayerHeal -= OnPlayerHeal;
-    }
-
-    private void OnEnable()
-    {
-        InputActions.Enable();
-        InputActions.Interaction.performed += OnInteraction;
-    }
-
-    private void OnDisable()
-    {
-        InputActions.Disable();
         InputActions.Interaction.performed -= OnInteraction;
+        InputActions.Disable();
+        InputActions.Interaction.Disable();
     }
+
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.CompareTag("GhostLight"))
+        if (other.CompareTag("GhostLight"))
         {
-            LightGhost ghost = ghostScriptable.GetLightGhost();
-
-            if (ghost != null)
-            {
-                isInRangeOfGhost = true;
-                StartCoroutine(CheckPlayerInput(other, ghost));
-            }
-
+            isInRangeOfGhost = true;
+            StartHealing();
         }
     }
 
     private void OnTriggerExit(Collider other)
     {
-        if (other.gameObject.CompareTag("GhostLight"))
+        if (other.CompareTag("GhostLight"))
         {
-            LightGhost ghost = ghostScriptable.GetLightGhost();
-            if (ghost != null)
-            {
-                ghost.OnGhostGoToSleep();
-            }
             isInRangeOfGhost = false;
+            StopHealing();
         }
     }
 
     public void OnInteraction(InputAction.CallbackContext context)
     {
-        if (InputActions.Interaction.triggered && healingCoroutine == null && !ghostScriptable.HasPlayerAwakenGhost)
+        if (!HasPlayerAwakenGhost && isInRangeOfGhost && !isHealingActive)
         {
-            ghostScriptable.HasPlayerAwakenGhost = true;
-            healingCoroutine = StartCoroutine(HealthUpGrduadly());
+            GameManager.Instance.GhostManager.SetGhostAwake(null);
+            HasPlayerAwakenGhost = true;
+            StopCoroutine(decayCoroutine);
+            LightGhost ghost = GameManager.Instance.GhostManager.GetActiveGhost();
+            GameManager.Instance.GhostManager.SetGhostAwake(ghost);
+
             playerHealingEffect.Play();
-            playerEvents.InvokePlayerAwakeGhost();
-            playerEvents.InvokePlayerHeal();
-            StartCoroutine(StartCooldown());
+            OnPlayerHeal();
+            isHealingActive = true;
+        }
+        else
+        {
+            isHealingActive = false;
+            GameManager.Instance.GhostManager.ResetGhost();
         }
     }
 
-    private IEnumerator StartCooldown()
+    private void StartHealing()
     {
-        yield return new WaitForSeconds(cooldownSettings.CoolDownDuration);
-        StopCoroutine(decayCoroutine);
-        decayCoroutine = null;
-    }
-    public IEnumerator CheckPlayerInput(Collider other = null, LightGhost ghost = null)
-    {
-        bool shouldHeal = true;
-
-        while (isInRangeOfGhost && shouldHeal)
+        if (healingCoroutine == null)
         {
-            StartCooldown();
-
-            yield return null;
-
-            if (decayCoroutine == null)
-            {
-                playerHealingEffect.Stop();
-                decayCoroutine = StartCoroutine(HealthDownGrduadly());
-            }
-
-            InputAction.CallbackContext interactionContext = new();
-            OnInteraction(interactionContext);
-
-
-            yield return new WaitForSeconds(cooldownSettings.CoolDownDuration);
-            ghostScriptable.HasPlayerAwakenGhost = false;
-
-            shouldHeal = isInRangeOfGhost;
-
-            yield return null;
+            healingCoroutine = StartCoroutine(HealPlayer());
         }
+    }
 
-        shouldHeal = false;
-
-        if (decayCoroutine == null)
+    private void StopHealing()
+    {
+        if (healingCoroutine != null)
         {
+            StopCoroutine(healingCoroutine);
+            healingCoroutine = null;
             playerHealingEffect.Stop();
-            decayCoroutine = StartCoroutine(HealthDownGrduadly());
+            StartCoroutine(DecayHealth());
+        }
+    }
+
+    private IEnumerator HealPlayer()
+    {
+        while (isInRangeOfGhost && HasPlayerAwakenGhost)
+        {
+            playerEvents.InvokePlayerHeal();
+            yield return new WaitForSeconds(cooldownSettings.CoolDownDuration);
+
+            if (!isHealingActive)
+            {
+                break;
+            }
         }
 
-        yield return new WaitForSeconds(5);
-        ghostScriptable.HasPlayerAwakenGhost = false;
-        yield return null;
-
+        HasPlayerAwakenGhost = false;
+        StartCoroutine(RegenerateHealth());
     }
-    private IEnumerator HealthUpGrduadly()
-    {
 
+    private IEnumerator RegenerateHealth()
+    {
         while (PlayerStats.HP < PlayerStats.maxHP && isInRangeOfGhost)
         {
             PlayerStats.HP += 3f;
-            playerEvents.InvokePlayerHeal();
-
-            if (PlayerVoice.playerBreathing.volume == 0.5f)
-            {
-                PlayerVoice.playerBreathing.volume = 1f;
-                PlayerVoice.playerBreathing.volume -= 0.1f;
-            }
-
             yield return null;
         }
     }
 
-    private void OnPlayerHeal()
-    {
-        healingCoroutine = StartCoroutine(HealthUpGrduadly());
-    }
-    private IEnumerator HealthDownGrduadly()
+    private IEnumerator DecayHealth()
     {
         while (PlayerStats.HP > 0)
         {
             PlayerStats.HP -= 3f;
 
-            if (PlayerVoice.playerBreathing.volume > 0.5f)
-            {
-                PlayerVoice.playerBreathing.volume = 1f;
-            }
-
             if (PlayerStats.HP <= 15f)
             {
                 PlayerVoice.playerBreathing.pitch = 2f;
-                PlayerVoice.playerBreathing.volume = 1f;
             }
 
             if (PlayerStats.HP <= 5f)
             {
-                Camera.main.transform.LookAt(transform.position);
                 PlayerVoice.playerBreathing.Stop();
                 PlayerVoice.playerScream.Play();
                 PlayerVoice.secondPlayerScream.Play();
 
-                yield return new WaitForSeconds(1);
+                yield return new WaitForSeconds(1f);
 
                 if (PlayerStats.HP <= 0)
                 {
                     SceneManager.LoadScene(SceneManager.GetActiveScene().name);
                 }
             }
-            yield return new WaitForSeconds(1);
+
+            yield return new WaitForSeconds(1f);
+        }
+    }
+
+    private void OnPlayerHeal()
+    {
+        if (!isHealingActive)
+        {
+            isHealingActive = true;
+            StartCoroutine(HealPlayer());
         }
     }
 
