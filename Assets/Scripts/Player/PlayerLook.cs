@@ -6,7 +6,6 @@ public class PlayerLook : MonoBehaviour
     private Vector3 newLook;
     [SerializeField] private Transform orientation;
     [SerializeField] private InputActionsSO InputActions;
-    [SerializeField] private PlayerStats playerStats;
 
     private void OnEnable()
     {
@@ -24,7 +23,7 @@ public class PlayerLook : MonoBehaviour
     {
         newLook = context.ReadValue<Vector2>();
 
-        transform.Rotate(0, newLook.x * playerStats.lookSpeed, 0);
+        transform.Rotate(0, newLook.x * GameManager.Instance.playerStats.lookSpeed, 0);
     }
 
 }

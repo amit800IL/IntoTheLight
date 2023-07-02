@@ -17,7 +17,6 @@ public abstract class Enemy : MonoBehaviour
     [Header("Player Refernces")]
 
     [SerializeField] protected PlayerMovement playerMovement;
-    [SerializeField] protected PlayerStats playerStats;
 
     [Header("Numbers")]
 
@@ -25,7 +24,6 @@ public abstract class Enemy : MonoBehaviour
 
     [Header("Audio Sources")]
 
-    [SerializeField] protected PlayerVoice playerVoice;
     [SerializeField] protected AudioSource guardKillingScream;
     [SerializeField] protected AudioSource guardFlySound;
 
@@ -59,7 +57,7 @@ public abstract class Enemy : MonoBehaviour
 
                 yield return new WaitForSeconds(1);
 
-                if (playerStats.HP <= 0)
+                if (GameManager.Instance.playerStats.HP <= 0)
                 {
                     SceneManager.LoadScene(SceneManager.GetActiveScene().name);
                 }
@@ -79,9 +77,9 @@ public abstract class Enemy : MonoBehaviour
         targetPosition.y = transform.position.y;
         Camera.main.transform.LookAt(targetPosition);
         agent.isStopped = true;
-        playerStats.HP -= 100;
-        playerVoice.playerScream.Play();
-        playerVoice.secondPlayerScream.Play();
+        GameManager.Instance.playerStats.HP -= 100;
+        PlayerVoiceManager.Instance.playerScream.Play();
+        PlayerVoiceManager.Instance.secondPlayerScream.Play();
     }
 
 }

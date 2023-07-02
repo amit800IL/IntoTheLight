@@ -14,8 +14,6 @@ public class PlayerGhostAwake : MonoBehaviour, Iinteraction
     private bool keypress;
     [SerializeField] private ParticleSystem playerHealingEffect;
     [SerializeField] private PlayerMovement playerMovement;
-    [SerializeField] private PlayerVoice playerVoice;
-    [SerializeField] private PlayerStats playerStats;
 
     [Header("Coroutines")]
 
@@ -71,8 +69,8 @@ public class PlayerGhostAwake : MonoBehaviour, Iinteraction
                 healingCourtuine = StartCoroutine(HealthUpGrduadly());
                 StopCoroutine(decayCourtuine);
                 decayCourtuine = null;
-                playerVoice.GuardGettingCloser.Stop();
-                playerVoice.PlayerOhNoScream.Stop();
+                PlayerVoiceManager.Instance.GuardGettingCloser.Stop();
+                PlayerVoiceManager.Instance.PlayerOhNoScream.Stop();
                 float coundDown = 7f;
                 float elapsedTime = 0f;
                 while (elapsedTime < coundDown)
@@ -111,14 +109,14 @@ public class PlayerGhostAwake : MonoBehaviour, Iinteraction
     }
     private IEnumerator HealthUpGrduadly()
     {
-        while (playerStats.HP < playerStats.maxHp && isInRangeOfGhost)
+        while (GameManager.Instance.playerStats.HP < GameManager.Instance.playerStats.maxHp && isInRangeOfGhost)
         {
-            playerStats.HP += SanityUpNumber;
+            GameManager.Instance.playerStats.HP += SanityUpNumber;
 
-            if (playerVoice.playerBreathing.volume == 0.5f)
+            if (PlayerVoiceManager.Instance.playerBreathing.volume == 0.5f)
             {
-                playerVoice.playerBreathing.volume = 1f;
-                playerVoice.playerBreathing.volume -= 0.1f;
+                PlayerVoiceManager.Instance.playerBreathing.volume = 1f;
+                PlayerVoiceManager.Instance.playerBreathing.volume -= 0.1f;
             }
             yield return new WaitForSeconds(1);
         }
@@ -127,32 +125,32 @@ public class PlayerGhostAwake : MonoBehaviour, Iinteraction
 
     private IEnumerator HealthDownGrduadly()
     {
-        while (playerStats.HP > 0)
+        while (GameManager.Instance.playerStats.HP > 0)
         {
-            playerStats.HP -= SanityDownNumber;
+            GameManager.Instance.playerStats.HP -= SanityDownNumber;
 
-            if (playerVoice.playerBreathing.volume > 0.5f)
+            if (PlayerVoiceManager.Instance.playerBreathing.volume > 0.5f)
             {
-                playerVoice.playerBreathing.volume = 1f;
+                PlayerVoiceManager.Instance.playerBreathing.volume = 1f;
             }
 
-            if (playerStats.HP <= 15f)
+            if (GameManager.Instance.playerStats.HP <= 15f)
             {
-                playerVoice.playerBreathing.pitch = 2f;
-                playerVoice.playerBreathing.volume = 1f;
-            }
+                PlayerVoiceManager.Instance.playerBreathing.pitch = 2f;
+                PlayerVoiceManager.Instance.playerBreathing.volume = 1f;
+            }   
 
-            if (playerStats.HP <= 5f)
+            if (GameManager.Instance.playerStats.HP <= 5f)
             {
               
                 Camera.main.transform.LookAt(transform.position);
-                playerVoice.playerBreathing.Stop();
-                playerVoice.playerScream.Play();
-                playerVoice.secondPlayerScream.Play();
+                PlayerVoiceManager.Instance.playerBreathing.Stop();
+                PlayerVoiceManager.Instance.playerScream.Play();
+                PlayerVoiceManager.Instance.secondPlayerScream.Play();
 
                 yield return new WaitForSeconds(1);
 
-                if (playerStats.HP <= 0)
+                if (GameManager.Instance.playerStats.HP <= 0)
                 {
                     SceneManager.LoadScene(SceneManager.GetActiveScene().name);
                 }

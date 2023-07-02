@@ -49,6 +49,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <Light>k__BackingField: {fileID: 8064291317547990248}
   GhostHealingLight: {fileID: 3905817655002730440}
+  IsGhostAwake: 0
+  enemyList: {fileID: 11400000, guid: e38e457bf27ae674bb7ed303edddf1da, type: 2}
 --- !u!1 &8016577237612224368
 GameObject:
   m_ObjectHideFlags: 0

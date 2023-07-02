@@ -850,13 +850,11 @@ MonoBehaviour:
   <playerCollider>k__BackingField: {fileID: 6250810433284146720}
   InputActions: {fileID: 11400000, guid: 32a8ba2bb0af2b44b801e74f479228ce, type: 2}
   playerRigidBody: {fileID: 1575560974512497516}
-  playerStats: {fileID: 2599596959583585859}
   GroundDistance: 5
   GroundCheck: {fileID: 745394639636663472}
   groundMask:
     serializedVersion: 2
     m_Bits: 8
-  playerVoice: {fileID: 655875169863995508}
 --- !u!114 &2599596959583585859
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1039,7 +1037,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   orientation: {fileID: 2798869438148834181}
   InputActions: {fileID: 11400000, guid: 32a8ba2bb0af2b44b801e74f479228ce, type: 2}
-  playerStats: {fileID: 2599596959583585859}
 --- !u!1 &2226325889558927198
 GameObject:
   m_ObjectHideFlags: 0
@@ -1388,10 +1385,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerHealingEffect: {fileID: 7194494073829039786}
   playerMovement: {fileID: 4777247618900407462}
-  playerVoice: {fileID: 655875169863995508}
-  playerStats: {fileID: 2599596959583585859}
   SanityUpNumber: 3
-  SanityDownNumber: 3
+  SanityDownNumber: 1.5
 --- !u!1 &3545011415133746878
 GameObject:
   m_ObjectHideFlags: 0

@@ -16,17 +16,12 @@ public class PlayerMovement : MonoBehaviour
 
     private bool isMoving = false;
 
-    [SerializeField] private PlayerStats playerStats;
-
     [Header("Ground Check")]
 
     [SerializeField] private float GroundDistance;
     [SerializeField] private Transform GroundCheck;
     [SerializeField] private LayerMask groundMask;
 
-    [Header("Audio")]
-
-    [SerializeField] private PlayerVoice playerVoice;
 
     private void OnEnable()
     {
@@ -80,7 +75,7 @@ public class PlayerMovement : MonoBehaviour
         Right.Normalize();
 
         Vector3 moveDirection = newMove.x * Right + newMove.z * Forward;
-        playerRigidBody.velocity = moveDirection * playerStats.speed;
+        playerRigidBody.velocity = moveDirection * GameManager.Instance.playerStats.speed;
     }
 
     private void PlayerWalk()
@@ -88,14 +83,14 @@ public class PlayerMovement : MonoBehaviour
         if (newMove.magnitude < 0.1f)
         {
             isMoving = false;
-            playerVoice.playerWalk.Stop();
+            PlayerVoiceManager.Instance.playerWalk.Stop();
         }
         else
         {
             CameraAndMovingHandling();
             isMoving = true;
-            playerVoice.playerWalk.Play();
-            playerVoice.playerWalk.volume = 0.5f;
+            PlayerVoiceManager.Instance.playerWalk.Play();
+            PlayerVoiceManager.Instance.playerWalk.volume = 0.5f;
         }
     }
 
