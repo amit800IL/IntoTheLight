@@ -986,15 +986,15 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 1115671674254481151, guid: 0ef22030d0e161048acead9cda6c8f2e,
-        type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 1115671675435861249, guid: 0ef22030d0e161048acead9cda6c8f2e,
         type: 3}
       propertyPath: m_Name
       value: PauseMenuUI
+      objectReference: {fileID: 0}
+    - target: {fileID: 1115671675435861249, guid: 0ef22030d0e161048acead9cda6c8f2e,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1115671675435861261, guid: 0ef22030d0e161048acead9cda6c8f2e,
         type: 3}
@@ -1099,16 +1099,6 @@ PrefabInstance:
     - target: {fileID: 1115671675435861261, guid: 0ef22030d0e161048acead9cda6c8f2e,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1115671675590521037, guid: 0ef22030d0e161048acead9cda6c8f2e,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1115671675748468838, guid: 0ef22030d0e161048acead9cda6c8f2e,
-        type: 3}
-      propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
