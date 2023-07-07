@@ -32,7 +32,7 @@ public class FakeKeyScript : MonoBehaviour
         {
             pickUpAllowed = false;
 
-            Vector3 offset = Random.onUnitSphere * guard.enemyStats.EnemySpeed;
+            Vector3 offset = Random.onUnitSphere * guard.EnemySpeed;
 
             offset.y = 0;
 

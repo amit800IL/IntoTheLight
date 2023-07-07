@@ -3,10 +3,10 @@ using UnityEngine;
 
 public class SuitMan : Enemy
 {
+    [SerializeField] private Transform GoToPos;
     protected override void GoToPlayer()
     {
         animator.SetBool("IsWalking", true);
-        animator.SetBool("IsSitting", false);
 
         base.GoToPlayer();
 
@@ -17,23 +17,13 @@ public class SuitMan : Enemy
 
         while (isChasingPlayer)
         {
-            
-            ScarePlayer();
-
-            yield return new WaitForSeconds(2);
-            
             GoToPlayer();
 
-            yield return base.ChasePlayer();
+            yield return new WaitForSeconds(5);
 
+            agent.SetDestination(GoToPos.position);
         }
 
     }
 
-    private void ScarePlayer()
-    {
-        animator.SetBool("IsSitting", true);
-        animator.SetBool("IsWalking", false);
-        guardKillingScream.Play();
-    }
 }

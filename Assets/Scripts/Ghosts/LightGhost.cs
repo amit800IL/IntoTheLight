@@ -12,8 +12,6 @@ public class LightGhost : MonoBehaviour
 
     private Coroutine WakeCourtine;
 
-    public EnemyListSO enemyList;
-
     private void Start()
     {
         CheckIfGhostAwake();
@@ -31,13 +29,6 @@ public class LightGhost : MonoBehaviour
         }
     }
 
-    public void SpawnEnemy()
-    {
-        int randomIndex = Random.Range(0, enemyList.enemyList.Count);
-        GameObject selectedEnemy = enemyList.enemyList[randomIndex];
-        Instantiate(selectedEnemy, transform.position + new Vector3(0, 0, 2), transform.rotation);
-        selectedEnemy.SetActive(true);
-    }
 
     public void AwakeGhost()
     {
@@ -46,7 +37,6 @@ public class LightGhost : MonoBehaviour
         if (keyPress && !IsGhostAwake && Vector3.Distance(transform.position, GameManager.Instance.Player.transform.position) < 2f && !GameManager.Instance.PlayerGhostAwake.HasAwaknedGhost)
         {
             IsGhostAwake = true;
-            SpawnEnemy();
             WakeCourtine = StartCoroutine(GhostFromWakeToSleep());
         }
     }

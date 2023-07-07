@@ -10,24 +10,22 @@ public abstract class Enemy : MonoBehaviour
 
     protected bool isChasingPlayer;
     protected float distance;
+    [SerializeField] protected bool canKillPlayer;
     [SerializeField] public NavMeshAgent agent;
     [SerializeField] protected Light enemyLight;
     [SerializeField] protected Animator animator;
 
-    [Header("Player Refernces")]
-
-    [SerializeField] protected PlayerMovement playerMovement;
-
     [Header("Numbers")]
 
-    [SerializeField] public EnemyStatsSO enemyStats;
+    [SerializeField] public float EnemySpeed;
+    [SerializeField] protected float killingDistance;
 
     [Header("Audio Sources")]
 
     [SerializeField] protected AudioSource guardKillingScream;
     [SerializeField] protected AudioSource guardFlySound;
 
-    protected void Start()
+    protected virtual void Start()
     {
         StartCoroutine(ChasePlayer());
     }
@@ -40,7 +38,6 @@ public abstract class Enemy : MonoBehaviour
     }
     protected virtual IEnumerator ChasePlayer()
     {
-
         enemyLight.enabled = true;
         isChasingPlayer = true;
         guardFlySound.Play();
@@ -51,7 +48,7 @@ public abstract class Enemy : MonoBehaviour
 
             GoToPlayer();
 
-            if (agent != null && distance < enemyStats.killingDistance && enemyStats.canKillPlayer)
+            if (agent != null && distance < killingDistance && canKillPlayer)
             {
                 GuardKill();
 

@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour
@@ -12,6 +13,8 @@ public class GameManager : MonoBehaviour
     [field: Header("Colliders Refernces")]
     [field: SerializeField] public Collider[] safeRoomDoor { get; private set; }
 
+    [field : SerializeField] public List<GameObject> enemies { get; private set; }
+
     private void Awake()
     {
 
@@ -23,7 +26,16 @@ public class GameManager : MonoBehaviour
         {
             Destroy(Instance);
         }
-
     }
 
+    private void Start()
+    {
+        SpawnEnemy();
+    }
+    public void SpawnEnemy()
+    {
+        int randomIndex = Random.Range(0, enemies.Count);
+        GameObject selectedEnemy = enemies[randomIndex];
+        selectedEnemy.SetActive(true);
+    }
 }
