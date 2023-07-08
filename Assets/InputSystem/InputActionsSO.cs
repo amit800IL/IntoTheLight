@@ -10,15 +10,14 @@ public class InputActionsSO : ScriptableObject
     public InputAction Look;
     public InputAction Interaction;
 
-
-    public void Enable()
+    private void OnEnable()
     {
         Move.Enable();
         Look.Enable();
         Interaction.Enable();
     }
 
-    public void Disable()
+    private void OnDisable()
     {
         Move.Disable();
         Look.Disable();

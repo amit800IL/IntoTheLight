@@ -112,8 +112,8 @@ MonoBehaviour:
     m_Flags: 0
   Interaction:
     m_Name: Interaction
-    m_Type: 0
-    m_ExpectedControlType: 
+    m_Type: 1
+    m_ExpectedControlType: Button
     m_Id: e8b50026-479d-4b0e-8db3-9518958e3250
     m_Processors: 
     m_Interactions: 
@@ -126,4 +126,4 @@ MonoBehaviour:
       m_Groups: 
       m_Action: Interaction
       m_Flags: 0
-    m_Flags: 0
+    m_Flags: 1

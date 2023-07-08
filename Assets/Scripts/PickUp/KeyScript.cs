@@ -11,25 +11,16 @@ public class KeyScript : MonoBehaviour, IInput
 
     private void OnEnable()
     {
-        InputActions.Enable();
         InputActions.Interaction.performed += OnInteraction;
         InputActions.Interaction.canceled += OnInteraction;
     }
 
     private void OnDisable()
     {
-        InputActions.Disable();
         InputActions.Interaction.performed -= OnInteraction;
         InputActions.Interaction.canceled -= OnInteraction;
     }
 
-    public void OnInteraction(InputAction.CallbackContext context)
-    {
-        if (context.performed  && pickUpAllowed)
-        {
-            PickUp();
-        }
-    }
 
     private void OnTriggerEnter(Collider collision)
     {
@@ -51,6 +42,13 @@ public class KeyScript : MonoBehaviour, IInput
     {
         gameObject.SetActive(false);
         Haskey = true;
+    }
+    public void OnInteraction(InputAction.CallbackContext context)
+    {
+        if (context.performed && pickUpAllowed)
+        {
+            PickUp();
+        }
     }
 
 }

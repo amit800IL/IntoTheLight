@@ -9,13 +9,11 @@ public class PlayerLook : MonoBehaviour
 
     private void OnEnable()
     {
-        InputActions.Enable();
         InputActions.Look.performed += OnLook;
     }
 
     private void OnDisable()
     {
-        InputActions.Disable();
         InputActions.Look.performed -= OnLook;
     }
 

@@ -25,14 +25,12 @@ public class PlayerMovement : MonoBehaviour
 
     private void OnEnable()
     {
-        InputActions.Enable();
         InputActions.Move.performed += OnMove;
         InputActions.Move.canceled += OnMove;
     }
 
     private void OnDisable()
     {
-        InputActions.Disable();
         InputActions.Move.performed -= OnMove;
         InputActions.Move.canceled -= OnMove;
     }

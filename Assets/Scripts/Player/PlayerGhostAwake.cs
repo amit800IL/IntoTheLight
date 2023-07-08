@@ -35,14 +35,12 @@ public class PlayerGhostAwake : MonoBehaviour, Iinteraction, IInput
 
     private void OnEnable()
     {
-        InputActions.Enable();
         InputActions.Interaction.performed += OnInteraction;
         InputActions.Interaction.canceled += OnInteraction;
     }
 
     private void OnDisable()
     {
-        InputActions.Disable();
         InputActions.Interaction.performed -= OnInteraction;
         InputActions.Interaction.canceled -= OnInteraction;
     }
@@ -70,8 +68,7 @@ public class PlayerGhostAwake : MonoBehaviour, Iinteraction, IInput
     public void OnInteraction(InputAction.CallbackContext context)
     {
         shouldHeal = true;
-
-        if (context.performed && healingCourtuine == null && !HasAwaknedGhost)
+        if (context.performed && healingCourtuine == null && !HasAwaknedGhost && isInRangeOfGhost)
         {
             ghost.transform.rotation = transform.rotation;
             HasAwaknedGhost = true;

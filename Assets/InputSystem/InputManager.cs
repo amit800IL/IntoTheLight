@@ -24,10 +24,6 @@ public class InputManager : MonoBehaviour
      
     }
 
-    private void Start()
-    {
-        InputActions.Enable();
-    }
 
 }
 

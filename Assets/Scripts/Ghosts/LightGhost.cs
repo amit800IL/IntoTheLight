@@ -21,14 +21,12 @@ public class LightGhost : MonoBehaviour, IInput
 
     private void OnEnable()
     {
-        InputActions.Enable();
         InputActions.Interaction.performed += OnInteraction;
         InputActions.Interaction.canceled += OnInteraction;
     }
 
     private void OnDisable()
     {
-        InputActions.Disable();
         InputActions.Interaction.performed -= OnInteraction;
         InputActions.Interaction.canceled -= OnInteraction;
     }

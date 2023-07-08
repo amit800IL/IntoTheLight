@@ -781,7 +781,6 @@ GameObject:
   - component: {fileID: 6250810433284146720}
   - component: {fileID: 6250810433284146721}
   - component: {fileID: 655875169863995507}
-  - component: {fileID: 655875169863995508}
   - component: {fileID: 3793275236806142455}
   m_Layer: 0
   m_Name: Player
@@ -1005,24 +1004,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   keyScript: {fileID: 0}
   Door: {fileID: 0}
---- !u!114 &655875169863995508
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1151173029364569866}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 185ead4b6227c01449cc69166bb7294f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  <PlayerOhNoScream>k__BackingField: {fileID: 2019290543}
-  <GuardGettingCloser>k__BackingField: {fileID: 6557822523980493833}
-  <playerBreathing>k__BackingField: {fileID: 7449788007570023134}
-  <playerScream>k__BackingField: {fileID: 1716326299201623417}
-  <secondPlayerScream>k__BackingField: {fileID: 674727606}
-  <playerWalk>k__BackingField: {fileID: 1489013855}
 --- !u!114 &3793275236806142455
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -56,9 +56,9 @@ public partial class @IntoTheLight: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": ""PlayerInteraction"",
-                    ""type"": ""Value"",
+                    ""type"": ""Button"",
                     ""id"": ""a6a2ac64-2e7b-4e1b-b608-6d5addebecf2"",
-                    ""expectedControlType"": ""Vector2"",
+                    ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": true
@@ -306,15 +306,59 @@ public partial class @IntoTheLight: IInputActionCollection2, IDisposable
                     ""isPartOfComposite"": false
                 },
                 {
-                    ""name"": """",
-                    ""id"": ""a8929966-44e6-4155-ba22-0e9ec02e4284"",
-                    ""path"": ""<Mouse>/delta"",
+                    ""name"": ""2D Vector"",
+                    ""id"": ""7b563245-aa1a-470a-ad35-c5dcab7e1ada"",
+                    ""path"": ""2DVector"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": ""Keyboard&Mouse;Gamepad"",
+                    ""groups"": """",
+                    ""action"": ""MouseDelta"",
+                    ""isComposite"": true,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""up"",
+                    ""id"": ""b9916938-d0d6-40e3-817f-5e46b2a1619b"",
+                    ""path"": ""<Mouse>/delta/up"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
                     ""action"": ""MouseDelta"",
                     ""isComposite"": false,
-                    ""isPartOfComposite"": false
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""down"",
+                    ""id"": ""03a02d9b-d2cb-4a99-8e69-b6aed84e7096"",
+                    ""path"": ""<Mouse>/delta/down"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""MouseDelta"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""left"",
+                    ""id"": ""b8b0900e-798f-4fe5-8a62-b2bdaeb678e6"",
+                    ""path"": ""<Mouse>/delta/left"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""MouseDelta"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""right"",
+                    ""id"": ""26cbbca3-9da4-4496-a596-d13bfe3ba2cf"",
+                    ""path"": ""<Mouse>/delta/right"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""MouseDelta"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
                 }
             ]
         },
