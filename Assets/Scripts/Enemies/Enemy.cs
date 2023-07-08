@@ -33,7 +33,6 @@ public abstract class Enemy : MonoBehaviour
     protected virtual void GoToPlayer()
     {
         Vector3 targetPosition = GameManager.Instance.Player.transform.position;
-        targetPosition.y = transform.position.y;
         agent.SetDestination(targetPosition);
     }
     protected virtual IEnumerator ChasePlayer()
@@ -74,7 +73,7 @@ public abstract class Enemy : MonoBehaviour
         targetPosition.y = transform.position.y;
         Camera.main.transform.LookAt(targetPosition);
         agent.isStopped = true;
-        GameManager.Instance.playerStats.HP -= 100;
+        GameManager.Instance.playerStats.HP -= 200;
         PlayerVoiceManager.Instance.playerScream.Play();
         PlayerVoiceManager.Instance.secondPlayerScream.Play();
     }

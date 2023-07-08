@@ -258,7 +258,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &968830166
 Transform:
   m_ObjectHideFlags: 0
@@ -1387,6 +1387,7 @@ MonoBehaviour:
   playerMovement: {fileID: 4777247618900407462}
   SanityUpNumber: 3
   SanityDownNumber: 1.5
+  InputActions: {fileID: 11400000, guid: 32a8ba2bb0af2b44b801e74f479228ce, type: 2}
 --- !u!1 &3545011415133746878
 GameObject:
   m_ObjectHideFlags: 0

@@ -2,21 +2,34 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
 
-public class FakeKeyScript : MonoBehaviour
+public class FakeKeyScript : MonoBehaviour , IInput
 {
     private bool pickUpAllowed = false;
 
     [SerializeField] private Enemy guard;
 
+    [SerializeField] private InputActionsSO InputActions;
 
-    private void Update()
+    private void OnEnable()
     {
-        if (pickUpAllowed && Keyboard.current.eKey.isPressed)
+        InputActions.Enable();
+        InputActions.Interaction.performed += OnInteraction;
+        InputActions.Interaction.canceled += OnInteraction;
+    }
+
+    private void OnDisable()
+    {
+        InputActions.Disable();
+        InputActions.Interaction.performed -= OnInteraction;
+        InputActions.Interaction.canceled -= OnInteraction;
+    }
+    public void OnInteraction(InputAction.CallbackContext context)
+    {
+        if (context.performed && pickUpAllowed)
         {
             PickUp();
         }
     }
-
 
     private void OnTriggerEnter(Collider collision)
     {
@@ -42,6 +55,6 @@ public class FakeKeyScript : MonoBehaviour
 
     private void PickUp()
     {
-        Destroy(gameObject);
+        gameObject.SetActive(false);
     }
 }

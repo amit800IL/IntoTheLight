@@ -10,6 +10,7 @@ public class InputActionsSO : ScriptableObject
     public InputAction Look;
     public InputAction Interaction;
 
+
     public void Enable()
     {
         Move.Enable();

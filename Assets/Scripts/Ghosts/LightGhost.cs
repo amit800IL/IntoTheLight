@@ -1,8 +1,9 @@
 using System.Collections;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class LightGhost : MonoBehaviour
+public class LightGhost : MonoBehaviour, IInput
 {
     [field: SerializeField] public Light Light { get; private set; }
 
@@ -12,13 +13,24 @@ public class LightGhost : MonoBehaviour
 
     private Coroutine WakeCourtine;
 
+    [SerializeField] private InputActionsSO InputActions;
     private void Start()
     {
         CheckIfGhostAwake();
     }
-    private void Update()
+
+    private void OnEnable()
     {
-        AwakeGhost();
+        InputActions.Enable();
+        InputActions.Interaction.performed += OnInteraction;
+        InputActions.Interaction.canceled += OnInteraction;
+    }
+
+    private void OnDisable()
+    {
+        InputActions.Disable();
+        InputActions.Interaction.performed -= OnInteraction;
+        InputActions.Interaction.canceled -= OnInteraction;
     }
     private void CheckIfGhostAwake()
     {
@@ -29,17 +41,15 @@ public class LightGhost : MonoBehaviour
         }
     }
 
-
-    public void AwakeGhost()
+    public void OnInteraction(InputAction.CallbackContext context)
     {
-        bool keyPress = Keyboard.current.eKey.isPressed;
-
-        if (keyPress && !IsGhostAwake && Vector3.Distance(transform.position, GameManager.Instance.Player.transform.position) < 2f && !GameManager.Instance.PlayerGhostAwake.HasAwaknedGhost)
+        if (context.performed && !IsGhostAwake && Vector3.Distance(transform.position, GameManager.Instance.Player.transform.position) < 2f && !GameManager.Instance.PlayerGhostAwake.HasAwaknedGhost)
         {
             IsGhostAwake = true;
             WakeCourtine = StartCoroutine(GhostFromWakeToSleep());
         }
     }
+
 
     public void OnGhostAwake()
     {
@@ -67,6 +77,7 @@ public class LightGhost : MonoBehaviour
         yield return new WaitForSeconds(7);
         OnGhostSleep();
     }
+
 }
 
 

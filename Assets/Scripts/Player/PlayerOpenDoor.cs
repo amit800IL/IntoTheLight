@@ -1,17 +1,26 @@
 using System.Collections;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class PlayerOpenDoor : MonoBehaviour, IPlayerInput
+public class PlayerOpenDoor : MonoBehaviour, Iinteraction, IInput
 {
-    private bool keyPress;
     private bool isInDoorTrigger;
     [SerializeField] private KeyScript keyScript;
     [SerializeField] private Transform Door;
 
-    private void Update()
+    public void OnInteraction(InputAction.CallbackContext context)
     {
-        keyPress = Keyboard.current.eKey.isPressed;
+        if (context.performed && keyScript.Haskey && isInDoorTrigger)
+        {
+            Door.transform.Translate(0, 10000, 0);
+            Application.Quit();
+        }
+
+        else if (context.performed && !keyScript.Haskey && isInDoorTrigger)
+        {
+            return;
+        }
     }
     private void OnTriggerEnter(Collider other)
     {
@@ -30,23 +39,11 @@ public class PlayerOpenDoor : MonoBehaviour, IPlayerInput
         }
     }
 
-    public IEnumerator CheckPlayerInput(Collider other, LightGhost ghost = null)
+    public IEnumerator CheckPlayerInput(Collider other)
     {
-        while (isInDoorTrigger)
-        {
-            if (keyPress && keyScript.Haskey)
-            {
-                Door.transform.Translate(0, 10000, 0);
-                Application.Quit();
-            }
+        OnInteraction(new());
 
-            else if (keyPress && !keyScript.Haskey)
-            {
-                break;
-            }
-
-            yield return null;
-        }
+        yield return new WaitForSeconds(1);
     }
 
 }
