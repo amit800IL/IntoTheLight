@@ -15,11 +15,6 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private Rigidbody playerRigidBody;
 
     private bool isMoving = false;
-<<<<<<< HEAD
-
-    [SerializeField] private PlayerStatsSO playerStats;
-=======
->>>>>>> Fixes
 
     [Header("Ground Check")]
 
@@ -28,11 +23,6 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private LayerMask groundMask;
 
 
-<<<<<<< HEAD
-    [SerializeField] private PlayerVoiceSO playerVoice;
-
-=======
->>>>>>> Fixes
     private void OnEnable()
     {
         InputActions.Enable();
@@ -85,11 +75,7 @@ public class PlayerMovement : MonoBehaviour
         Right.Normalize();
 
         Vector3 moveDirection = newMove.x * Right + newMove.z * Forward;
-<<<<<<< HEAD
-        playerRigidBody.velocity = moveDirection * playerStats.speed;
-=======
         playerRigidBody.velocity = moveDirection * GameManager.Instance.playerStats.speed;
->>>>>>> Fixes
     }
 
     private void PlayerWalk()
@@ -97,23 +83,14 @@ public class PlayerMovement : MonoBehaviour
         if (newMove.magnitude < 0.1f)
         {
             isMoving = false;
-<<<<<<< HEAD
-            playerVoice.playerWalk.Stop();
-=======
             PlayerVoiceManager.Instance.playerWalk.Stop();
->>>>>>> Fixes
         }
         else
         {
             CameraAndMovingHandling();
             isMoving = true;
-<<<<<<< HEAD
-            playerVoice.playerWalk.Play();
-            playerVoice.playerWalk.volume = 0.5f;
-=======
             PlayerVoiceManager.Instance.playerWalk.Play();
             PlayerVoiceManager.Instance.playerWalk.volume = 0.5f;
->>>>>>> Fixes
         }
     }
 
@@ -154,18 +131,4 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
-<<<<<<< HEAD
-
-    private void OnTriggerEnter(Collider other)
-    {
-        if (other.gameObject.CompareTag("EnemyTrigger"))
-        {
-            other.gameObject.SetActive(true);
-            other.gameObject.transform.position = transform.position + new Vector3(10f, 0, 0);
-        }
-    }
-
 }
-=======
-}
->>>>>>> Fixes
