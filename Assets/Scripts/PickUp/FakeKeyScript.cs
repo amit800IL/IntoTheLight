@@ -6,11 +6,8 @@ public class FakeKeyScript : MonoBehaviour
 {
     private bool pickUpAllowed = false;
 
-<<<<<<< HEAD
-=======
     [SerializeField] private Enemy guard;
 
->>>>>>> Fixes
 
     private void Update()
     {
@@ -35,15 +32,11 @@ public class FakeKeyScript : MonoBehaviour
         {
             pickUpAllowed = false;
 
-<<<<<<< HEAD
-            //Vector3 offset = Random.onUnitSphere * guard.Speed + guard.OffsetDistance;
-=======
-            Vector3 offset = Random.onUnitSphere * guard.enemyStats.EnemySpeed;
->>>>>>> Fixes
+            Vector3 offset = Random.onUnitSphere * guard.EnemySpeed;
 
-            //offset.y = 0;
+            offset.y = 0;
 
-            //guard.agent.Warp(GameManager.Instance.Player.transform.position + offset);
+            guard.agent.Warp(GameManager.Instance.Player.transform.position + offset);
         }
     }
 

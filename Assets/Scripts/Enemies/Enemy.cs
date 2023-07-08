@@ -10,40 +10,22 @@ public abstract class Enemy : MonoBehaviour
 
     protected bool isChasingPlayer;
     protected float distance;
-<<<<<<< HEAD
-    [SerializeField] protected NavMeshAgent agent;
-=======
+    [SerializeField] protected bool canKillPlayer;
     [SerializeField] public NavMeshAgent agent;
->>>>>>> Fixes
     [SerializeField] protected Light enemyLight;
     [SerializeField] protected Animator animator;
 
-    [Header("Player Refernces")]
-
-    [SerializeField] protected PlayerMovement playerMovement;
-<<<<<<< HEAD
-    [SerializeField] protected PlayerStatsSO playerStats;
-
     [Header("Numbers")]
 
-    [SerializeField] protected EnemyStatsSO enemyStats;
+    [SerializeField] public float EnemySpeed;
+    [SerializeField] protected float killingDistance;
 
     [Header("Audio Sources")]
 
-    [SerializeField] protected PlayerVoiceSO playerVoice;
-=======
-
-    [Header("Numbers")]
-
-    [SerializeField] public EnemyStatsSO enemyStats;
-
-    [Header("Audio Sources")]
-
->>>>>>> Fixes
     [SerializeField] protected AudioSource guardKillingScream;
     [SerializeField] protected AudioSource guardFlySound;
 
-    protected void Start()
+    protected virtual void Start()
     {
         StartCoroutine(ChasePlayer());
     }
@@ -56,7 +38,6 @@ public abstract class Enemy : MonoBehaviour
     }
     protected virtual IEnumerator ChasePlayer()
     {
-
         enemyLight.enabled = true;
         isChasingPlayer = true;
         guardFlySound.Play();
@@ -67,21 +48,13 @@ public abstract class Enemy : MonoBehaviour
 
             GoToPlayer();
 
-<<<<<<< HEAD
-            if (agent != null && distance < enemyStats.KillingDistance && enemyStats.canKillPlayer)
-=======
-            if (agent != null && distance < enemyStats.killingDistance && enemyStats.canKillPlayer)
->>>>>>> Fixes
+            if (agent != null && distance < killingDistance && canKillPlayer)
             {
                 GuardKill();
 
                 yield return new WaitForSeconds(1);
 
-<<<<<<< HEAD
-                if (playerStats.HP <= 0)
-=======
                 if (GameManager.Instance.playerStats.HP <= 0)
->>>>>>> Fixes
                 {
                     SceneManager.LoadScene(SceneManager.GetActiveScene().name);
                 }
@@ -101,15 +74,9 @@ public abstract class Enemy : MonoBehaviour
         targetPosition.y = transform.position.y;
         Camera.main.transform.LookAt(targetPosition);
         agent.isStopped = true;
-<<<<<<< HEAD
-        playerStats.HP -= 100;
-        playerVoice.playerScream.Play();
-        playerVoice.secondPlayerScream.Play();
-=======
         GameManager.Instance.playerStats.HP -= 100;
         PlayerVoiceManager.Instance.playerScream.Play();
         PlayerVoiceManager.Instance.secondPlayerScream.Play();
->>>>>>> Fixes
     }
 
 }

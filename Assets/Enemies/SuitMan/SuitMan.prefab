@@ -26,7 +26,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2834419917863332879}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1.299, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -259,11 +259,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-<<<<<<< HEAD
   m_IsActive: 0
-=======
-  m_IsActive: 1
->>>>>>> Fixes
 --- !u!4 &3427521229770411605
 Transform:
   m_ObjectHideFlags: 0
@@ -391,7 +387,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &2420476459805288630
 Transform:
   m_ObjectHideFlags: 0
@@ -514,13 +510,14 @@ GameObject:
   - component: {fileID: 6050444081387312380}
   - component: {fileID: 763273764}
   - component: {fileID: 6777421282977997086}
+  - component: {fileID: 6433001532390644051}
   m_Layer: 0
   m_Name: SuitMan
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &6050444081387312380
 Transform:
   m_ObjectHideFlags: 0
@@ -553,19 +550,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3ce060d365ba14147bbdf6333113d895, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  canKillPlayer: 0
   agent: {fileID: 6777421282977997086}
   enemyLight: {fileID: 4019241146482662692}
-  animator: {fileID: 6132642962525094964}
-  playerMovement: {fileID: 0}
-<<<<<<< HEAD
-  playerStats: {fileID: 11400000, guid: 6d553fd777e32964bab130b5382d9993, type: 2}
-  enemyStats: {fileID: 11400000, guid: 4d05aaf2085e0df438b1771499a1e7dc, type: 2}
-  playerVoice: {fileID: 11400000, guid: f159d5952698ee941aa5dbda65c510fb, type: 2}
-=======
-  enemyStats: {fileID: 11400000, guid: 4d05aaf2085e0df438b1771499a1e7dc, type: 2}
->>>>>>> Fixes
+  animator: {fileID: 6433001532390644051}
+  EnemySpeed: 1
+  killingDistance: 0
   guardKillingScream: {fileID: 85036350536011326}
   guardFlySound: {fileID: 4274505277907835150}
+  GoToPos: {fileID: 0}
 --- !u!195 &6777421282977997086
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -588,6 +581,26 @@ NavMeshAgent:
   m_BaseOffset: 0
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
+--- !u!95 &6433001532390644051
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7320963435959732098}
+  m_Enabled: 1
+  m_Avatar: {fileID: 9000000, guid: a3810bf3ad7491b4595253fa6e299aac, type: 3}
+  m_Controller: {fileID: 9100000, guid: 6d16c62940c89994f87d7390c792cc9d, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 2
+  m_ApplyRootMotion: 1
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
 --- !u!1001 &320058908701571493
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -608,7 +621,7 @@ PrefabInstance:
     - target: {fileID: -8679921383154817045, guid: a3810bf3ad7491b4595253fa6e299aac,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: 1.5
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: a3810bf3ad7491b4595253fa6e299aac,
         type: 3}
@@ -688,9 +701,3 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 2548443371274435268, guid: a3810bf3ad7491b4595253fa6e299aac, type: 3}
---- !u!95 &6132642962525094964 stripped
-Animator:
-  m_CorrespondingSourceObject: {fileID: 5866666021909216657, guid: a3810bf3ad7491b4595253fa6e299aac,
-    type: 3}
-  m_PrefabInstance: {fileID: 320058908701571493}
-  m_PrefabAsset: {fileID: 0}

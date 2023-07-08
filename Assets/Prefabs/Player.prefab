@@ -258,7 +258,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &968830166
 Transform:
   m_ObjectHideFlags: 0
@@ -870,7 +870,7 @@ MonoBehaviour:
   HP: 100
   maxHp: 100
   speed: 10
-  lookSpeed: 1.5
+  lookSpeed: 1.8
 --- !u!54 &1575560974512497516
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -1110,7 +1110,7 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: 9b4d27e6d08371748b8bb608b9a25cc9, type: 3}
+  m_audioClip: {fileID: 8300000, guid: d2d933aec714a654aa936bc948183514, type: 3}
   m_PlayOnAwake: 1
   m_Volume: 0.5
   m_Pitch: 1
