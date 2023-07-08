@@ -14,12 +14,10 @@ public class SuitManKiller : Enemy
     {
         isChasingPlayer = true;
 
+        yield return new WaitForSeconds(5);
+
         while (isChasingPlayer)
         {
-            GoToPlayer();
-
-            yield return new WaitForSeconds(1);
-
             yield return base.ChasePlayer();
         }
 

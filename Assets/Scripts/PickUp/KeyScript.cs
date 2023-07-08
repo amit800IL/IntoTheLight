@@ -1,22 +1,35 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
-using UnityEngine.UI;
 
-public class KeyScript : MonoBehaviour
+public class KeyScript : MonoBehaviour, IInput
 {
     [HideInInspector] public bool Haskey { get; private set; } = false;
 
     private bool pickUpAllowed = false;
 
+    [SerializeField] private InputActionsSO InputActions;
 
-    private void Update()
+    private void OnEnable()
     {
-        if (pickUpAllowed && Keyboard.current.eKey.isPressed)
+        InputActions.Enable();
+        InputActions.Interaction.performed += OnInteraction;
+        InputActions.Interaction.canceled += OnInteraction;
+    }
+
+    private void OnDisable()
+    {
+        InputActions.Disable();
+        InputActions.Interaction.performed -= OnInteraction;
+        InputActions.Interaction.canceled -= OnInteraction;
+    }
+
+    public void OnInteraction(InputAction.CallbackContext context)
+    {
+        if (context.performed  && pickUpAllowed)
         {
             PickUp();
         }
     }
-
 
     private void OnTriggerEnter(Collider collision)
     {
@@ -36,7 +49,8 @@ public class KeyScript : MonoBehaviour
 
     private void PickUp()
     {
-        Destroy(gameObject);
+        gameObject.SetActive(false);
         Haskey = true;
     }
+
 }

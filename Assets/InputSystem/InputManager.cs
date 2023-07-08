@@ -4,8 +4,8 @@ using UnityEngine.InputSystem;
 [DefaultExecutionOrder(-1)]
 public class InputManager : MonoBehaviour
 {
-    private IntoTheLight inputActions;
-    public IntoTheLight InputActions { get => inputActions; private set => inputActions = value; }
+    private InputActionsSO inputActions;
+    public InputActionsSO InputActions { get => inputActions; private set => inputActions = value; }
     public static InputManager Instance { get; private set; }
 
     [SerializeField] private PlayerLook playerLook;
@@ -26,12 +26,8 @@ public class InputManager : MonoBehaviour
 
     private void Start()
     {
-        InputActions = new IntoTheLight();
         InputActions.Enable();
     }
-
-    public Vector2 GetMoveValue(InputValue input) => input.Get<Vector2>();
-    public Vector2 GetMouseDelta(InputValue input) => input.Get<Vector2>();
 
 }
 

@@ -3,7 +3,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 
-public class PlayerGhostAwake : MonoBehaviour, Iinteraction
+public class PlayerGhostAwake : MonoBehaviour, Iinteraction, IInput
 {
     public bool isInRangeOfGhost { get; private set; } = false;
     public bool HasAwaknedGhost { get; private set; } = false;
@@ -11,7 +11,7 @@ public class PlayerGhostAwake : MonoBehaviour, Iinteraction
     [Header("General")]
 
     private LightGhost ghost;
-    private bool keypress;
+    private bool shouldHeal;
     [SerializeField] private ParticleSystem playerHealingEffect;
     [SerializeField] private PlayerMovement playerMovement;
 
@@ -25,15 +25,28 @@ public class PlayerGhostAwake : MonoBehaviour, Iinteraction
     [SerializeField] private float SanityUpNumber;
     [SerializeField] private float SanityDownNumber;
 
+
+    public InputActionsSO InputActions;
+
     private void Start()
     {
         decayCourtuine = StartCoroutine(HealthDownGrduadly());
     }
 
-    private void Update()
+    private void OnEnable()
     {
-        keypress = Keyboard.current.eKey.isPressed;
+        InputActions.Enable();
+        InputActions.Interaction.performed += OnInteraction;
+        InputActions.Interaction.canceled += OnInteraction;
     }
+
+    private void OnDisable()
+    {
+        InputActions.Disable();
+        InputActions.Interaction.performed -= OnInteraction;
+        InputActions.Interaction.canceled -= OnInteraction;
+    }
+
     private void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.CompareTag("GhostLight"))
@@ -53,44 +66,58 @@ public class PlayerGhostAwake : MonoBehaviour, Iinteraction
             isInRangeOfGhost = false;
         }
     }
+
+    public void OnInteraction(InputAction.CallbackContext context)
+    {
+        shouldHeal = true;
+
+        if (context.performed && healingCourtuine == null && !HasAwaknedGhost)
+        {
+            ghost.transform.rotation = transform.rotation;
+            HasAwaknedGhost = true;
+
+            PlayerVoiceManager.Instance.GuardGettingCloser.Stop();
+            PlayerVoiceManager.Instance.PlayerOhNoScream.Stop();
+
+            StartCoroutine(HealingTimer());
+
+            playerHealingEffect.Play();
+            healingCourtuine = StartCoroutine(HealthUpGrduadly());
+            StopCoroutine(decayCourtuine);
+            decayCourtuine = null;
+
+        }
+
+    }
+
+    private IEnumerator HealingTimer()
+    {
+        float coundDown = 7f;
+        float elapsedTime = 0f;
+        while (elapsedTime < coundDown)
+        {
+            elapsedTime += Time.deltaTime;
+            yield return null;
+
+            if (!isInRangeOfGhost)
+            {
+                shouldHeal = false;
+                break;
+            }
+
+        }
+
+        playerHealingEffect.Stop();
+        StopCoroutine(healingCourtuine);
+        healingCourtuine = null;
+    }
     public IEnumerator CheckPlayerInput(Collider other)
     {
-        bool shouldHeal = true;
+        shouldHeal = true;
 
         while (isInRangeOfGhost && shouldHeal)
         {
-            ghost.transform.rotation = transform.rotation;
-
-            if (keypress && healingCourtuine == null && !HasAwaknedGhost)
-            {
-                ghost.transform.rotation = transform.rotation;
-                HasAwaknedGhost = true;
-                playerHealingEffect.Play();
-                healingCourtuine = StartCoroutine(HealthUpGrduadly());
-                StopCoroutine(decayCourtuine);
-                decayCourtuine = null;
-                PlayerVoiceManager.Instance.GuardGettingCloser.Stop();
-                PlayerVoiceManager.Instance.PlayerOhNoScream.Stop();
-                float coundDown = 7f;
-                float elapsedTime = 0f;
-                while (elapsedTime < coundDown)
-                {
-                    ghost.transform.rotation = transform.rotation;
-                    elapsedTime += Time.deltaTime;
-                    yield return null;
-
-                    if (!isInRangeOfGhost)
-                    {
-                        shouldHeal = false;
-                        break;
-                    }
-
-                }
-                playerHealingEffect.Stop();
-                StopCoroutine(healingCourtuine);
-                healingCourtuine = null;
-
-            }
+            OnInteraction(new());
             yield return null;
         }
 
@@ -138,11 +165,11 @@ public class PlayerGhostAwake : MonoBehaviour, Iinteraction
             {
                 PlayerVoiceManager.Instance.playerBreathing.pitch = 2f;
                 PlayerVoiceManager.Instance.playerBreathing.volume = 1f;
-            }   
+            }
 
             if (GameManager.Instance.playerStats.HP <= 5f)
             {
-              
+
                 Camera.main.transform.LookAt(transform.position);
                 PlayerVoiceManager.Instance.playerBreathing.Stop();
                 PlayerVoiceManager.Instance.playerScream.Play();
