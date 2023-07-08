@@ -5,9 +5,10 @@ public class KeyScript : MonoBehaviour, IInput
 {
     [HideInInspector] public bool Haskey { get; private set; } = false;
 
+    [SerializeField] private InputActionsSO InputActions;
+
     private bool pickUpAllowed = false;
 
-    [SerializeField] private InputActionsSO InputActions;
 
     private void OnEnable()
     {
@@ -21,6 +22,13 @@ public class KeyScript : MonoBehaviour, IInput
         InputActions.Interaction.canceled -= OnInteraction;
     }
 
+    public void OnInteraction(InputAction.CallbackContext context)
+    {
+        if (context.performed && pickUpAllowed)
+        {
+            PickUp();
+        }
+    }
 
     private void OnTriggerEnter(Collider collision)
     {
@@ -42,13 +50,6 @@ public class KeyScript : MonoBehaviour, IInput
     {
         gameObject.SetActive(false);
         Haskey = true;
-    }
-    public void OnInteraction(InputAction.CallbackContext context)
-    {
-        if (context.performed && pickUpAllowed)
-        {
-            PickUp();
-        }
     }
 
 }

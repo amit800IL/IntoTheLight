@@ -4,17 +4,16 @@ using UnityEngine.InputSystem;
 
 public class PlayerMovement : MonoBehaviour
 {
-
     [field: Header("General")]
 
     private Vector3 newMove;
+
+    private bool isMoving = false;
     [field: SerializeField] public Collider playerCollider { get; private set; }
 
     [SerializeField] private InputActionsSO InputActions;
 
     [SerializeField] private Rigidbody playerRigidBody;
-
-    private bool isMoving = false;
 
     [Header("Ground Check")]
 

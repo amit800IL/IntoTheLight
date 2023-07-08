@@ -40,13 +40,13 @@ public class GhostManager : MonoBehaviour
     }
 
 
-    public LightGhost GetActiveGhost()
-    {
-        if (activeGhost != null && activeGhost.IsGhostAwake)
-        {
-            return activeGhost;
-        }
+    //public LightGhost GetActiveGhost()
+    //{
+    //    //if (activeGhost != null && activeGhost.IsGhostAwake)
+    //    //{
+    //    //    return activeGhost;
+    //    //}
 
-        return null;
-    }
+    //    //return null;
+    //}
 }

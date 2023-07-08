@@ -5,15 +5,15 @@ using UnityEngine.InputSystem;
 
 public class LightGhost : MonoBehaviour, IInput
 {
+    private bool IsGhostAwake = false;
     [field: SerializeField] public Light Light { get; private set; }
 
     [SerializeField] private ParticleSystem GhostHealingLight;
 
-    public bool IsGhostAwake = false;
+    [SerializeField] private InputActionsSO InputActions;
+
 
     private Coroutine WakeCourtine;
-
-    [SerializeField] private InputActionsSO InputActions;
     private void Start()
     {
         CheckIfGhostAwake();

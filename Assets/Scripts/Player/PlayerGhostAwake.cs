@@ -14,6 +14,7 @@ public class PlayerGhostAwake : MonoBehaviour, Iinteraction, IInput
     private bool shouldHeal;
     [SerializeField] private ParticleSystem playerHealingEffect;
     [SerializeField] private PlayerMovement playerMovement;
+    [SerializeField] private InputActionsSO InputActions;
 
     [Header("Coroutines")]
 
@@ -26,7 +27,6 @@ public class PlayerGhostAwake : MonoBehaviour, Iinteraction, IInput
     [SerializeField] private float SanityDownNumber;
 
 
-    public InputActionsSO InputActions;
 
     private void Start()
     {
