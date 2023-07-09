@@ -131,7 +131,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &831659131589593550
 Transform:
   m_ObjectHideFlags: 0
@@ -259,7 +259,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &3427521229770411605
 Transform:
   m_ObjectHideFlags: 0
@@ -387,7 +387,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &2420476459805288630
 Transform:
   m_ObjectHideFlags: 0
@@ -551,13 +551,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   canKillPlayer: 1
-  agent: {fileID: 6777421282977997086}
+  <agent>k__BackingField: {fileID: 6777421282977997086}
   enemyLight: {fileID: 4019241146482662692}
   animator: {fileID: 7247184916246678163}
-  EnemySpeed: 1
+  <EnemySpeed>k__BackingField: 1
   killingDistance: 3
+  guardScream: {fileID: 5349354144246091762}
   guardKillingScream: {fileID: 85036350536011326}
   guardFlySound: {fileID: 4274505277907835150}
+  suitManRenderer: {fileID: 5486136520536589058}
 --- !u!195 &6777421282977997086
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -677,6 +679,12 @@ PrefabInstance:
 --- !u!4 &287010591596764750 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: a3810bf3ad7491b4595253fa6e299aac,
+    type: 3}
+  m_PrefabInstance: {fileID: 320058908701571493}
+  m_PrefabAsset: {fileID: 0}
+--- !u!137 &5486136520536589058 stripped
+SkinnedMeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 5211720267947752103, guid: a3810bf3ad7491b4595253fa6e299aac,
     type: 3}
   m_PrefabInstance: {fileID: 320058908701571493}
   m_PrefabAsset: {fileID: 0}

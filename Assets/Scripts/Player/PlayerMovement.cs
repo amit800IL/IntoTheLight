@@ -72,7 +72,7 @@ public class PlayerMovement : MonoBehaviour
         Right.Normalize();
 
         Vector3 moveDirection = newMove.x * Right + newMove.z * Forward;
-        playerRigidBody.velocity = moveDirection * GameManager.Instance.playerStats.speed;
+        playerRigidBody.velocity = moveDirection * GameManager.Instance.playerStats.speed * Time.deltaTime;
     }
 
     private void PlayerWalk()

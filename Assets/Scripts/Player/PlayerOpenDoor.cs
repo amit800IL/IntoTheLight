@@ -8,6 +8,12 @@ public class PlayerOpenDoor : MonoBehaviour, Iinteraction, IInput
     private bool isInDoorTrigger;
     [SerializeField] private KeyScript keyScript;
     [SerializeField] private Transform Door;
+    private InputAction.CallbackContext context;
+
+    private void Start()
+    {
+        context = new InputAction.CallbackContext();
+    }
 
     public void OnInteraction(InputAction.CallbackContext context)
     {
@@ -41,7 +47,7 @@ public class PlayerOpenDoor : MonoBehaviour, Iinteraction, IInput
 
     public IEnumerator CheckPlayerInput(Collider other)
     {
-        OnInteraction(new());
+        OnInteraction(context);
 
         yield return new WaitForSeconds(1);
     }

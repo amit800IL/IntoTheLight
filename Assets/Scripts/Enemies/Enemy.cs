@@ -11,17 +11,18 @@ public abstract class Enemy : MonoBehaviour
     protected bool isChasingPlayer;
     protected float distance;
     [SerializeField] protected bool canKillPlayer;
-    [SerializeField] public NavMeshAgent agent;
+    [field: SerializeField] public NavMeshAgent agent { get; protected set; }
     [SerializeField] protected Light enemyLight;
     [SerializeField] protected Animator animator;
 
-    [Header("Numbers")]
+    [field: Header("Numbers")]
 
-    [SerializeField] public float EnemySpeed;
+    [field: SerializeField] public float EnemySpeed { get; protected set; }
     [SerializeField] protected float killingDistance;
 
     [Header("Audio Sources")]
 
+    [SerializeField] protected AudioSource guardScream;
     [SerializeField] protected AudioSource guardKillingScream;
     [SerializeField] protected AudioSource guardFlySound;
 

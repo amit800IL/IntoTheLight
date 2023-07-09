@@ -127,3 +127,20 @@ MonoBehaviour:
       m_Action: Interaction
       m_Flags: 0
     m_Flags: 1
+  Pause:
+    m_Name: Pause
+    m_Type: 1
+    m_ExpectedControlType: Button
+    m_Id: 49b971e6-3a92-4180-afc6-dc8b73580527
+    m_Processors: 
+    m_Interactions: 
+    m_SingletonActionBindings:
+    - m_Name: 
+      m_Id: e71ffacb-c1e7-4acb-ab57-4de3264f6328
+      m_Path: <Keyboard>/escape
+      m_Interactions: 
+      m_Processors: 
+      m_Groups: 
+      m_Action: Pause
+      m_Flags: 0
+    m_Flags: 1

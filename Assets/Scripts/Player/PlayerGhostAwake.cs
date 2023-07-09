@@ -26,10 +26,13 @@ public class PlayerGhostAwake : MonoBehaviour, Iinteraction, IInput
     [SerializeField] private float SanityUpNumber;
     [SerializeField] private float SanityDownNumber;
 
+    private InputAction.CallbackContext context;
+
 
 
     private void Start()
     {
+        context = new InputAction.CallbackContext();
         decayCourtuine = StartCoroutine(HealthDownGrduadly());
     }
 
@@ -114,7 +117,7 @@ public class PlayerGhostAwake : MonoBehaviour, Iinteraction, IInput
 
         while (isInRangeOfGhost && shouldHeal)
         {
-            OnInteraction(new());
+            OnInteraction(context);
             yield return null;
         }
 

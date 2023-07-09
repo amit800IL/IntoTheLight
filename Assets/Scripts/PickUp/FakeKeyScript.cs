@@ -48,7 +48,7 @@ public class FakeKeyScript : MonoBehaviour , IInput
 
             offset.y = 0;
 
-            guard.agent.Warp(GameManager.Instance.Player.transform.position + offset);
+            guard.agent.Warp(GameManager.Instance.Player.transform.position);
         }
     }
 
