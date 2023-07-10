@@ -5,7 +5,6 @@ public class PlayerStats : MonoBehaviour
     public float HP;
     public float maxHp = 100;
     public float speed;
-    public float lookSpeed;
 
     private void Start()
     {

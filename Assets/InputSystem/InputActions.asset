@@ -69,8 +69,8 @@ MonoBehaviour:
     m_Processors: 
     m_Interactions: 
     m_SingletonActionBindings:
-    - m_Name: MouseLook
-      m_Id: 0c061d24-0ed2-4fbe-b35f-b0032037d87a
+    - m_Name: PlayerLook
+      m_Id: 2c2f1181-78f1-4743-ab20-f8bd94afda93
       m_Path: 2DVector
       m_Interactions: 
       m_Processors: 
@@ -78,7 +78,7 @@ MonoBehaviour:
       m_Action: Look
       m_Flags: 4
     - m_Name: up
-      m_Id: 3b31b7a3-ad9b-4b05-9fd5-754e98825863
+      m_Id: dd64a2b4-080a-4e94-89d7-e7031c11ccbd
       m_Path: <Mouse>/delta/up
       m_Interactions: 
       m_Processors: 
@@ -86,7 +86,7 @@ MonoBehaviour:
       m_Action: Look
       m_Flags: 8
     - m_Name: down
-      m_Id: a8462759-6f4a-4ab2-be61-e03683904530
+      m_Id: 58ccebd5-b2a0-478b-bde6-974af5b14ba1
       m_Path: <Mouse>/delta/down
       m_Interactions: 
       m_Processors: 
@@ -94,7 +94,7 @@ MonoBehaviour:
       m_Action: Look
       m_Flags: 8
     - m_Name: left
-      m_Id: f8917b93-c990-499c-b2c7-88ce1c907acd
+      m_Id: b2648e34-2a0f-4902-aeea-acfecbf91e4f
       m_Path: <Mouse>/delta/left
       m_Interactions: 
       m_Processors: 
@@ -102,7 +102,7 @@ MonoBehaviour:
       m_Action: Look
       m_Flags: 8
     - m_Name: right
-      m_Id: fcb3f4e8-f8f1-4f99-9351-5923eaba45d3
+      m_Id: aaccad2e-8e32-4b33-95a2-708cc8cb07c8
       m_Path: <Mouse>/delta/right
       m_Interactions: 
       m_Processors: 

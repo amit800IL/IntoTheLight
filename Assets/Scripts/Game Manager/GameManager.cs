@@ -1,5 +1,7 @@
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class GameManager : MonoBehaviour
 {
@@ -26,6 +28,8 @@ public class GameManager : MonoBehaviour
         {
             Destroy(Instance);
         }
+
+        Cursor.visible = false;
     }
 
     private void Start()

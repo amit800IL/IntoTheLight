@@ -848,7 +848,6 @@ MonoBehaviour:
   HP: 100
   maxHp: 100
   speed: 300
-  lookSpeed: 50
 --- !u!54 &1575560974512497516
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -995,6 +994,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e028801766a65bd43a94f76d5084a231, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  smoothing: 1.5
+  mouseSenstivity: 3
   orientation: {fileID: 2798869438148834181}
   playerTransform: {fileID: 1147674315953803344}
   cameraTransform: {fileID: 5839926824862602603}
@@ -1303,7 +1304,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &8870302261371695549
 Transform:
   m_ObjectHideFlags: 0
