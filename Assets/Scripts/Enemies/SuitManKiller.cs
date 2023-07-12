@@ -5,66 +5,73 @@ public class SuitManKiller : Enemy
 {
     [SerializeField] private SkinnedMeshRenderer suitManRenderer;
 
-    protected override void Start()
+    protected override void GoToPlayer(float Radius)
     {
-        canKillPlayer = false;
-        isChasingPlayer = false;
-        base.Start();
-    }
-    protected override void GoToPlayer()
-    {
-        animator.SetBool("IsWalking", true);
+        int randomIndex = Random.Range(0, enemyAnimations.Length);
+        string randomAnimation = enemyAnimations[randomIndex];
+        animator.SetTrigger(randomAnimation);
 
-        base.GoToPlayer();
+        base.GoToPlayer(Radius);
 
     }
     protected override IEnumerator ChasePlayer()
     {
-        Vector3 offset = new Vector3(5, 0, 0);
+        isChasingPlayer = true;
+
+        Vector3 offset = new Vector3(8, 0, 0);
 
         yield return new WaitForSeconds(5);
 
+
         for (int i = 0; i < 2; i++)
         {
-            GoToPlayer();
+            GoToPlayer(8f);
 
             guardFlySound.Play();
 
-            guardScream.Play();
+            AudioSource randomScream = enemyScreams[Random.Range(0, enemyScreams.Length)];
+            randomScream.Play();
 
             enemyLight.enabled = false;
 
-            transform.position = GameManager.Instance.Player.transform.position + offset;
+            GoToPlayer(8f);
+            yield return new WaitForSeconds(Random.Range(minDelay, maxDelay));
 
-            yield return new WaitForSeconds(5);
-
-            transform.position = GameManager.Instance.Player.transform.position + offset;
+            GoToPlayer(8f);
 
             suitManRenderer.forceRenderingOff = true;
 
-            guardScream.Stop();
+            yield return new WaitForSeconds(Random.Range(minDelay, maxDelay));
 
-            yield return new WaitForSeconds(5);
-
-            transform.position = GameManager.Instance.Player.transform.position + offset;
+            GoToPlayer(8f);
 
             guardFlySound.Stop();
 
-            guardScream.Play();
+            randomScream = enemyScreams[Random.Range(0, enemyScreams.Length)];
+            randomScream.Play();
 
             suitManRenderer.forceRenderingOff = false;
 
             enemyLight.enabled = true;
 
-            yield return new WaitForSeconds(5);
+            yield return new WaitForSeconds(Random.Range(minDelay, maxDelay));
 
             guardFlySound.Play();
 
-            guardScream.Play();
+            GoToPlayer(8f);
+
+            randomScream = enemyScreams[Random.Range(0, enemyScreams.Length)];
+            randomScream.Play();
 
             suitManRenderer.forceRenderingOff = true;
 
             enemyLight.enabled = false;
+
+            yield return new WaitForSeconds(Random.Range(minDelay, maxDelay));
+
+            randomScream = enemyScreams[Random.Range(0, enemyScreams.Length)];
+            randomScream.Play();
+
         }
 
         canKillPlayer = true;
@@ -79,5 +86,4 @@ public class SuitManKiller : Enemy
 
 
     }
-
 }

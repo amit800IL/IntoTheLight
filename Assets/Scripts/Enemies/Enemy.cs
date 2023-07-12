@@ -32,9 +32,8 @@ public abstract class Enemy : MonoBehaviour
     [SerializeField] protected AudioSource guardKillingScream;
     [SerializeField] protected AudioSource guardFlySound;
 
-    public AudioSource[] enemyScreams;
-
-    public string[] enemyAnimations;
+    [SerializeField] protected AudioSource[] enemyScreams;
+    [SerializeField] protected string[] enemyAnimations;
 
     protected virtual void Start()
     {
@@ -45,16 +44,15 @@ public abstract class Enemy : MonoBehaviour
         StartCoroutine(ChasePlayer());
     }
 
-    protected virtual void GoToPlayer()
+    protected virtual void GoToPlayer(float Radius)
     {
         Vector3 targetPosition = GameManager.Instance.Player.transform.position;
-        agent.SetDestination(targetPosition);
+        Vector2 randomCircle = Random.insideUnitCircle * Radius;
+        Vector3 randomPosition = targetPosition + new Vector3(randomCircle.x, 0, randomCircle.y);
+        agent.SetDestination(randomPosition);
     }
     protected virtual IEnumerator ChasePlayer()
     {
-        enemyLight.enabled = true;
-        isChasingPlayer = true;
-        guardFlySound.Play();
 
         while (isChasingPlayer)
         {
@@ -63,6 +61,7 @@ public abstract class Enemy : MonoBehaviour
             AudioSource randomScream = enemyScreams[Random.Range(0, enemyScreams.Length)];
             randomScream.Play();
 
+            GoToPlayer(8f);
 
             if (agent != null && distance < killingDistance && canKillPlayer)
             {
@@ -94,5 +93,6 @@ public abstract class Enemy : MonoBehaviour
         PlayerVoiceManager.Instance.playerScream.Play();
         PlayerVoiceManager.Instance.secondPlayerScream.Play();
     }
+
 
 }

@@ -5,13 +5,13 @@ public class SuitMan : Enemy
 {
     [SerializeField] private SkinnedMeshRenderer suitManRenderer;
 
-    protected override void GoToPlayer()
+    protected override void GoToPlayer(float Radius)
     {
         int randomIndex = Random.Range(0, enemyAnimations.Length);
         string randomAnimation = enemyAnimations[randomIndex];
         animator.SetBool(randomAnimation, true);
 
-        base.GoToPlayer();
+        base.GoToPlayer(Radius);
 
     }
     protected override IEnumerator ChasePlayer()
@@ -25,7 +25,7 @@ public class SuitMan : Enemy
 
         for (int i = 0; i < 2; i++)
         {
-            GoToPlayer();
+            GoToPlayer(8f);
 
             guardFlySound.Play();
 
@@ -34,16 +34,16 @@ public class SuitMan : Enemy
 
             enemyLight.enabled = false;
 
-            agent.transform.position = GameManager.Instance.Player.transform.position + offset;
+            GoToPlayer(8f);
             yield return new WaitForSeconds(Random.Range(minDelay, maxDelay));
 
-            agent.transform.position = GameManager.Instance.Player.transform.position + offset;
+            GoToPlayer(8f);
 
             suitManRenderer.forceRenderingOff = true;
 
             yield return new WaitForSeconds(Random.Range(minDelay, maxDelay));
 
-            agent.transform.position = GameManager.Instance.Player.transform.position + offset;
+            GoToPlayer(8f);
 
             guardFlySound.Stop();
 
@@ -58,6 +58,7 @@ public class SuitMan : Enemy
 
             guardFlySound.Play();
 
+            GoToPlayer(8f);
 
             randomScream = enemyScreams[Random.Range(0, enemyScreams.Length)];
             randomScream.Play();
@@ -78,10 +79,8 @@ public class SuitMan : Enemy
         enemyLight.enabled = true;
         suitManRenderer.forceRenderingOff = false;
 
-        while (isChasingPlayer)
-        {
-            yield return base.ChasePlayer();
-        }
+        yield return base.ChasePlayer();
+
 
     }
 }
