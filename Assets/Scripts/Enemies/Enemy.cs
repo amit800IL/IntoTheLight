@@ -10,15 +10,21 @@ public abstract class Enemy : MonoBehaviour
 
     protected bool isChasingPlayer;
     protected float distance;
-    [SerializeField] protected bool canKillPlayer;
+    [SerializeField] protected bool canKillPlayer = true;
     [field: SerializeField] public NavMeshAgent agent { get; protected set; }
     [SerializeField] protected Light enemyLight;
     [SerializeField] protected Animator animator;
 
     [field: Header("Numbers")]
 
-    [field: SerializeField] public float EnemySpeed { get; protected set; }
-    [SerializeField] protected float killingDistance;
+    protected float maxDelay = 1f;
+    protected float minDelay = 1f;
+    protected float minEnemySpeed = 5f;
+    protected float maxEnemySpeed = 10f;
+    protected float minkillingDistance = 3f;
+    protected float maxKillingDistance = 6f;
+    public float EnemySpeed { get; protected set; }
+    protected float killingDistance;
 
     [Header("Audio Sources")]
 
@@ -26,8 +32,16 @@ public abstract class Enemy : MonoBehaviour
     [SerializeField] protected AudioSource guardKillingScream;
     [SerializeField] protected AudioSource guardFlySound;
 
+    public AudioSource[] enemyScreams;
+
+    public string[] enemyAnimations;
+
     protected virtual void Start()
     {
+        isChasingPlayer = false;
+        killingDistance = Random.Range(minkillingDistance, maxKillingDistance);
+        EnemySpeed = Random.Range(minEnemySpeed, maxEnemySpeed);
+        agent.speed = EnemySpeed;
         StartCoroutine(ChasePlayer());
     }
 
@@ -44,9 +58,11 @@ public abstract class Enemy : MonoBehaviour
 
         while (isChasingPlayer)
         {
-            distance = Vector3.Distance(transform.position, GameManager.Instance.Player.transform.position);
+            distance = Vector3.Distance(agent.transform.position, GameManager.Instance.Player.transform.position);
 
-            GoToPlayer();
+            AudioSource randomScream = enemyScreams[Random.Range(0, enemyScreams.Length)];
+            randomScream.Play();
+
 
             if (agent != null && distance < killingDistance && canKillPlayer)
             {
@@ -67,11 +83,11 @@ public abstract class Enemy : MonoBehaviour
 
     protected void GuardKill()
     {
-        Camera.main.transform.LookAt(transform.position);
+        Camera.main.transform.LookAt(agent.transform.position);
         guardKillingScream.Play();
         guardKillingScream.volume = 1f;
         Vector3 targetPosition = GameManager.Instance.Player.transform.position;
-        targetPosition.y = transform.position.y;
+        targetPosition.y = agent.transform.position.y;
         Camera.main.transform.LookAt(targetPosition);
         agent.isStopped = true;
         GameManager.Instance.playerStats.HP -= 200;

@@ -108,7 +108,7 @@ NavMeshSettings:
   m_BuildSettings:
     serializedVersion: 2
     agentTypeID: 0
-    agentRadius: 0.3
+    agentRadius: 0.1
     agentHeight: 2
     agentSlope: 45
     agentClimb: 2
@@ -116,7 +116,7 @@ NavMeshSettings:
     maxJumpAcrossDistance: 0
     minRegionArea: 2
     manualCellSize: 0
-    cellSize: 0.1
+    cellSize: 0.033333335
     manualTileSize: 0
     tileSize: 256
     accuratePlacement: 0
@@ -1010,11 +1010,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: SuitManKiller
       objectReference: {fileID: 0}
-    - target: {fileID: 7320963435959732098, guid: d3f9a1c146d1b07468d9ed7a049519df,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d3f9a1c146d1b07468d9ed7a049519df, type: 3}
 --- !u!1 &974231382
@@ -1573,6 +1568,16 @@ PrefabInstance:
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: 89c1baad907fe244db91efe208a1febb, type: 2}
+    - target: {fileID: 8281560202221597816, guid: 6f05042252408014aac0f95c2515567b,
+        type: 3}
+      propertyPath: m_NavMeshLayer
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8281560202221597816, guid: 6f05042252408014aac0f95c2515567b,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 8
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6f05042252408014aac0f95c2515567b, type: 3}
 --- !u!4 &1403003337 stripped
