@@ -21,6 +21,10 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private Transform GroundCheck;
     [SerializeField] private LayerMask groundMask;
 
+    private void Start()
+    {
+        InputActions.Move.Enable();
+    }
 
     private void OnEnable()
     {
@@ -107,25 +111,7 @@ public class PlayerMovement : MonoBehaviour
             }
 
         }
-
-        if (collision.gameObject.CompareTag("SafeRoom"))
-        {
-            foreach (Collider safeRoomDoor in GameManager.Instance.safeRoomDoor)
-            {
-                Physics.IgnoreCollision(playerCollider, safeRoomDoor);
-            }
-        }
     }
 
-    private void OnCollisionExit(Collision collision)
-    {
-        if (collision.gameObject.CompareTag("SafeRoom"))
-        {
-            foreach (Collider safeRoomDoor in GameManager.Instance.safeRoomDoor)
-            {
-                Physics.IgnoreCollision(playerCollider, safeRoomDoor);
-            }
-        }
-    }
 
 }

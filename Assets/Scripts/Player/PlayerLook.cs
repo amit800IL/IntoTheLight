@@ -15,7 +15,10 @@ public class PlayerLook : MonoBehaviour
     [SerializeField] private InputActionsSO InputActions;
 
 
-
+    private void Start()
+    {
+        InputActions.Look.Enable();
+    }
     private void OnEnable()
     {
         InputActions.Look.performed += OnLook;

@@ -15,6 +15,7 @@ TagManager:
   - SafeRoom
   - SoundTrigger
   - EnemyTrigger
+  - Enemy
   layers:
   - Default
   - TransparentFX

@@ -12,9 +12,11 @@ public class PlayerGhostAwake : MonoBehaviour, Iinteraction, IInput
 
     private LightGhost ghost;
     private bool shouldHeal;
+    [SerializeField] private CoolDownSO coolDown;
     [SerializeField] private ParticleSystem playerHealingEffect;
     [SerializeField] private PlayerMovement playerMovement;
     [SerializeField] private InputActionsSO InputActions;
+    [SerializeField] private GhostEvents ghostEvents;
 
     [Header("Coroutines")]
 
@@ -73,11 +75,12 @@ public class PlayerGhostAwake : MonoBehaviour, Iinteraction, IInput
         shouldHeal = true;
         if (context.performed && healingCourtuine == null && !HasAwaknedGhost && isInRangeOfGhost)
         {
-            ghost.transform.rotation = transform.rotation;
             HasAwaknedGhost = true;
 
             PlayerVoiceManager.Instance.GuardGettingCloser.Stop();
             PlayerVoiceManager.Instance.PlayerOhNoScream.Stop();
+
+            ghostEvents.InvokeGhostAwake();
 
             StartCoroutine(HealingTimer());
 
@@ -85,14 +88,13 @@ public class PlayerGhostAwake : MonoBehaviour, Iinteraction, IInput
             healingCourtuine = StartCoroutine(HealthUpGrduadly());
             StopCoroutine(decayCourtuine);
             decayCourtuine = null;
-
         }
 
     }
 
     private IEnumerator HealingTimer()
     {
-        float coundDown = 7f;
+        float coundDown = coolDown.coolDownTimer;
         float elapsedTime = 0f;
         while (elapsedTime < coundDown)
         {
@@ -129,7 +131,8 @@ public class PlayerGhostAwake : MonoBehaviour, Iinteraction, IInput
             decayCourtuine = StartCoroutine(HealthDownGrduadly());
         }
 
-        yield return new WaitForSeconds(5);
+        yield return new WaitForSeconds(coolDown.coolDownTimer);
+        ghostEvents.InvokeGhostSleep();
         HasAwaknedGhost = false;
         yield return null;
 
@@ -149,7 +152,6 @@ public class PlayerGhostAwake : MonoBehaviour, Iinteraction, IInput
         }
 
     }
-
     private IEnumerator HealthDownGrduadly()
     {
         while (GameManager.Instance.playerStats.HP > 0)

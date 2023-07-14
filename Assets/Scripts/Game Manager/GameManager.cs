@@ -13,8 +13,6 @@ public class GameManager : MonoBehaviour
     [field: SerializeField] public PlayerStats playerStats { get; private set; }
 
     [field: Header("Colliders Refernces")]
-    [field: SerializeField] public Collider[] safeRoomDoor { get; private set; }
-
     [field : SerializeField] public List<GameObject> enemies { get; private set; }
 
     private void Awake()

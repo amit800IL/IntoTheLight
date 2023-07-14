@@ -12,10 +12,16 @@ public class LightGhost : MonoBehaviour, IInput
 
     [SerializeField] private InputActionsSO InputActions;
 
+    [SerializeField] private CoolDownSO coolDown;
+
+    [SerializeField] private GhostEvents ghostEvents;
+
 
     private Coroutine WakeCourtine;
     private void Start()
     {
+        ghostEvents.OnGhostAwake += OnGhostAwake;
+        ghostEvents.OnGhostSleep += OnGhostSleep;
         CheckIfGhostAwake();
     }
 
@@ -72,7 +78,7 @@ public class LightGhost : MonoBehaviour, IInput
     public IEnumerator GhostFromWakeToSleep()
     {
         OnGhostAwake();
-        yield return new WaitForSeconds(7);
+        yield return new WaitForSeconds(coolDown.coolDownTimer);
         OnGhostSleep();
     }
 
