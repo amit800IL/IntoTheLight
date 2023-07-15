@@ -636,11 +636,12 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6050444081387312380}
-  - component: {fileID: 143176578542116239}
+  - component: {fileID: 1468124598860436399}
   - component: {fileID: 6777421282977997086}
   - component: {fileID: 7247184916246678163}
   - component: {fileID: 1148225672}
   - component: {fileID: 1148225671}
+  - component: {fileID: 6041768982576153642}
   m_Layer: 0
   m_Name: Enemy
   m_TagString: Enemy
@@ -670,7 +671,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &143176578542116239
+--- !u!114 &1468124598860436399
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -679,22 +680,21 @@ MonoBehaviour:
   m_GameObject: {fileID: 7320963435959732098}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ff6a4f85a525b2d47a396cef981dda1e, type: 3}
+  m_Script: {fileID: 11500000, guid: 157fda3e1254817459ee03f901c5c3db, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  canKillPlayer: 1
   <agent>k__BackingField: {fileID: 6777421282977997086}
+  enemyRenderer: {fileID: 7845111578218500457}
   enemyLight: {fileID: 4019241146482662692}
   animator: {fileID: 7247184916246678163}
-  guardScream: {fileID: 5349354144246091762}
-  guardKillingScream: {fileID: 5971873096229309752}
-  guardWalkSound: {fileID: 4274505277907835150}
   enemyScreams:
   - {fileID: 5971873096229309752}
   - {fileID: 2938674370795472078}
   - {fileID: 5349354144246091762}
   inputActions: {fileID: 11400000, guid: 32a8ba2bb0af2b44b801e74f479228ce, type: 2}
-  suitManRenderer: {fileID: 7845111578218500457}
+  guardScream: {fileID: 5971873096229309752}
+  guardKillingScream: {fileID: 2938674370795472078}
+  guardWalkSound: {fileID: 4274505277907835150}
 --- !u!195 &6777421282977997086
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -767,6 +767,23 @@ CapsuleCollider:
   m_Height: 4.7817144
   m_Direction: 1
   m_Center: {x: -0.07489347, y: 3.2197633, z: 0.024070619}
+--- !u!114 &6041768982576153642
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7320963435959732098}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 17b6353140fbdee4896d61bb8ad63e9c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rightDoor:
+  - {fileID: 0}
+  - {fileID: 0}
+  leftDoor: []
+  inputActions: {fileID: 11400000, guid: 32a8ba2bb0af2b44b801e74f479228ce, type: 2}
 --- !u!1 &7814672890762324622
 GameObject:
   m_ObjectHideFlags: 0

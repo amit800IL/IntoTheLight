@@ -30,8 +30,6 @@ public class PlayerGhostAwake : MonoBehaviour, Iinteraction, IInput
 
     private InputAction.CallbackContext context;
 
-
-
     private void Start()
     {
         context = new InputAction.CallbackContext();
@@ -64,7 +62,7 @@ public class PlayerGhostAwake : MonoBehaviour, Iinteraction, IInput
     {
         if (other.gameObject.CompareTag("GhostLight"))
         {
-            ghost.OnGhostSleep();
+            ghostEvents.InvokeGhostSleep();
             ghost = null;
             isInRangeOfGhost = false;
         }
@@ -75,14 +73,16 @@ public class PlayerGhostAwake : MonoBehaviour, Iinteraction, IInput
         shouldHeal = true;
         if (context.performed && healingCourtuine == null && !HasAwaknedGhost && isInRangeOfGhost)
         {
+            ghostEvents.InvokeGhostAwake();
+
+     
+
             HasAwaknedGhost = true;
 
             PlayerVoiceManager.Instance.GuardGettingCloser.Stop();
             PlayerVoiceManager.Instance.PlayerOhNoScream.Stop();
 
-            ghostEvents.InvokeGhostAwake();
-
-            StartCoroutine(HealingTimer());
+            HealingTimer();
 
             playerHealingEffect.Play();
             healingCourtuine = StartCoroutine(HealthUpGrduadly());
@@ -92,17 +92,17 @@ public class PlayerGhostAwake : MonoBehaviour, Iinteraction, IInput
 
     }
 
-    private IEnumerator HealingTimer()
+    private void HealingTimer()
     {
         float coundDown = coolDown.coolDownTimer;
         float elapsedTime = 0f;
         while (elapsedTime < coundDown)
         {
             elapsedTime += Time.deltaTime;
-            yield return null;
 
             if (!isInRangeOfGhost)
             {
+                ghostEvents.InvokeGhostSleep();
                 shouldHeal = false;
                 break;
             }
@@ -110,8 +110,12 @@ public class PlayerGhostAwake : MonoBehaviour, Iinteraction, IInput
         }
 
         playerHealingEffect.Stop();
-        StopCoroutine(healingCourtuine);
-        healingCourtuine = null;
+
+        if (healingCourtuine != null)
+        {
+            StopCoroutine(healingCourtuine);
+            healingCourtuine = null;
+        }
     }
     public IEnumerator CheckPlayerInput(Collider other)
     {
@@ -143,11 +147,11 @@ public class PlayerGhostAwake : MonoBehaviour, Iinteraction, IInput
         {
             GameManager.Instance.playerStats.HP += SanityUpNumber;
 
-            if (PlayerVoiceManager.Instance.playerBreathing.volume == 0.5f)
-            {
-                PlayerVoiceManager.Instance.playerBreathing.volume = 1f;
-                PlayerVoiceManager.Instance.playerBreathing.volume -= 0.1f;
-            }
+            //if (PlayerVoiceManager.Instance.playerBreathing.volume == 0.5f)
+            //{
+            //    PlayerVoiceManager.Instance.playerBreathing.volume = 1f;
+            //    PlayerVoiceManager.Instance.playerBreathing.volume -= 0.1f;
+            //}
             yield return new WaitForSeconds(1);
         }
 
@@ -158,16 +162,16 @@ public class PlayerGhostAwake : MonoBehaviour, Iinteraction, IInput
         {
             GameManager.Instance.playerStats.HP -= SanityDownNumber;
 
-            if (PlayerVoiceManager.Instance.playerBreathing.volume > 0.5f)
-            {
-                PlayerVoiceManager.Instance.playerBreathing.volume = 1f;
-            }
+            //if (PlayerVoiceManager.Instance.playerBreathing.volume > 0.5f)
+            //{
+            //    PlayerVoiceManager.Instance.playerBreathing.volume = 1f;
+            //}
 
-            if (GameManager.Instance.playerStats.HP <= 15f)
-            {
-                PlayerVoiceManager.Instance.playerBreathing.pitch = 2f;
-                PlayerVoiceManager.Instance.playerBreathing.volume = 1f;
-            }
+            //if (GameManager.Instance.playerStats.HP <= 15f)
+            //{
+            //    PlayerVoiceManager.Instance.playerBreathing.pitch = 2f;
+            //    PlayerVoiceManager.Instance.playerBreathing.volume = 1f;
+            //}
 
             if (GameManager.Instance.playerStats.HP <= 5f)
             {

@@ -50,6 +50,7 @@ public class LightGhost : MonoBehaviour, IInput
         if (context.performed && !IsGhostAwake && Vector3.Distance(transform.position, GameManager.Instance.Player.transform.position) < 2f && !GameManager.Instance.PlayerGhostAwake.HasAwaknedGhost)
         {
             IsGhostAwake = true;
+            Debug.Log("Light ghost interacted");
             WakeCourtine = StartCoroutine(GhostFromWakeToSleep());
         }
     }
@@ -57,7 +58,10 @@ public class LightGhost : MonoBehaviour, IInput
 
     public void OnGhostAwake()
     {
+        GhostHealingLight.Stop();
+        GhostHealingLight.Clear();
         GhostHealingLight.Play();
+        Debug.Log("Light ghost awake");
     }
 
     public void OnGhostSleep()
@@ -68,8 +72,7 @@ public class LightGhost : MonoBehaviour, IInput
             WakeCourtine = null;
         }
         GhostHealingLight.Stop();
-        GhostHealingLight.gameObject.SetActive(false);
-        GhostHealingLight.gameObject.SetActive(true);
+        Debug.Log("Light ghost asleep");
         Light.spotAngle = 40f;
         Light.intensity = 40f;
         IsGhostAwake = false;

@@ -1,41 +1,41 @@
 using System.Collections;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.SceneManagement;
 
-public abstract class Enemy : MonoBehaviour
+public class Enemy : MonoBehaviour
 {
 
-    [Header("General")]
-
-    protected bool isChasingPlayer;
-    protected float distance;
-    [SerializeField] protected bool canKillPlayer = true;
+    [field: Header("General")]
     [field: SerializeField] public NavMeshAgent agent { get; protected set; }
-    [SerializeField] protected Light enemyLight;
-    [SerializeField] protected Animator animator;
+    private bool isChasingPlayer;
+    private bool canKillPlayer = true;
+    [SerializeField] private SkinnedMeshRenderer enemyRenderer;
+    [SerializeField] private Light enemyLight;
+    [SerializeField] private Animator animator;
+    [SerializeField] private AudioSource[] enemyScreams;
+    [SerializeField] private InputActionsSO inputActions;
 
     [field: Header("Numbers")]
 
-    protected float maxDelay = 2f;
-    protected float minDelay = 5f;
-    protected float minEnemySpeed = 3f;
-    protected float maxEnemySpeed = 6f;
-    protected float minkillingDistance = 3f;
-    protected float maxKillingDistance = 10f;
-    public float EnemySpeed { get; protected set; }
-    protected float killingDistance;
+    public float EnemySpeed { get; private set; }
+    private float maxDelay = 2f;
+    private float minDelay = 5f;
+    private float minEnemySpeed = 3f;
+    private float maxEnemySpeed = 6f;
+    private float minkillingDistance = 3f;
+    private float maxKillingDistance = 10f;
+    private float killingDistance;
+    private float distance;
 
     [Header("Audio Sources")]
 
-    [SerializeField] protected AudioSource guardScream;
-    [SerializeField] protected AudioSource guardKillingScream;
-    [SerializeField] protected AudioSource guardWalkSound;
+    [SerializeField] private AudioSource guardScream;
+    [SerializeField] private AudioSource guardKillingScream;
+    [SerializeField] private AudioSource guardWalkSound;
 
-    [SerializeField] protected AudioSource[] enemyScreams;
 
-    [SerializeField] protected InputActionsSO inputActions;
-
-    protected virtual void Start()
+    private void Start()
     {
         isChasingPlayer = false;
         killingDistance = Random.Range(minkillingDistance, maxKillingDistance);
@@ -44,16 +44,123 @@ public abstract class Enemy : MonoBehaviour
         StartCoroutine(ChasePlayer());
     }
 
-    protected virtual void GoToPlayer(float Radius)
+    private void GoToPlayer(float Radius)
     {
+        animator.SetTrigger("IsWalking");
         Vector3 targetPosition = GameManager.Instance.Player.transform.position;
         Vector2 randomCircle = Random.insideUnitCircle * Radius;
         Vector3 randomPosition = targetPosition + new Vector3(randomCircle.x, 0, randomCircle.y);
         agent.SetDestination(randomPosition);
     }
-    protected abstract IEnumerator ChasePlayer();
+    private IEnumerator ChasePlayer()
+    {
+        enemyRenderer.forceRenderingOff = true;
 
-    protected void GuardKill()
+        isChasingPlayer = true;
+
+        enemyLight.enabled = false;
+
+        yield return new WaitForSeconds(5);
+
+        enemyRenderer.forceRenderingOff = false;
+
+        enemyLight.enabled = true;
+
+        for (int i = 0; i < 2; i++)
+        {
+            animator.SetTrigger("IsWalking");
+            ScarePlayer();
+
+            guardWalkSound.Play();
+
+            AudioSource randomScream = enemyScreams[Random.Range(0, enemyScreams.Length)];
+            randomScream.Play();
+
+            enemyLight.enabled = false;
+
+            animator.SetTrigger("IsWalking");
+            ScarePlayer();
+            yield return new WaitForSeconds(Random.Range(minDelay, maxDelay));
+
+            animator.SetTrigger("IsWalking");
+            ScarePlayer();
+
+            enemyRenderer.forceRenderingOff = true;
+
+            yield return new WaitForSeconds(Random.Range(minDelay, maxDelay));
+
+            animator.SetTrigger("IsWalking");
+            ScarePlayer();
+
+            guardWalkSound.Stop();
+
+            randomScream = enemyScreams[Random.Range(0, enemyScreams.Length)];
+            randomScream.Play();
+
+            enemyRenderer.forceRenderingOff = false;
+
+            enemyLight.enabled = true;
+
+            yield return new WaitForSeconds(Random.Range(minDelay, maxDelay));
+
+            guardWalkSound.Play();
+
+            randomScream = enemyScreams[Random.Range(0, enemyScreams.Length)];
+            randomScream.Play();
+
+            animator.SetTrigger("IsWalking");
+            ScarePlayer();
+
+            enemyRenderer.forceRenderingOff = true;
+
+            enemyLight.enabled = false;
+
+            yield return new WaitForSeconds(Random.Range(minDelay, maxDelay));
+
+            randomScream = enemyScreams[Random.Range(0, enemyScreams.Length)];
+            randomScream.Play();
+
+            yield return new WaitForSeconds(2);
+
+            randomScream.Stop();
+
+        }
+
+        canKillPlayer = true;
+        isChasingPlayer = true;
+        enemyLight.enabled = true;
+        enemyRenderer.forceRenderingOff = false;
+
+        while (isChasingPlayer)
+        {
+            distance = Vector3.Distance(agent.transform.position, GameManager.Instance.Player.transform.position);
+
+            guardWalkSound.Play();
+
+            GoToPlayer(2.5f);
+
+            standInFronOfGhost();
+
+            yield return new WaitForSeconds(3);
+
+            if (agent != null && distance < killingDistance && canKillPlayer)
+            {
+                enemyKill();
+
+                yield return new WaitForSeconds(6);
+
+                if (GameManager.Instance.playerStats.HP <= 0)
+                {
+                    SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+                }
+            }
+            yield return new WaitForSeconds(1);
+        }
+
+        yield return new WaitForSeconds(1);
+    }
+
+    public void enemyKill()
     {
         inputActions.Move.Disable();
         inputActions.Look.Disable();
@@ -78,7 +185,7 @@ public abstract class Enemy : MonoBehaviour
         StartCoroutine(standByPlayer());
     }
 
-    protected IEnumerator standByPlayer()
+    private IEnumerator standByPlayer()
     {
         while (true)
         {
@@ -87,28 +194,40 @@ public abstract class Enemy : MonoBehaviour
             yield return null;
         }
     }
-    protected void SpawnAtPosition()
+    private void ScarePlayer()
     {
- 
-        Vector3 playerDirection = GameManager.Instance.Player.transform.position - transform.position;
-        Vector3 spawnPosition = GameManager.Instance.Player.transform.position + playerDirection.normalized * 5;
-        transform.position = spawnPosition;
+        float WalkAwayDistance = 10f;
+
+        Vector3 WalkDirection = transform.position - GameManager.Instance.Player.transform.position;
+        WalkDirection.y = 0f;
+        Vector3 spawnPosition = transform.position + WalkDirection.normalized * WalkAwayDistance;
+        agent.SetDestination(spawnPosition);
     }
-    protected void standInFronOfGhost()
+
+    private void StandInFrontOfPlayer()
+    {
+        float StandingDistance = 5f;
+
+        Vector3 standingDirection = GameManager.Instance.Player.transform.position - transform.position;
+        Vector3 spawnPosition = GameManager.Instance.Player.transform.position + standingDirection.normalized * StandingDistance;
+        agent.Warp(spawnPosition);
+    }
+    private void standInFronOfGhost()
     {
         if (GameManager.Instance.PlayerGhostAwake.isInRangeOfGhost)
         {
             animator.SetTrigger("IsStanding");
-            SpawnAtPosition();
+            StandInFrontOfPlayer();
             agent.isStopped = true;
             canKillPlayer = false;
         }
-        else
+        else if (!GameManager.Instance.PlayerGhostAwake.isInRangeOfGhost)
         {
+            animator.ResetTrigger("IsStanding");
+            animator.SetTrigger("IsWalking");
             agent.isStopped = false;
             canKillPlayer = true;
-            animator.SetTrigger("IsWalking");
         }
     }
 
-} 
+}

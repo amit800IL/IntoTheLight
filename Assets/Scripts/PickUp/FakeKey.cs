@@ -1,14 +1,21 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using UnityEngine.UI;
 
-public class FakeKeyScript : MonoBehaviour , IInput
+public class FakeKey : MonoBehaviour, IInput
 {
-    private bool pickUpAllowed = false;
-
-    [SerializeField] private Enemy guard;
+    [HideInInspector] public bool Haskey { get; private set; } = false;
 
     [SerializeField] private InputActionsSO InputActions;
+
+    [SerializeField] private Transform chestLock;
+
+    [SerializeField] private Enemy enemy;
+
+    private bool pickUpAllowed = false;
+
+    private bool isInChestTrigger;
+
 
     private void OnEnable()
     {
@@ -24,9 +31,9 @@ public class FakeKeyScript : MonoBehaviour , IInput
 
     public void OnInteraction(InputAction.CallbackContext context)
     {
-        if (context.performed && pickUpAllowed)
+        if (context.performed && pickUpAllowed && isInChestTrigger)
         {
-            PickUp();
+            StartCoroutine(OpenChestAndPickUp());
         }
     }
 
@@ -35,6 +42,7 @@ public class FakeKeyScript : MonoBehaviour , IInput
         if (collision.gameObject.name.Equals("Player"))
         {
             pickUpAllowed = true;
+            isInChestTrigger = true;
         }
     }
 
@@ -43,18 +51,27 @@ public class FakeKeyScript : MonoBehaviour , IInput
         if (collision.gameObject.name.Equals("Player"))
         {
             pickUpAllowed = false;
-
-            Vector3 offset = Random.onUnitSphere * guard.EnemySpeed;
-
-            offset.y = 0;
-
-            guard.agent.Warp(GameManager.Instance.Player.transform.position);
+            isInChestTrigger = false;
         }
     }
 
-    private void PickUp()
+    private IEnumerator OpenChestAndPickUp()
     {
+        if (isInChestTrigger)
+        {
+            chestLock.Rotate(-90, 0, 0);
+        }
+
+        yield return new WaitForSeconds(3);
+
         gameObject.SetActive(false);
+        Haskey = true;
+
+        yield return new WaitForSeconds(5);
+
+        enemy.agent.Warp(GameManager.Instance.Player.transform.position);
+
+        enemy.enemyKill();
     }
-  
+
 }

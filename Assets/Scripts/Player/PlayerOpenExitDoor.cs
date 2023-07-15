@@ -6,7 +6,7 @@ using UnityEngine.InputSystem;
 public class PlayerOpenExitDoor : MonoBehaviour, Iinteraction, IInput
 {
     private bool isInDoorTrigger;
-    [SerializeField] private KeyScript keyScript;
+    [SerializeField] private RealKey keyScript;
     [SerializeField] private Transform Door;
     private InputAction.CallbackContext context;
 

@@ -35,6 +35,7 @@ public class PlayerOpenKeyRoomDoor : MonoBehaviour, IInput
             if (isInDoorTrigger)
             {
                 RightDoor.Rotate(0, -90, 0);
+                RightDoor.position = new Vector3(0, -0.3f,0);
             }
         }
         foreach (Transform LeftDoor in leftDoor)
@@ -42,6 +43,7 @@ public class PlayerOpenKeyRoomDoor : MonoBehaviour, IInput
             if (isInDoorTrigger)
             {
                 LeftDoor.Rotate(0, 90, 0);
+                LeftDoor.position = new Vector3(0, 0.3f, 0);
             }
         }
     }
@@ -65,6 +67,7 @@ public class PlayerOpenKeyRoomDoor : MonoBehaviour, IInput
                 if (!isInDoorTrigger)
                 {
                     RightDoor.rotation = default;
+                    RightDoor.position = default;
                 }
 
             }
@@ -73,6 +76,7 @@ public class PlayerOpenKeyRoomDoor : MonoBehaviour, IInput
                 if (!isInDoorTrigger)
                 {
                     LeftDoor.rotation = default;
+                    LeftDoor.position = default;
                 }
 
             }

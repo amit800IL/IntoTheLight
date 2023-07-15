@@ -9,8 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 373760747329438589}
-  - component: {fileID: -4272602764351085283}
-  - component: {fileID: 208077210569271530}
+  - component: {fileID: 9159853572579371824}
   m_Layer: 0
   m_Name: LightGhost
   m_TagString: GhostLight
@@ -36,7 +35,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &-4272602764351085283
+--- !u!114 &9159853572579371824
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -45,26 +44,16 @@ MonoBehaviour:
   m_GameObject: {fileID: 5795895148495803113}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7adc78c0a8501fc4dab2dd29deb6e00f, type: 3}
+  m_Script: {fileID: 11500000, guid: 6296defe059ad88499d1b31e192dfd34, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <Light>k__BackingField: {fileID: 7310142167450757386}
+  <Light>k__BackingField: {fileID: 1979449829191570888}
   GhostHealingLight: {fileID: 1746201488877860212}
+  playerHeaingEffect: {fileID: 0}
   InputActions: {fileID: 11400000, guid: 32a8ba2bb0af2b44b801e74f479228ce, type: 2}
   coolDown: {fileID: 11400000, guid: c7906cb829522b844b756a05bdf3350a, type: 2}
-  ghostEvents: {fileID: 208077210569271530}
---- !u!114 &208077210569271530
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5795895148495803113}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 75993698e41940c40a41e09a16d879b8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  SanityUpNumber: 1.5
+  SanityDownNumber: 3
 --- !u!1 &9194730949350787150
 GameObject:
   m_ObjectHideFlags: 0
@@ -91,14 +80,14 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 9194730949350787150}
-  m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalRotation: {x: -0, y: 0.71306974, z: -0.70109314, w: 0}
+  m_LocalPosition: {x: 0, y: 3.15, z: 0.05}
   m_LocalScale: {x: 0, y: 0, z: 0}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 373760747329438589}
   m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
+  m_LocalEulerAnglesHint: {x: 89.03, y: 180, z: 0}
 --- !u!108 &7310142167450757386
 Light:
   m_ObjectHideFlags: 0
@@ -111,10 +100,10 @@ Light:
   m_Type: 0
   m_Shape: 0
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_Intensity: 6.63
+  m_Intensity: 8.27
   m_Range: 5.72
-  m_SpotAngle: 46.56685
-  m_InnerSpotAngle: 24.615776
+  m_SpotAngle: 88.179886
+  m_InnerSpotAngle: 0.6082783
   m_CookieSize: 10
   m_Shadows:
     m_Type: 2
@@ -153,9 +142,9 @@ Light:
   m_Lightmapping: 4
   m_LightShadowCasterMode: 0
   m_AreaSize: {x: 1, y: 1}
-  m_BounceIntensity: 1
-  m_ColorTemperature: 6570
-  m_UseColorTemperature: 0
+  m_BounceIntensity: 5.66
+  m_ColorTemperature: 20000
+  m_UseColorTemperature: 1
   m_BoundingSphereOverride: {x: 0, y: 0, z: 0, w: 0}
   m_UseBoundingSphereOverride: 0
   m_UseViewFrustumForShadowCasterCull: 1
@@ -292,6 +281,12 @@ ParticleSystem:
 --- !u!4 &1939680637825166822 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4985127113715788, guid: 8d9acef849f7240468daa95c1c7f14c4,
+    type: 3}
+  m_PrefabInstance: {fileID: 1944029678058626474}
+  m_PrefabAsset: {fileID: 0}
+--- !u!108 &1979449829191570888 stripped
+Light:
+  m_CorrespondingSourceObject: {fileID: 108930339080734818, guid: 8d9acef849f7240468daa95c1c7f14c4,
     type: 3}
   m_PrefabInstance: {fileID: 1944029678058626474}
   m_PrefabAsset: {fileID: 0}
