@@ -36,6 +36,7 @@ public class PlayerGhostAwake : MonoBehaviour, Iinteraction, IInput
         decayCourtuine = StartCoroutine(HealthDownGrduadly());
     }
 
+
     private void OnEnable()
     {
         InputActions.Interaction.performed += OnInteraction;
@@ -62,7 +63,6 @@ public class PlayerGhostAwake : MonoBehaviour, Iinteraction, IInput
     {
         if (other.gameObject.CompareTag("GhostLight"))
         {
-            ghostEvents.InvokeGhostSleep();
             ghost = null;
             isInRangeOfGhost = false;
         }
@@ -70,13 +70,8 @@ public class PlayerGhostAwake : MonoBehaviour, Iinteraction, IInput
 
     public void OnInteraction(InputAction.CallbackContext context)
     {
-        shouldHeal = true;
         if (context.performed && healingCourtuine == null && !HasAwaknedGhost && isInRangeOfGhost)
         {
-            ghostEvents.InvokeGhostAwake();
-
-     
-
             HasAwaknedGhost = true;
 
             PlayerVoiceManager.Instance.GuardGettingCloser.Stop();
@@ -95,14 +90,13 @@ public class PlayerGhostAwake : MonoBehaviour, Iinteraction, IInput
     private void HealingTimer()
     {
         float coundDown = coolDown.coolDownTimer;
-        float elapsedTime = 0f;
-        while (elapsedTime < coundDown)
+        while (coundDown > 0f)
         {
-            elapsedTime += Time.deltaTime;
+            coundDown -= Time.deltaTime;
+            Debug.Log(coolDown.coolDownTimer);
 
             if (!isInRangeOfGhost)
             {
-                ghostEvents.InvokeGhostSleep();
                 shouldHeal = false;
                 break;
             }
@@ -127,16 +121,12 @@ public class PlayerGhostAwake : MonoBehaviour, Iinteraction, IInput
             yield return null;
         }
 
-        shouldHeal = false;
-
         if (decayCourtuine == null)
         {
             playerHealingEffect.Stop();
             decayCourtuine = StartCoroutine(HealthDownGrduadly());
         }
 
-        yield return new WaitForSeconds(coolDown.coolDownTimer);
-        ghostEvents.InvokeGhostSleep();
         HasAwaknedGhost = false;
         yield return null;
 
@@ -147,11 +137,6 @@ public class PlayerGhostAwake : MonoBehaviour, Iinteraction, IInput
         {
             GameManager.Instance.playerStats.HP += SanityUpNumber;
 
-            //if (PlayerVoiceManager.Instance.playerBreathing.volume == 0.5f)
-            //{
-            //    PlayerVoiceManager.Instance.playerBreathing.volume = 1f;
-            //    PlayerVoiceManager.Instance.playerBreathing.volume -= 0.1f;
-            //}
             yield return new WaitForSeconds(1);
         }
 
@@ -161,17 +146,6 @@ public class PlayerGhostAwake : MonoBehaviour, Iinteraction, IInput
         while (GameManager.Instance.playerStats.HP > 0)
         {
             GameManager.Instance.playerStats.HP -= SanityDownNumber;
-
-            //if (PlayerVoiceManager.Instance.playerBreathing.volume > 0.5f)
-            //{
-            //    PlayerVoiceManager.Instance.playerBreathing.volume = 1f;
-            //}
-
-            //if (GameManager.Instance.playerStats.HP <= 15f)
-            //{
-            //    PlayerVoiceManager.Instance.playerBreathing.pitch = 2f;
-            //    PlayerVoiceManager.Instance.playerBreathing.volume = 1f;
-            //}
 
             if (GameManager.Instance.playerStats.HP <= 5f)
             {

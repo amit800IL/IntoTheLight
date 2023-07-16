@@ -1,23 +1,20 @@
 using System.Collections;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
 public class LightGhost : MonoBehaviour, IInput
 {
-    private bool IsGhostAwake = false;
+    public bool IsGhostAwake { get; private set; } = false;
     [field: SerializeField] public Light Light { get; private set; }
 
     [SerializeField] private ParticleSystem GhostHealingLight;
-
     [SerializeField] private InputActionsSO InputActions;
-
     [SerializeField] private CoolDownSO coolDown;
-
     [SerializeField] private GhostEvents ghostEvents;
 
-
+    private Coroutine healingCoroutine;
     private Coroutine WakeCourtine;
+
     private void Start()
     {
         ghostEvents.OnGhostAwake += OnGhostAwake;
@@ -36,6 +33,7 @@ public class LightGhost : MonoBehaviour, IInput
         InputActions.Interaction.performed -= OnInteraction;
         InputActions.Interaction.canceled -= OnInteraction;
     }
+
     private void CheckIfGhostAwake()
     {
         if (!IsGhostAwake && !GameManager.Instance.PlayerGhostAwake.HasAwaknedGhost)
@@ -54,7 +52,6 @@ public class LightGhost : MonoBehaviour, IInput
             WakeCourtine = StartCoroutine(GhostFromWakeToSleep());
         }
     }
-
 
     public void OnGhostAwake()
     {
@@ -77,14 +74,21 @@ public class LightGhost : MonoBehaviour, IInput
         Light.intensity = 40f;
         IsGhostAwake = false;
     }
-
-    public IEnumerator GhostFromWakeToSleep()
+    private IEnumerator GhostFromWakeToSleep()
     {
         OnGhostAwake();
-        yield return new WaitForSeconds(coolDown.coolDownTimer);
+        float coundDown = coolDown.coolDownTimer;
+        while (coundDown > 0f)
+        {
+            coundDown -= Time.deltaTime;
+            yield return null;
+
+            if (!GameManager.Instance.PlayerGhostAwake.isInRangeOfGhost)
+            {
+                break;
+            }
+
+        }
         OnGhostSleep();
     }
-
 }
-
-

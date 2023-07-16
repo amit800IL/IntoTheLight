@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
-public class GhostEvents : ScriptableObject
+public class GhostEvents : MonoBehaviour
 {
     public event Action OnGhostAwake;
     public event Action OnGhostSleep;
@@ -19,8 +19,4 @@ public class GhostEvents : ScriptableObject
         OnGhostSleep?.Invoke();
     }
 
-    public IDisposable Subscribe(IObserver<GhostEvents> observer)
-    {
-        throw new NotImplementedException();
-    }
 }

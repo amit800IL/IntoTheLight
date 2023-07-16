@@ -17,20 +17,20 @@ public class GhostManager : MonoBehaviour
 
     public void SetGhostAwake(LightGhost ghost)
     {
-        foreach (LightGhost g in Ghosts)
-        {
+        //foreach (LightGhost g in Ghosts)
+        //{
 
-            if (g != ghost)
-            {
-                g.OnGhostSleep();
-            }
-            else
-            {
-                g.OnGhostAwake();
-                activeGhost = g;
-            }
+        //    if (g != ghost)
+        //    {
+        //        g.OnGhostSleep();
+        //    }
+        //    else
+        //    {
+        //        g.OnGhostAwake();
+        //        activeGhost = g;
+        //    }
 
-        }
+        //}
 
     }
 

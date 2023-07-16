@@ -1316,7 +1316,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8870302261371695549}
-  - component: {fileID: 7665306941736156338}
+  - component: {fileID: 8041158815482345198}
+  - component: {fileID: 8773637228397492677}
   - component: {fileID: 387573038805052316}
   m_Layer: 0
   m_Name: LightCheckRadius
@@ -1340,7 +1341,7 @@ Transform:
   m_Father: {fileID: 1147674315953803344}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
---- !u!114 &7665306941736156338
+--- !u!114 &8041158815482345198
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1349,17 +1350,31 @@ MonoBehaviour:
   m_GameObject: {fileID: 2556270093499973913}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7b7aeabcd087907458e417933151444d, type: 3}
+  m_Script: {fileID: 11500000, guid: 23b840ccb81c30f4685e317d9ca58d84, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   coolDown: {fileID: 11400000, guid: c7906cb829522b844b756a05bdf3350a, type: 2}
   playerHealingEffect: {fileID: 7194494073829039786}
   playerMovement: {fileID: 4777247618900407462}
   InputActions: {fileID: 11400000, guid: 32a8ba2bb0af2b44b801e74f479228ce, type: 2}
-  ghostEvents: {fileID: 208077210569271530, guid: 1f45b3fae489f27428ecbf5c8887de48,
+  ghostEvents: {fileID: 6436605775470837880, guid: 1f45b3fae489f27428ecbf5c8887de48,
     type: 3}
-  SanityUpNumber: 1.5
-  SanityDownNumber: 3
+  SanityUpNumber: 5
+  SanityDownNumber: 5
+--- !u!114 &8773637228397492677
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2556270093499973913}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a8aca46216df283419bd009d14ec0c90, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  player: {fileID: 8041158815482345198}
+  ghost: []
 --- !u!136 &387573038805052316
 CapsuleCollider:
   m_ObjectHideFlags: 0

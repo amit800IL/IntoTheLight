@@ -678,12 +678,6 @@ AudioSource:
     type: 3}
   m_PrefabInstance: {fileID: 655875169863995495}
   m_PrefabAsset: {fileID: 0}
---- !u!198 &463430069 stripped
-ParticleSystem:
-  m_CorrespondingSourceObject: {fileID: 7194494073829039786, guid: f5e5e7d9de8270f41aab8a8feb5b7d40,
-    type: 3}
-  m_PrefabInstance: {fileID: 655875169863995495}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &541335763 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -6862932616048933662, guid: 6e6ed36da4a976646b4a5b4fef00ae46,
@@ -964,8 +958,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   <Player>k__BackingField: {fileID: 502003234776940599}
-  <PlayerGhostAwake>k__BackingField: {fileID: 0}
-  <PlayerGhostAwakeRefactor>k__BackingField: {fileID: 0}
+  <PlayerGhostAwake>k__BackingField: {fileID: 2036403405}
   <playerStats>k__BackingField: {fileID: 655875169863995501}
   <enemy>k__BackingField: {fileID: 1148225663}
 --- !u!4 &635908882
@@ -1125,11 +1118,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: LightGhost
       objectReference: {fileID: 0}
-    - target: {fileID: 9159853572579371824, guid: 1f45b3fae489f27428ecbf5c8887de48,
-        type: 3}
-      propertyPath: playerHeaingEffect
-      value: 
-      objectReference: {fileID: 463430069}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1f45b3fae489f27428ecbf5c8887de48, type: 3}
 --- !u!4 &716624954 stripped
@@ -2573,50 +2561,6 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 5537914760762738905, guid: 6f05042252408014aac0f95c2515567b, type: 3}
---- !u!1 &1613132553
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1613132555}
-  - component: {fileID: 1613132554}
-  m_Layer: 0
-  m_Name: GhostPlayerMediator
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &1613132554
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1613132553}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d6ca5e36c73e8ce4a9185e548ee6b78d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!4 &1613132555
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1613132553}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -66.45169, y: -6.1244793, z: -152.36317}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 18
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1623393041
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3084,6 +3028,18 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1.1024928, y: 0.3517188, z: 0.6161181}
   m_Center: {x: -0.55333537, y: -0.14789328, z: -0.94937176}
+--- !u!114 &2036403405 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8041158815482345198, guid: f5e5e7d9de8270f41aab8a8feb5b7d40,
+    type: 3}
+  m_PrefabInstance: {fileID: 655875169863995495}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 23b840ccb81c30f4685e317d9ca58d84, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!4 &2115087776 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 373760747329438589, guid: 1f45b3fae489f27428ecbf5c8887de48,
@@ -3202,6 +3158,16 @@ PrefabInstance:
       propertyPath: m_VolumeTrigger
       value: 
       objectReference: {fileID: 579558761}
+    - target: {fileID: 8041158815482345198, guid: f5e5e7d9de8270f41aab8a8feb5b7d40,
+        type: 3}
+      propertyPath: SanityUpNumber
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 8041158815482345198, guid: f5e5e7d9de8270f41aab8a8feb5b7d40,
+        type: 3}
+      propertyPath: SanityDownNumber
+      value: 1.5
+      objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 7665306941736156338, guid: f5e5e7d9de8270f41aab8a8feb5b7d40, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: f5e5e7d9de8270f41aab8a8feb5b7d40, type: 3}
