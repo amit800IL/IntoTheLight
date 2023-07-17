@@ -14,7 +14,7 @@ OcclusionCullingSettings:
 RenderSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 9
-  m_Fog: 0
+  m_Fog: 1
   m_FogColor: {r: 0.16037738, g: 0.16037738, b: 0.16037738, a: 1}
   m_FogMode: 3
   m_FogDensity: 0.05
@@ -23,7 +23,7 @@ RenderSettings:
   m_AmbientSkyColor: {r: 0.09433961, g: 0.09433961, b: 0.09433961, a: 1}
   m_AmbientEquatorColor: {r: 0.38679248, g: 0.38679248, b: 0.38679248, a: 1}
   m_AmbientGroundColor: {r: 0.13207549, g: 0.044404875, b: 0, a: 1}
-  m_AmbientIntensity: 1
+  m_AmbientIntensity: 0.1
   m_AmbientMode: 0
   m_SubtractiveShadowColor: {r: 0.016393738, g: 0.016393738, b: 0.028301895, a: 1}
   m_SkyboxMaterial: {fileID: 10304, guid: 0000000000000000f000000000000000, type: 0}
@@ -3071,7 +3071,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 968830165, guid: f5e5e7d9de8270f41aab8a8feb5b7d40, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1147674315953803344, guid: f5e5e7d9de8270f41aab8a8feb5b7d40,
         type: 3}

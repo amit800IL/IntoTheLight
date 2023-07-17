@@ -29,7 +29,7 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
-        //SpawnEnemy();
+        SpawnEnemy();
     }
     public void SpawnEnemy()
     {
