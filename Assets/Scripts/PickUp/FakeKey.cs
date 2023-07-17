@@ -52,6 +52,7 @@ public class FakeKey : MonoBehaviour, IInput
         {
             pickUpAllowed = false;
             isInChestTrigger = false;
+            
         }
     }
 

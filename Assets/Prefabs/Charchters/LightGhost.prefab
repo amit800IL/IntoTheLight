@@ -60,10 +60,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7adc78c0a8501fc4dab2dd29deb6e00f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <Light>k__BackingField: {fileID: 7310142167450757386}
+  Light: {fileID: 7310142167450757386}
   GhostHealingLight: {fileID: 1746201488877860212}
   InputActions: {fileID: 11400000, guid: 32a8ba2bb0af2b44b801e74f479228ce, type: 2}
-  coolDown: {fileID: 11400000, guid: c7906cb829522b844b756a05bdf3350a, type: 2}
+  coolDown: 7
   ghostEvents: {fileID: 6436605775470837880}
 --- !u!1 &9194730949350787150
 GameObject:

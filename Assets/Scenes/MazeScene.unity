@@ -1113,6 +1113,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4668240278413427494, guid: 1f45b3fae489f27428ecbf5c8887de48,
+        type: 3}
+      propertyPath: m_IsTrigger
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5795895148495803113, guid: 1f45b3fae489f27428ecbf5c8887de48,
         type: 3}
       propertyPath: m_Name
@@ -1936,14 +1941,14 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1096739005}
-  m_LocalRotation: {x: -1.1580527e-23, y: 0.30666628, z: 6.617444e-24, w: 0.95181715}
-  m_LocalPosition: {x: 0.16759232, y: 0, z: 0.0009313598}
+  m_LocalRotation: {x: -1.8197969e-23, y: 0.3315595, z: 6.6174433e-24, w: 0.9434343}
+  m_LocalPosition: {x: 0.7580446, y: 0, z: -0.3677592}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1810033686}
   m_RootOrder: 3
-  m_LocalEulerAnglesHint: {x: 0, y: 35.717, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 38.727, z: 0}
 --- !u!65 &1096739007
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -2902,6 +2907,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: NewGhost (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 7547686849433669478, guid: 1f45b3fae489f27428ecbf5c8887de48,
+        type: 3}
+      propertyPath: playerGhostAwake
+      value: 
+      objectReference: {fileID: 2036403405}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1f45b3fae489f27428ecbf5c8887de48, type: 3}
 --- !u!4 &1810033686 stripped
@@ -3007,14 +3017,14 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1933377335}
-  m_LocalRotation: {x: -4.141731e-17, y: 0.048641767, z: 2.6844324e-17, w: 0.9988164}
-  m_LocalPosition: {x: 1.251, y: 0.143, z: 9.046}
+  m_LocalRotation: {x: -4.639249e-17, y: 0.2719681, z: 1.684483e-17, w: 0.9623063}
+  m_LocalPosition: {x: 0.41544667, y: 0.14, z: -0.44181874}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 184723677}
   m_RootOrder: 3
-  m_LocalEulerAnglesHint: {x: 0, y: 35.717, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 31.563, z: 0}
 --- !u!65 &1933377337
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -3063,36 +3073,6 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 655875169863995507, guid: f5e5e7d9de8270f41aab8a8feb5b7d40,
-        type: 3}
-      propertyPath: Door
-      value: 
-      objectReference: {fileID: 723704965}
-    - target: {fileID: 655875169863995507, guid: f5e5e7d9de8270f41aab8a8feb5b7d40,
-        type: 3}
-      propertyPath: keyScript
-      value: 
-      objectReference: {fileID: 9161077115818577953}
-    - target: {fileID: 655875169863995509, guid: f5e5e7d9de8270f41aab8a8feb5b7d40,
-        type: 3}
-      propertyPath: leftDoor.Array.data[0]
-      value: 
-      objectReference: {fileID: 422331053}
-    - target: {fileID: 655875169863995509, guid: f5e5e7d9de8270f41aab8a8feb5b7d40,
-        type: 3}
-      propertyPath: leftDoor.Array.data[1]
-      value: 
-      objectReference: {fileID: 1017028003}
-    - target: {fileID: 655875169863995509, guid: f5e5e7d9de8270f41aab8a8feb5b7d40,
-        type: 3}
-      propertyPath: rightDoor.Array.data[0]
-      value: 
-      objectReference: {fileID: 1756214649}
-    - target: {fileID: 655875169863995509, guid: f5e5e7d9de8270f41aab8a8feb5b7d40,
-        type: 3}
-      propertyPath: rightDoor.Array.data[1]
-      value: 
-      objectReference: {fileID: 1833155729}
     - target: {fileID: 1147674315953803344, guid: f5e5e7d9de8270f41aab8a8feb5b7d40,
         type: 3}
       propertyPath: m_RootOrder
@@ -3153,23 +3133,47 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
+    - target: {fileID: 4535794447182669390, guid: f5e5e7d9de8270f41aab8a8feb5b7d40,
+        type: 3}
+      propertyPath: Door
+      value: 
+      objectReference: {fileID: 723704965}
+    - target: {fileID: 4535794447182669390, guid: f5e5e7d9de8270f41aab8a8feb5b7d40,
+        type: 3}
+      propertyPath: keyScript
+      value: 
+      objectReference: {fileID: 9161077115818577953}
     - target: {fileID: 5839926824862602601, guid: f5e5e7d9de8270f41aab8a8feb5b7d40,
         type: 3}
       propertyPath: m_VolumeTrigger
       value: 
       objectReference: {fileID: 579558761}
-    - target: {fileID: 8041158815482345198, guid: f5e5e7d9de8270f41aab8a8feb5b7d40,
+    - target: {fileID: 7517739918925115292, guid: f5e5e7d9de8270f41aab8a8feb5b7d40,
         type: 3}
-      propertyPath: SanityUpNumber
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 8041158815482345198, guid: f5e5e7d9de8270f41aab8a8feb5b7d40,
+      propertyPath: leftDoor.Array.data[0]
+      value: 
+      objectReference: {fileID: 422331053}
+    - target: {fileID: 7517739918925115292, guid: f5e5e7d9de8270f41aab8a8feb5b7d40,
         type: 3}
-      propertyPath: SanityDownNumber
-      value: 1.5
+      propertyPath: leftDoor.Array.data[1]
+      value: 
+      objectReference: {fileID: 1017028003}
+    - target: {fileID: 7517739918925115292, guid: f5e5e7d9de8270f41aab8a8feb5b7d40,
+        type: 3}
+      propertyPath: rightDoor.Array.data[0]
+      value: 
+      objectReference: {fileID: 1756214649}
+    - target: {fileID: 7517739918925115292, guid: f5e5e7d9de8270f41aab8a8feb5b7d40,
+        type: 3}
+      propertyPath: rightDoor.Array.data[1]
+      value: 
+      objectReference: {fileID: 1833155729}
+    - target: {fileID: 7517739918925115292, guid: f5e5e7d9de8270f41aab8a8feb5b7d40,
+        type: 3}
+      propertyPath: rightDoorDefaultPositions.Array.size
+      value: 2
       objectReference: {fileID: 0}
-    m_RemovedComponents:
-    - {fileID: 7665306941736156338, guid: f5e5e7d9de8270f41aab8a8feb5b7d40, type: 3}
+    m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f5e5e7d9de8270f41aab8a8feb5b7d40, type: 3}
 --- !u!114 &655875169863995501 stripped
 MonoBehaviour:

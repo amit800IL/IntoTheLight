@@ -98,20 +98,4 @@ public class PlayerMovement : MonoBehaviour
 
     public void IsGrounded() => Physics.CheckSphere(GroundCheck.position, GroundDistance, groundMask);
 
-    private void OnCollisionEnter(Collision collision)
-    {
-        if (collision.gameObject.CompareTag("GhostLight"))
-        {
-            LightGhost[] ghostColliders = FindObjectsOfType<LightGhost>();
-            Collider[] allChildrenColliders = ghostColliders.SelectMany(ghost => ghost.GetComponentsInChildren<Collider>()).ToArray();
-
-            foreach (Collider childCollider in allChildrenColliders)
-            {
-                Physics.IgnoreCollision(playerCollider, childCollider);
-            }
-
-        }
-    }
-
-
 }

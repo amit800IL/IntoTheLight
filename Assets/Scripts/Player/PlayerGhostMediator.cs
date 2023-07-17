@@ -1,45 +1,67 @@
-using UnityEngine.InputSystem;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
-public class PlayerGhostMediator : MonoBehaviour
+public class PlayerGhostMediator : MonoBehaviour /*IInput*/
 {
-    [SerializeField] private LightGhost[] ghost;
+    //private InputAction.CallbackContext input;
 
-    private InputAction.CallbackContext input;
+    //[SerializeField] private LightGhost[] ghost;
 
-    private void Start()
-    {
-        ghost = FindObjectsOfType<LightGhost>();
-    }
+    //[SerializeField] private InputActionsSO InputActions;
 
-    public void OnPlayerInteract()
-    {
-        foreach (LightGhost ghost in ghost)
-        {
-            ghost.OnInteraction(input);
-            GameManager.Instance.PlayerGhostAwake.OnInteraction(input);
-        }
-    }
+    //private void Start()
+    //{
+    //    ghost = FindObjectsOfType<LightGhost>();
+    //    Debug.LogError(ghost.Length);
+    //}
 
-    private void OnTriggerEnter(Collider other)
-    {
-        if (other.gameObject.CompareTag("GhostLight"))
-        {
-            OnPlayerInteract();
-        }
-    }
+    //private void OnEnable()
+    //{
+    //    InputActions.Interaction.performed += OnInteraction;
+    //    InputActions.Interaction.canceled += OnInteraction;
+    //}
 
-    private void OnTriggerExit(Collider other)
-    {
-        if (other.gameObject.CompareTag("GhostLight"))
-        {
-            foreach (LightGhost ghost in ghost)
-            {
-                if (!GameManager.Instance.PlayerGhostAwake.isInRangeOfGhost && ghost.IsGhostAwake)
-                {
-                    ghost.OnGhostSleep();
-                }
-            }
-        }
-    }
+    //private void OnDisable()
+    //{
+    //    InputActions.Interaction.performed -= OnInteraction;
+    //    InputActions.Interaction.canceled -= OnInteraction;
+    //}
+
+    //public void OnInteraction(InputAction.CallbackContext context)
+    //{
+    //    input = context;
+
+    //    GameManager.Instance.PlayerGhostAwake.OnInteraction(input);
+
+    //    foreach (LightGhost ghost in ghost)
+    //    {
+    //        ghost.OnInteraction(input);
+    //    }
+    //}
+
+
+
+    //private void OnTriggerEnter(Collider other)
+    //{
+    //    if (other.gameObject.CompareTag("GhostLight"))
+    //    {
+    //        Debug.LogError("Interact collision detected");
+    //        input = new();
+    //        OnInteraction(input);
+    //    }
+    //}
+
+    //private void OnTriggerExit(Collider other)
+    //{
+    //    if (other.gameObject.CompareTag("GhostLight"))
+    //    {
+    //        foreach (LightGhost ghost in ghost)
+    //        {
+    //            if (!GameManager.Instance.PlayerGhostAwake.isInRangeOfGhost && ghost.IsGhostAwake)
+    //            {
+    //                ghost.OnGhostSleep();
+    //            }
+    //        }
+    //    }
+    //}
 }

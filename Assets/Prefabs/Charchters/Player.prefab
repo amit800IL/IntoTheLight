@@ -779,9 +779,7 @@ GameObject:
   - component: {fileID: 1575560974512497516}
   - component: {fileID: 6250810433284146720}
   - component: {fileID: 6250810433284146721}
-  - component: {fileID: 655875169863995507}
   - component: {fileID: 3793275236806142455}
-  - component: {fileID: 655875169863995509}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -969,20 +967,6 @@ MonoBehaviour:
   m_DefaultActionMap: Player
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 5839926824862602583}
---- !u!114 &655875169863995507
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1151173029364569866}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: afa5c3d68a1ec704ca2298231447c4f7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  keyScript: {fileID: 0}
-  Door: {fileID: 0}
 --- !u!114 &3793275236806142455
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1001,25 +985,6 @@ MonoBehaviour:
   playerTransform: {fileID: 1147674315953803344}
   cameraTransform: {fileID: 5839926824862602603}
   InputActions: {fileID: 11400000, guid: 32a8ba2bb0af2b44b801e74f479228ce, type: 2}
---- !u!114 &655875169863995509
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1151173029364569866}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 17b6353140fbdee4896d61bb8ad63e9c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  rightDoor:
-  - {fileID: 0}
-  - {fileID: 0}
-  leftDoor:
-  - {fileID: 0}
-  - {fileID: 0}
-  inputActions: {fileID: 11400000, guid: 32a8ba2bb0af2b44b801e74f479228ce, type: 2}
 --- !u!1 &2226325889558927198
 GameObject:
   m_ObjectHideFlags: 0
@@ -1317,10 +1282,11 @@ GameObject:
   m_Component:
   - component: {fileID: 8870302261371695549}
   - component: {fileID: 8041158815482345198}
-  - component: {fileID: 8773637228397492677}
+  - component: {fileID: 4535794447182669390}
+  - component: {fileID: 7517739918925115292}
   - component: {fileID: 387573038805052316}
   m_Layer: 0
-  m_Name: LightCheckRadius
+  m_Name: TriggersChecker
   m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1353,15 +1319,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 23b840ccb81c30f4685e317d9ca58d84, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  coolDown: {fileID: 11400000, guid: c7906cb829522b844b756a05bdf3350a, type: 2}
-  playerHealingEffect: {fileID: 7194494073829039786}
-  playerMovement: {fileID: 4777247618900407462}
-  InputActions: {fileID: 11400000, guid: 32a8ba2bb0af2b44b801e74f479228ce, type: 2}
-  ghostEvents: {fileID: 6436605775470837880, guid: 1f45b3fae489f27428ecbf5c8887de48,
-    type: 3}
-  SanityUpNumber: 5
-  SanityDownNumber: 5
---- !u!114 &8773637228397492677
+  <playerHealingEffect>k__BackingField: {fileID: 7194494073829039786}
+  SanityUpNumber: 3
+  SanityDownNumber: 0.1
+--- !u!114 &4535794447182669390
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1370,11 +1331,30 @@ MonoBehaviour:
   m_GameObject: {fileID: 2556270093499973913}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a8aca46216df283419bd009d14ec0c90, type: 3}
+  m_Script: {fileID: 11500000, guid: afa5c3d68a1ec704ca2298231447c4f7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: {fileID: 8041158815482345198}
-  ghost: []
+  keyScript: {fileID: 0}
+  Door: {fileID: 0}
+--- !u!114 &7517739918925115292
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2556270093499973913}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 17b6353140fbdee4896d61bb8ad63e9c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rightDoor:
+  - {fileID: 0}
+  - {fileID: 0}
+  leftDoor:
+  - {fileID: 0}
+  - {fileID: 0}
+  inputActions: {fileID: 11400000, guid: 32a8ba2bb0af2b44b801e74f479228ce, type: 2}
 --- !u!136 &387573038805052316
 CapsuleCollider:
   m_ObjectHideFlags: 0
