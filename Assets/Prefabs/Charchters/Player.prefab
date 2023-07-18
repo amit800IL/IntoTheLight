@@ -979,8 +979,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e028801766a65bd43a94f76d5084a231, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  smoothing: 1.5
-  mouseSenstivity: 3
+  smoothing: 2
+  mouseSenstivity: 3.5
   orientation: {fileID: 2798869438148834181}
   playerTransform: {fileID: 1147674315953803344}
   cameraTransform: {fileID: 5839926824862602603}
@@ -1321,8 +1321,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <playerHealingEffect>k__BackingField: {fileID: 7194494073829039786}
   InputActions: {fileID: 11400000, guid: 32a8ba2bb0af2b44b801e74f479228ce, type: 2}
-  SanityUpNumber: 3
-  SanityDownNumber: 1.5
 --- !u!114 &4535794447182669390
 MonoBehaviour:
   m_ObjectHideFlags: 0

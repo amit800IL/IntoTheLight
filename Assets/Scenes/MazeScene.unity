@@ -2342,7 +2342,8 @@ PrefabInstance:
       propertyPath: m_Name
       value: LightGhost (1)
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 6436605775470837880, guid: 1f45b3fae489f27428ecbf5c8887de48, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 1f45b3fae489f27428ecbf5c8887de48, type: 3}
 --- !u!1 &1466894584
 GameObject:

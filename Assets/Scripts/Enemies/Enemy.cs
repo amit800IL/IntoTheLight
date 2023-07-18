@@ -8,6 +8,8 @@ public class Enemy : MonoBehaviour
 
     [field: Header("General")]
     [field: SerializeField] public NavMeshAgent agent { get; protected set; }
+    private PlayerGhostAwake playerGhostAwake;
+    private Vector3 playerPosition;
     private bool isChasingPlayer;
     private bool canKillPlayer = true;
     [SerializeField] private SkinnedMeshRenderer enemyRenderer;
@@ -37,6 +39,8 @@ public class Enemy : MonoBehaviour
 
     private void Start()
     {
+        playerGhostAwake = GameManager.Instance.PlayerGhostAwake;
+        playerPosition = GameManager.Instance.Player.transform.position;
         isChasingPlayer = false;
         killingDistance = Random.Range(minkillingDistance, maxKillingDistance);
         EnemySpeed = Random.Range(minEnemySpeed, maxEnemySpeed);
@@ -47,8 +51,8 @@ public class Enemy : MonoBehaviour
     private void GoToPlayer(float Radius)
     {
         animator.SetTrigger("IsWalking");
-        Vector3 targetPosition = GameManager.Instance.Player.transform.position;
-        Vector2 randomCircle = Random.insideUnitCircle * Radius;
+        Vector3 targetPosition = playerPosition;
+        Vector2 randomCircle = UnityEngine.Random.insideUnitCircle * Radius;
         Vector3 randomPosition = targetPosition + new Vector3(randomCircle.x, 0, randomCircle.y);
         agent.SetDestination(randomPosition);
     }
@@ -73,7 +77,7 @@ public class Enemy : MonoBehaviour
 
             guardWalkSound.Play();
 
-            AudioSource randomScream = enemyScreams[Random.Range(0, enemyScreams.Length)];
+            AudioSource randomScream = enemyScreams[UnityEngine.Random.Range(0, enemyScreams.Length)];
             randomScream.Play();
 
             enemyLight.enabled = false;
@@ -133,7 +137,7 @@ public class Enemy : MonoBehaviour
 
         while (isChasingPlayer)
         {
-            distance = Vector3.Distance(agent.transform.position, GameManager.Instance.Player.transform.position);
+            distance = Vector3.Distance(agent.transform.position, playerPosition);
 
             guardWalkSound.Play();
 
@@ -198,7 +202,7 @@ public class Enemy : MonoBehaviour
     {
         float WalkAwayDistance = 10f;
 
-        Vector3 WalkDirection = transform.position - GameManager.Instance.Player.transform.position;
+        Vector3 WalkDirection = transform.position - playerPosition;
         WalkDirection.y = 0f;
         Vector3 spawnPosition = transform.position + WalkDirection.normalized * WalkAwayDistance;
         agent.SetDestination(spawnPosition);
@@ -208,13 +212,13 @@ public class Enemy : MonoBehaviour
     {
         float StandingDistance = 5f;
 
-        Vector3 standingDirection = GameManager.Instance.Player.transform.position - transform.position;
-        Vector3 spawnPosition = GameManager.Instance.Player.transform.position + standingDirection.normalized * StandingDistance;
+        Vector3 standingDirection = playerPosition - transform.position;
+        Vector3 spawnPosition = playerPosition + standingDirection.normalized * StandingDistance;
         agent.Warp(spawnPosition);
     }
     private void standInFronOfGhost()
     {
-        if (GameManager.Instance.PlayerGhostAwake.isInRangeOfGhost)
+        if (playerGhostAwake.isInRangeOfGhost && playerGhostAwake.HasAwaknedGhost)
         {
             animator.ResetTrigger("IsWalking");
             animator.SetTrigger("IsStanding");
@@ -222,8 +226,9 @@ public class Enemy : MonoBehaviour
             agent.isStopped = true;
             canKillPlayer = false;
         }
-        else if (!GameManager.Instance.PlayerGhostAwake.isInRangeOfGhost)
+        else if (!playerGhostAwake.isInRangeOfGhost && !playerGhostAwake.HasAwaknedGhost)
         {
+            animator.ResetTrigger("IsStanding");
             animator.SetTrigger("IsWalking");
             agent.isStopped = false;
             canKillPlayer = true;
