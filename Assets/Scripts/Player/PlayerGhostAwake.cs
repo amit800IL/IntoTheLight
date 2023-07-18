@@ -47,7 +47,6 @@ public class PlayerGhostAwake : MonoBehaviour, IInput
         {
             ghost = other.GetComponent<LightGhost>();
             isInRangeOfGhost = true;
-
         }
     }
 

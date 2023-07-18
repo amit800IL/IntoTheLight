@@ -141,13 +141,13 @@ public class Enemy : MonoBehaviour
 
             standInFronOfGhost();
 
-            yield return new WaitForSeconds(1);
+            yield return new WaitForSeconds(3);
 
             if (agent != null && distance < killingDistance && canKillPlayer)
             {
                 enemyKill();
 
-                yield return new WaitForSeconds(1);
+                yield return new WaitForSeconds(2);
 
                 if (GameManager.Instance.playerStats.HP <= 0)
                 {
@@ -223,7 +223,6 @@ public class Enemy : MonoBehaviour
         }
         else if (!GameManager.Instance.PlayerGhostAwake.isInRangeOfGhost)
         {
-            animator.ResetTrigger("IsStanding");
             animator.SetTrigger("IsWalking");
             agent.isStopped = false;
             canKillPlayer = true;
