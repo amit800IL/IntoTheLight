@@ -216,6 +216,7 @@ public class Enemy : MonoBehaviour
     {
         if (GameManager.Instance.PlayerGhostAwake.isInRangeOfGhost)
         {
+            animator.ResetTrigger("IsWalking");
             animator.SetTrigger("IsStanding");
             StandInFrontOfPlayer();
             agent.isStopped = true;

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class PlayerOpenChest : MonoBehaviour, IInput
+public class PlayerOpenChest : MonoBehaviour, ICheckPlayerInteraction
 {
     [SerializeField] private Transform[] chestLock;
     [SerializeField] private InputActionsSO inputActions;
@@ -11,17 +11,17 @@ public class PlayerOpenChest : MonoBehaviour, IInput
 
     private void OnEnable()
     {
-        inputActions.Interaction.performed += OnInteraction;
-        inputActions.Interaction.canceled += OnInteraction;
+        inputActions.Interaction.performed += OnPlayerInteraction;
+        inputActions.Interaction.canceled += OnPlayerInteraction;
     }
 
     private void OnDisable()
     {
-        inputActions.Interaction.performed -= OnInteraction;
-        inputActions.Interaction.canceled -= OnInteraction;
+        inputActions.Interaction.performed -= OnPlayerInteraction;
+        inputActions.Interaction.canceled -= OnPlayerInteraction;
     }
 
-    public void OnInteraction(InputAction.CallbackContext context)
+    public void OnPlayerInteraction(InputAction.CallbackContext context)
     {
         if (context.performed && isInChestTrigger)
         {

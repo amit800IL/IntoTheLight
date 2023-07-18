@@ -1,20 +1,25 @@
 using System.Collections;
 using UnityEngine;
-using UnityEngine.InputSystem;
 
 public class LightGhost : MonoBehaviour
 {
-
     [field: Header("General")]
     public bool IsGhostAwake { get; private set; } = false;
+
     private PlayerGhostAwake PlayerGhostAwake;
+
     [SerializeField] private Light Light;
+
     [SerializeField] private ParticleSystem GhostHealingLight;
+
     [SerializeField] private InputActionsSO InputActions;
-    public float coolDown = 7f;
-    [SerializeField] public float elapsedTime;
+
+    [field : Header("Numbers")]
+    public float coolDown { get; private set; } = 7f;
+    public float elapsedTime { get; private set; }
 
     [Header("Coroutines")]
+
     private Coroutine WakeCourtine;
 
 
@@ -25,18 +30,6 @@ public class LightGhost : MonoBehaviour
         CheckIfGhostAwake();
     }
 
-    //private void OnEnable()
-    //{
-    //    InputActions.Interaction.performed += OnInteraction;
-    //    InputActions.Interaction.canceled += OnInteraction;
-    //}
-
-    //private void OnDisable()
-    //{
-    //    InputActions.Interaction.performed -= OnInteraction;
-    //    InputActions.Interaction.canceled -= OnInteraction;
-    //}
-
     private void CheckIfGhostAwake()
     {
         if (!IsGhostAwake && !PlayerGhostAwake.HasAwaknedGhost)
@@ -45,24 +38,6 @@ public class LightGhost : MonoBehaviour
             Light.intensity = 40f;
         }
     }
-
-    //public void OnInteraction(InputAction.CallbackContext context)
-    //{
-    //    if (context.performed && !IsGhostAwake && Vector3.Distance(transform.position, GameManager.Instance.Player.transform.position) < 2f && !PlayerGhostAwake.HasAwaknedGhost && PlayerGhostAwake.isInRangeOfGhost)
-    //    {
-
-    //        OnGhostAwake();
-
-    //        if (WakeCourtine != null)
-    //        {
-    //            StopCoroutine(WakeCourtine);
-    //            WakeCourtine = null;
-    //        }
-
-
-    //        WakeCourtine = StartCoroutine(GhostFromWakeToSleep());
-    //    }
-    //}
 
     public void OnGhostInteraction()
     {

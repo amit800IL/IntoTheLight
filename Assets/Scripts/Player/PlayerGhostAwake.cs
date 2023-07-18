@@ -3,27 +3,31 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 
-public class PlayerGhostAwake : MonoBehaviour, IInput
+public class PlayerGhostAwake : MonoBehaviour, ICheckPlayerInteraction
 {
 
     [field: Header("General")]
+
     [field: SerializeField] public ParticleSystem playerHealingEffect { get; private set; }
 
-    [SerializeField] private InputActionsSO InputActions;
     public bool isInRangeOfGhost { get; private set; } = false;
-    public bool HasAwaknedGhost { get => hasAwaknedGhost; set => hasAwaknedGhost = value; }
+    public bool HasAwaknedGhost { get; private set; }
 
-    private bool hasAwaknedGhost;
+    [SerializeField] private InputActionsSO InputActions;
 
     private LightGhost ghost;
 
+    [Header("Coroutines")]
+
     private Coroutine healingCourtuine;
+
     private Coroutine decayCourtuine;
 
     [Header("Health Up and Down")]
 
-    [SerializeField] public float SanityUpNumber;
-    [SerializeField] public float SanityDownNumber;
+    private float SanityUpNumber;
+
+    private float SanityDownNumber;
 
     private void Start()
     {
@@ -31,14 +35,14 @@ public class PlayerGhostAwake : MonoBehaviour, IInput
     }
     private void OnEnable()
     {
-        InputActions.Interaction.performed += OnInteraction;
-        InputActions.Interaction.canceled += OnInteraction;
+        InputActions.Interaction.performed += OnPlayerInteraction;
+        InputActions.Interaction.canceled += OnPlayerInteraction;
     }
 
     private void OnDisable()
     {
-        InputActions.Interaction.performed -= OnInteraction;
-        InputActions.Interaction.canceled -= OnInteraction;
+        InputActions.Interaction.performed -= OnPlayerInteraction;
+        InputActions.Interaction.canceled -= OnPlayerInteraction;
     }
 
     private void OnTriggerEnter(Collider other)
@@ -58,9 +62,9 @@ public class PlayerGhostAwake : MonoBehaviour, IInput
             isInRangeOfGhost = false;
         }
     }
-    public void OnInteraction(InputAction.CallbackContext context)
+    public void OnPlayerInteraction(InputAction.CallbackContext context)
     {
-        if (context.performed && isInRangeOfGhost && !hasAwaknedGhost && ghost.coolDown == ghost.elapsedTime)
+        if (context.performed && isInRangeOfGhost && !HasAwaknedGhost && ghost.coolDown == ghost.elapsedTime)
         {
             ghost.OnGhostInteraction();
 
@@ -93,7 +97,7 @@ public class PlayerGhostAwake : MonoBehaviour, IInput
     public IEnumerator HealthDownGrduadly()
     {
         playerHealingEffect.Stop();
-        hasAwaknedGhost = false;
+        HasAwaknedGhost = false;
 
         while (GameManager.Instance.playerStats.HP > 0)
         {

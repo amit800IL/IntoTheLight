@@ -2,7 +2,7 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class PlayerOpenKeyRoomDoor : MonoBehaviour, IInput
+public class PlayerOpenKeyRoomDoor : MonoBehaviour, ICheckPlayerInteraction
 {
     private bool isInDoorTrigger = false;
     private bool isDoorOpen = false;
@@ -21,17 +21,17 @@ public class PlayerOpenKeyRoomDoor : MonoBehaviour, IInput
 
     private void OnEnable()
     {
-        inputActions.Interaction.performed += OnInteraction;
-        inputActions.Interaction.canceled += OnInteraction;
+        inputActions.Interaction.performed += OnPlayerInteraction;
+        inputActions.Interaction.canceled += OnPlayerInteraction;
     }
 
     private void OnDisable()
     {
-        inputActions.Interaction.performed -= OnInteraction;
-        inputActions.Interaction.canceled -= OnInteraction;
+        inputActions.Interaction.performed -= OnPlayerInteraction;
+        inputActions.Interaction.canceled -= OnPlayerInteraction;
     }
 
-    public void OnInteraction(InputAction.CallbackContext context)
+    public void OnPlayerInteraction(InputAction.CallbackContext context)
     {
         if (context.performed && isInDoorTrigger)
         {

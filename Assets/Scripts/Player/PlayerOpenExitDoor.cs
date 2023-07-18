@@ -3,7 +3,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class PlayerOpenExitDoor : MonoBehaviour, Iinteraction, IInput
+public class PlayerOpenExitDoor : MonoBehaviour, ICheckPlayerInteraction
 {
     private bool isInDoorTrigger;
     [SerializeField] private RealKey keyScript;
@@ -15,25 +15,20 @@ public class PlayerOpenExitDoor : MonoBehaviour, Iinteraction, IInput
         context = new InputAction.CallbackContext();
     }
 
-    public void OnInteraction(InputAction.CallbackContext context)
+    public void OnPlayerInteraction(InputAction.CallbackContext context)
     {
         if (context.performed && keyScript.Haskey && isInDoorTrigger)
         {
             Door.transform.Translate(0, 10000, 0);
             Application.Quit();
         }
-
-        else if (context.performed && !keyScript.Haskey && isInDoorTrigger)
-        {
-            return;
-        }
     }
     private void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.CompareTag("OpenDoor"))
         {
+            Debug.Log("The player can open the door, he has the key " + keyScript.Haskey);
             isInDoorTrigger = true;
-            StartCoroutine(CheckPlayerInput(other));
         }
     }
 
@@ -43,13 +38,6 @@ public class PlayerOpenExitDoor : MonoBehaviour, Iinteraction, IInput
         {
             isInDoorTrigger = false;
         }
-    }
-
-    public IEnumerator CheckPlayerInput(Collider other)
-    {
-        OnInteraction(context);
-
-        yield return new WaitForSeconds(1);
     }
 
 }

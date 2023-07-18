@@ -2,7 +2,7 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class FakeKey : MonoBehaviour, IInput
+public class FakeKey : MonoBehaviour, ICheckPlayerInteraction
 {
     [HideInInspector] public bool Haskey { get; private set; } = false;
 
@@ -19,17 +19,17 @@ public class FakeKey : MonoBehaviour, IInput
 
     private void OnEnable()
     {
-        InputActions.Interaction.performed += OnInteraction;
-        InputActions.Interaction.canceled += OnInteraction;
+        InputActions.Interaction.performed += OnPlayerInteraction;
+        InputActions.Interaction.canceled += OnPlayerInteraction;
     }
 
     private void OnDisable()
     {
-        InputActions.Interaction.performed -= OnInteraction;
-        InputActions.Interaction.canceled -= OnInteraction;
+        InputActions.Interaction.performed -= OnPlayerInteraction;
+        InputActions.Interaction.canceled -= OnPlayerInteraction;
     }
 
-    public void OnInteraction(InputAction.CallbackContext context)
+    public void OnPlayerInteraction(InputAction.CallbackContext context)
     {
         if (context.performed && pickUpAllowed && isInChestTrigger)
         {

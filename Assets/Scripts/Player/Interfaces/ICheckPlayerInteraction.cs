@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-interface IInput
+interface ICheckPlayerInteraction
 {
-    public void OnInteraction(InputAction.CallbackContext context);
+    public void OnPlayerInteraction(InputAction.CallbackContext context);
 }
