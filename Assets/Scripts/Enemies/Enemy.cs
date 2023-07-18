@@ -137,17 +137,17 @@ public class Enemy : MonoBehaviour
 
             guardWalkSound.Play();
 
-            GoToPlayer(2.5f);
+            GoToPlayer(1f);
 
             standInFronOfGhost();
 
-            yield return new WaitForSeconds(3);
+            yield return new WaitForSeconds(1);
 
             if (agent != null && distance < killingDistance && canKillPlayer)
             {
                 enemyKill();
 
-                yield return new WaitForSeconds(6);
+                yield return new WaitForSeconds(1);
 
                 if (GameManager.Instance.playerStats.HP <= 0)
                 {
