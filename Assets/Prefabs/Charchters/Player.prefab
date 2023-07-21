@@ -1337,6 +1337,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   keyScript: {fileID: 0}
   Door: {fileID: 0}
+  inputActions: {fileID: 11400000, guid: 32a8ba2bb0af2b44b801e74f479228ce, type: 2}
 --- !u!114 &7517739918925115292
 MonoBehaviour:
   m_ObjectHideFlags: 0

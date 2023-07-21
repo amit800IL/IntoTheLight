@@ -4,7 +4,7 @@ using UnityEngine.InputSystem;
 
 public class RealKey : MonoBehaviour, ICheckPlayerInteraction
 {
-    [HideInInspector] public bool Haskey { get; private set; } = false;
+    public bool Haskey { get; private set; } = false;
 
     [SerializeField] private InputActionsSO InputActions;
 
@@ -60,7 +60,7 @@ public class RealKey : MonoBehaviour, ICheckPlayerInteraction
         {
             chestLock.Rotate(-90, 0, 0);
         }
-        yield return new WaitForSeconds(3);
+        yield return new WaitForSeconds(1);
 
         gameObject.SetActive(false);
         Haskey = true;

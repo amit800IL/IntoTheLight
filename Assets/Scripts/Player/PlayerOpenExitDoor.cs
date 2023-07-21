@@ -6,13 +6,26 @@ using UnityEngine.InputSystem;
 public class PlayerOpenExitDoor : MonoBehaviour, ICheckPlayerInteraction
 {
     private bool isInDoorTrigger;
+    private InputAction.CallbackContext context;
     [SerializeField] private RealKey keyScript;
     [SerializeField] private Transform Door;
-    private InputAction.CallbackContext context;
+    [SerializeField] private InputActionsSO inputActions;
 
     private void Start()
     {
         context = new InputAction.CallbackContext();
+    }
+
+    private void OnEnable()
+    {
+        inputActions.Interaction.performed += OnPlayerInteraction;
+        inputActions.Interaction.canceled += OnPlayerInteraction;
+    }
+
+    private void OnDisable()
+    {
+        inputActions.Interaction.performed -= OnPlayerInteraction;
+        inputActions.Interaction.canceled -= OnPlayerInteraction;
     }
 
     public void OnPlayerInteraction(InputAction.CallbackContext context)

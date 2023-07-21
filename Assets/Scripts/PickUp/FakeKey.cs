@@ -63,12 +63,10 @@ public class FakeKey : MonoBehaviour, ICheckPlayerInteraction
             chestLock.Rotate(-90, 0, 0);
         }
 
-        yield return new WaitForSeconds(3);
+        yield return new WaitForSeconds(1);
 
         gameObject.SetActive(false);
         Haskey = true;
-
-        yield return new WaitForSeconds(5);
 
         enemy.agent.Warp(GameManager.Instance.Player.transform.position);
 

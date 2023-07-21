@@ -681,17 +681,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   <agent>k__BackingField: {fileID: 6777421282977997086}
+  <animator>k__BackingField: {fileID: 7247184916246678163}
   enemyRenderer: {fileID: 7845111578218500457}
   enemyLight: {fileID: 4019241146482662692}
-  animator: {fileID: 7247184916246678163}
   enemyScreams:
   - {fileID: 5971873096229309752}
   - {fileID: 2938674370795472078}
   - {fileID: 5349354144246091762}
   inputActions: {fileID: 11400000, guid: 32a8ba2bb0af2b44b801e74f479228ce, type: 2}
+  <guardWalkSound>k__BackingField: {fileID: 4274505277907835150}
   guardScream: {fileID: 5971873096229309752}
   guardKillingScream: {fileID: 2938674370795472078}
-  guardWalkSound: {fileID: 4274505277907835150}
 --- !u!195 &6777421282977997086
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -701,7 +701,7 @@ NavMeshAgent:
   m_GameObject: {fileID: 7320963435959732098}
   m_Enabled: 1
   m_AgentTypeID: 0
-  m_Radius: 2
+  m_Radius: 4
   m_Speed: 3.5
   m_Acceleration: 10
   avoidancePriority: 1

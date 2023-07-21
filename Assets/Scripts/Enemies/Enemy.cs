@@ -8,14 +8,15 @@ public class Enemy : MonoBehaviour
 
     [field: Header("General")]
     [field: SerializeField] public NavMeshAgent agent { get; private set; }
+    [field: SerializeField] public Animator animator { get; private set; }
+
+    [SerializeField] private SkinnedMeshRenderer enemyRenderer;
+    [SerializeField] private Light enemyLight;
+    [SerializeField] private AudioSource[] enemyScreams;
+    [SerializeField] private InputActionsSO inputActions;
     private bool isChasingPlayer;
     private bool canKillPlayer = true;
     private Vector3 PlayerPosition;
-    [SerializeField] private SkinnedMeshRenderer enemyRenderer;
-    [SerializeField] private Light enemyLight;
-    [SerializeField] private Animator animator;
-    [SerializeField] private AudioSource[] enemyScreams;
-    [SerializeField] private InputActionsSO inputActions;
 
     [field: Header("Numbers")]
     public float EnemySpeed { get; private set; }
@@ -28,11 +29,10 @@ public class Enemy : MonoBehaviour
     private float killingDistance;
     private float distance;
 
-    [Header("Audio Sources")]
-
+    [field: Header("Audio Sources")]
+    [field: SerializeField] public AudioSource guardWalkSound { get; private set; }
     [SerializeField] private AudioSource guardScream;
     [SerializeField] private AudioSource guardKillingScream;
-    [SerializeField] private AudioSource guardWalkSound;
 
 
     private void Start()
@@ -56,28 +56,27 @@ public class Enemy : MonoBehaviour
 
         Vector3 WalkDirection = PlayerPosition - transform.position;
         WalkDirection.y = 0f;
-        Vector3 spawnPosition = transform.position + WalkDirection.normalized * targetDistance;
+        Vector3 spawnPosition = transform.position - WalkDirection.normalized * targetDistance;
         agent.SetDestination(spawnPosition);
         Debug.Log("Scare Player" + spawnPosition);
     }
 
     private void StandInFrontOfPlayer()
     {
-        float offset = 1.5f;
+        float offset = 10f;
 
         Vector3 directionToPlayer = transform.position - PlayerPosition;
         Vector3 targetPosition = PlayerPosition + directionToPlayer.normalized * offset;
-
         agent.Warp(targetPosition);
         Debug.Log("stand in front of player" + targetPosition);
     }
     private void GoToPlayer()
     {
-        float offset = 2f;
+        float offset = killingDistance + 2f;
 
         Vector3 directionToPlayer = transform.position - PlayerPosition;
         directionToPlayer.y = 0f;
-        Vector3 targetPosition = PlayerPosition - directionToPlayer.normalized * offset;
+        Vector3 targetPosition = PlayerPosition + directionToPlayer.normalized * offset;
 
         animator.SetTrigger("IsWalking");
         agent.SetDestination(targetPosition);
@@ -173,8 +172,6 @@ public class Enemy : MonoBehaviour
             GoToPlayer();
 
             standInFronOfGhost();
-
-            yield return new WaitForSeconds(3);
 
             if (agent != null && distance < killingDistance && canKillPlayer)
             {
