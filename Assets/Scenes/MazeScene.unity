@@ -23,7 +23,7 @@ RenderSettings:
   m_AmbientSkyColor: {r: 0.09433961, g: 0.09433961, b: 0.09433961, a: 1}
   m_AmbientEquatorColor: {r: 0.38679248, g: 0.38679248, b: 0.38679248, a: 1}
   m_AmbientGroundColor: {r: 0.13207549, g: 0.044404875, b: 0, a: 1}
-  m_AmbientIntensity: 0.1
+  m_AmbientIntensity: 0.3
   m_AmbientMode: 0
   m_SubtractiveShadowColor: {r: 0.016393738, g: 0.016393738, b: 0.028301895, a: 1}
   m_SkyboxMaterial: {fileID: 10304, guid: 0000000000000000f000000000000000, type: 0}
@@ -192,6 +192,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: LightGhost (3)
       objectReference: {fileID: 0}
+    - target: {fileID: 7547686849433669478, guid: 1f45b3fae489f27428ecbf5c8887de48,
+        type: 3}
+      propertyPath: enemy
+      value: 
+      objectReference: {fileID: 1148225668}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1f45b3fae489f27428ecbf5c8887de48, type: 3}
 --- !u!1 &71489098
@@ -467,6 +472,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: NewGhost (5)
       objectReference: {fileID: 0}
+    - target: {fileID: 7547686849433669478, guid: 1f45b3fae489f27428ecbf5c8887de48,
+        type: 3}
+      propertyPath: enemy
+      value: 
+      objectReference: {fileID: 1148225668}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1f45b3fae489f27428ecbf5c8887de48, type: 3}
 --- !u!82 &351390729 stripped
@@ -670,6 +680,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: NewGhost (3)
       objectReference: {fileID: 0}
+    - target: {fileID: 7547686849433669478, guid: 1f45b3fae489f27428ecbf5c8887de48,
+        type: 3}
+      propertyPath: enemy
+      value: 
+      objectReference: {fileID: 1148225668}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1f45b3fae489f27428ecbf5c8887de48, type: 3}
 --- !u!82 &462834345 stripped
@@ -1043,6 +1058,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: NewGhost (4)
       objectReference: {fileID: 0}
+    - target: {fileID: 7547686849433669478, guid: 1f45b3fae489f27428ecbf5c8887de48,
+        type: 3}
+      propertyPath: enemy
+      value: 
+      objectReference: {fileID: 1148225668}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1f45b3fae489f27428ecbf5c8887de48, type: 3}
 --- !u!4 &657795376 stripped
@@ -1113,16 +1133,16 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 4668240278413427494, guid: 1f45b3fae489f27428ecbf5c8887de48,
-        type: 3}
-      propertyPath: m_IsTrigger
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 5795895148495803113, guid: 1f45b3fae489f27428ecbf5c8887de48,
         type: 3}
       propertyPath: m_Name
       value: LightGhost
       objectReference: {fileID: 0}
+    - target: {fileID: 7547686849433669478, guid: 1f45b3fae489f27428ecbf5c8887de48,
+        type: 3}
+      propertyPath: enemy
+      value: 
+      objectReference: {fileID: 1148225668}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1f45b3fae489f27428ecbf5c8887de48, type: 3}
 --- !u!4 &716624954 stripped
@@ -1433,6 +1453,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: LightGhost (2)
       objectReference: {fileID: 0}
+    - target: {fileID: 7547686849433669478, guid: 1f45b3fae489f27428ecbf5c8887de48,
+        type: 3}
+      propertyPath: enemy
+      value: 
+      objectReference: {fileID: 1148225668}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1f45b3fae489f27428ecbf5c8887de48, type: 3}
 --- !u!1001 &945162585
@@ -1502,25 +1527,7 @@ PrefabInstance:
       propertyPath: m_Name
       value: Enemy
       objectReference: {fileID: 0}
-    - target: {fileID: 7320963435959732098, guid: d3f9a1c146d1b07468d9ed7a049519df,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 9217458016169341017, guid: d3f9a1c146d1b07468d9ed7a049519df,
-        type: 3}
-      propertyPath: m_LocalRotation.x
-      value: -0.055951778
-      objectReference: {fileID: 0}
-    - target: {fileID: 9217458016169341017, guid: d3f9a1c146d1b07468d9ed7a049519df,
-        type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0.042914886
-      objectReference: {fileID: 0}
-    m_RemovedComponents:
-    - {fileID: 6041768982576153642, guid: d3f9a1c146d1b07468d9ed7a049519df, type: 3}
-    - {fileID: 1148225671, guid: d3f9a1c146d1b07468d9ed7a049519df, type: 3}
-    - {fileID: 1148225672, guid: d3f9a1c146d1b07468d9ed7a049519df, type: 3}
+    m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d3f9a1c146d1b07468d9ed7a049519df, type: 3}
 --- !u!1 &974231382
 GameObject:
@@ -1809,6 +1816,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: NewGhost (6)
       objectReference: {fileID: 0}
+    - target: {fileID: 7547686849433669478, guid: 1f45b3fae489f27428ecbf5c8887de48,
+        type: 3}
+      propertyPath: enemy
+      value: 
+      objectReference: {fileID: 1148225668}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1f45b3fae489f27428ecbf5c8887de48, type: 3}
 --- !u!1 &1084509345
@@ -2050,7 +2062,7 @@ PrefabInstance:
     - target: {fileID: 8281560202221597816, guid: 6f05042252408014aac0f95c2515567b,
         type: 3}
       propertyPath: m_NavMeshLayer
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8281560202221597816, guid: 6f05042252408014aac0f95c2515567b,
         type: 3}
@@ -2332,6 +2344,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1050256336403724712, guid: 1f45b3fae489f27428ecbf5c8887de48,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 4668240278413427494, guid: 1f45b3fae489f27428ecbf5c8887de48,
         type: 3}
       propertyPath: m_Radius
@@ -2342,6 +2359,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: LightGhost (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 7547686849433669478, guid: 1f45b3fae489f27428ecbf5c8887de48,
+        type: 3}
+      propertyPath: enemy
+      value: 
+      objectReference: {fileID: 1148225668}
     m_RemovedComponents:
     - {fileID: 6436605775470837880, guid: 1f45b3fae489f27428ecbf5c8887de48, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 1f45b3fae489f27428ecbf5c8887de48, type: 3}
@@ -2635,6 +2657,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: LightGhost (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 7547686849433669478, guid: 1f45b3fae489f27428ecbf5c8887de48,
+        type: 3}
+      propertyPath: enemy
+      value: 
+      objectReference: {fileID: 1148225668}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1f45b3fae489f27428ecbf5c8887de48, type: 3}
 --- !u!1001 &1661585636
@@ -2704,6 +2731,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: NewGhost (2)
       objectReference: {fileID: 0}
+    - target: {fileID: 7547686849433669478, guid: 1f45b3fae489f27428ecbf5c8887de48,
+        type: 3}
+      propertyPath: enemy
+      value: 
+      objectReference: {fileID: 1148225668}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1f45b3fae489f27428ecbf5c8887de48, type: 3}
 --- !u!4 &1675537284 stripped
@@ -2909,6 +2941,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: NewGhost (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 7547686849433669478, guid: 1f45b3fae489f27428ecbf5c8887de48,
+        type: 3}
+      propertyPath: enemy
+      value: 
+      objectReference: {fileID: 1148225668}
     - target: {fileID: 7547686849433669478, guid: 1f45b3fae489f27428ecbf5c8887de48,
         type: 3}
       propertyPath: playerGhostAwake

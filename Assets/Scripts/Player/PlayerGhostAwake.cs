@@ -25,9 +25,9 @@ public class PlayerGhostAwake : MonoBehaviour, ICheckPlayerInteraction
 
     [Header("Health Up and Down")]
 
-    private float SanityUpNumber;
+    [SerializeField] private float SanityUpNumber;
 
-    private float SanityDownNumber;
+    [SerializeField] private float SanityDownNumber;
 
     private void Start()
     {
@@ -120,7 +120,7 @@ public class PlayerGhostAwake : MonoBehaviour, ICheckPlayerInteraction
                     SceneManager.LoadScene(SceneManager.GetActiveScene().name);
                 }
             }
-            Debug.Log("Player lost health");
+
             yield return new WaitForSeconds(1);
         }
     }

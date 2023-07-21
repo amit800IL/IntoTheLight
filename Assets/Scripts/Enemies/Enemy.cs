@@ -7,11 +7,10 @@ public class Enemy : MonoBehaviour
 {
 
     [field: Header("General")]
-    [field: SerializeField] public NavMeshAgent agent { get; protected set; }
-    private PlayerGhostAwake playerGhostAwake;
-    private Vector3 playerPosition;
+    [field: SerializeField] public NavMeshAgent agent { get; private set; }
     private bool isChasingPlayer;
     private bool canKillPlayer = true;
+    private Vector3 PlayerPosition;
     [SerializeField] private SkinnedMeshRenderer enemyRenderer;
     [SerializeField] private Light enemyLight;
     [SerializeField] private Animator animator;
@@ -19,7 +18,6 @@ public class Enemy : MonoBehaviour
     [SerializeField] private InputActionsSO inputActions;
 
     [field: Header("Numbers")]
-
     public float EnemySpeed { get; private set; }
     private float maxDelay = 2f;
     private float minDelay = 5f;
@@ -39,8 +37,6 @@ public class Enemy : MonoBehaviour
 
     private void Start()
     {
-        playerGhostAwake = GameManager.Instance.PlayerGhostAwake;
-        playerPosition = GameManager.Instance.Player.transform.position;
         isChasingPlayer = false;
         killingDistance = Random.Range(minkillingDistance, maxKillingDistance);
         EnemySpeed = Random.Range(minEnemySpeed, maxEnemySpeed);
@@ -48,16 +44,48 @@ public class Enemy : MonoBehaviour
         StartCoroutine(ChasePlayer());
     }
 
-    private void GoToPlayer(float Radius)
+    private void Update()
     {
+        PlayerPosition = GameManager.Instance.Player.transform.position;
+    }
+    private void ScarePlayer()
+    {
+        float WalkAwayDistanceFraction = 0.5f;
+        float walkAwayDistance = Vector3.Distance(PlayerPosition, transform.position);
+        float targetDistance = walkAwayDistance * WalkAwayDistanceFraction;
+
+        Vector3 WalkDirection = PlayerPosition - transform.position;
+        WalkDirection.y = 0f;
+        Vector3 spawnPosition = transform.position + WalkDirection.normalized * targetDistance;
+        agent.SetDestination(spawnPosition);
+        Debug.Log("Scare Player" + spawnPosition);
+    }
+
+    private void StandInFrontOfPlayer()
+    {
+        float offset = 1.5f;
+
+        Vector3 directionToPlayer = transform.position - PlayerPosition;
+        Vector3 targetPosition = PlayerPosition + directionToPlayer.normalized * offset;
+
+        agent.Warp(targetPosition);
+        Debug.Log("stand in front of player" + targetPosition);
+    }
+    private void GoToPlayer()
+    {
+        float offset = 2f;
+
+        Vector3 directionToPlayer = transform.position - PlayerPosition;
+        directionToPlayer.y = 0f;
+        Vector3 targetPosition = PlayerPosition - directionToPlayer.normalized * offset;
+
         animator.SetTrigger("IsWalking");
-        Vector3 targetPosition = playerPosition;
-        Vector2 randomCircle = UnityEngine.Random.insideUnitCircle * Radius;
-        Vector3 randomPosition = targetPosition + new Vector3(randomCircle.x, 0, randomCircle.y);
-        agent.SetDestination(randomPosition);
+        agent.SetDestination(targetPosition);
+        Debug.Log("go to player : " + targetPosition);
     }
     private IEnumerator ChasePlayer()
     {
+
         enemyRenderer.forceRenderingOff = true;
 
         isChasingPlayer = true;
@@ -72,12 +100,13 @@ public class Enemy : MonoBehaviour
 
         for (int i = 0; i < 2; i++)
         {
+
             animator.SetTrigger("IsWalking");
             ScarePlayer();
 
             guardWalkSound.Play();
 
-            AudioSource randomScream = enemyScreams[UnityEngine.Random.Range(0, enemyScreams.Length)];
+            AudioSource randomScream = enemyScreams[Random.Range(0, enemyScreams.Length)];
             randomScream.Play();
 
             enemyLight.enabled = false;
@@ -137,11 +166,11 @@ public class Enemy : MonoBehaviour
 
         while (isChasingPlayer)
         {
-            distance = Vector3.Distance(agent.transform.position, playerPosition);
+            distance = Vector3.Distance(agent.transform.position, PlayerPosition);
 
             guardWalkSound.Play();
 
-            GoToPlayer(1f);
+            GoToPlayer();
 
             standInFronOfGhost();
 
@@ -157,6 +186,7 @@ public class Enemy : MonoBehaviour
                 {
                     SceneManager.LoadScene(SceneManager.GetActiveScene().name);
                 }
+
             }
             yield return new WaitForSeconds(1);
         }
@@ -193,41 +223,25 @@ public class Enemy : MonoBehaviour
     {
         while (true)
         {
-            transform.position = GameManager.Instance.Player.transform.position;
+            transform.position = PlayerPosition;
 
             yield return null;
         }
     }
-    private void ScarePlayer()
-    {
-        float WalkAwayDistance = 10f;
-
-        Vector3 WalkDirection = transform.position - playerPosition;
-        WalkDirection.y = 0f;
-        Vector3 spawnPosition = transform.position + WalkDirection.normalized * WalkAwayDistance;
-        agent.SetDestination(spawnPosition);
-    }
-
-    private void StandInFrontOfPlayer()
-    {
-        float StandingDistance = 5f;
-
-        Vector3 standingDirection = playerPosition - transform.position;
-        Vector3 spawnPosition = playerPosition + standingDirection.normalized * StandingDistance;
-        agent.Warp(spawnPosition);
-    }
     private void standInFronOfGhost()
     {
-        if (playerGhostAwake.isInRangeOfGhost && playerGhostAwake.HasAwaknedGhost)
+        if (GameManager.Instance.PlayerGhostAwake.isInRangeOfGhost && GameManager.Instance.PlayerGhostAwake.HasAwaknedGhost)
         {
+            Debug.Log("StandingInFront");
             animator.ResetTrigger("IsWalking");
             animator.SetTrigger("IsStanding");
             StandInFrontOfPlayer();
             agent.isStopped = true;
             canKillPlayer = false;
         }
-        else if (!playerGhostAwake.isInRangeOfGhost && !playerGhostAwake.HasAwaknedGhost)
+        else if (!GameManager.Instance.PlayerGhostAwake.isInRangeOfGhost && !GameManager.Instance.PlayerGhostAwake.HasAwaknedGhost)
         {
+            Debug.Log("NotStandingInFront");
             animator.ResetTrigger("IsStanding");
             animator.SetTrigger("IsWalking");
             agent.isStopped = false;
