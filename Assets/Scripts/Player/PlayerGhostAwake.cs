@@ -9,6 +9,7 @@ public class PlayerGhostAwake : MonoBehaviour, ICheckPlayerInteraction
 
     [field: Header("General")]
 
+    private bool isGlobalCooldown = false;
     [field: SerializeField] public ParticleSystem playerHealingEffect { get; private set; }
 
     public bool isInRangeOfGhost { get; private set; } = false;
@@ -66,7 +67,7 @@ public class PlayerGhostAwake : MonoBehaviour, ICheckPlayerInteraction
     }
     public void OnPlayerInteraction(InputAction.CallbackContext context)
     {
-        if (context.performed && isInRangeOfGhost && !HasAwaknedGhost && ghost.coolDown == ghost.elapsedTime)
+        if (context.performed && isInRangeOfGhost && !HasAwaknedGhost && ghost.coolDown == ghost.elapsedTime && !isGlobalCooldown)
         {
             ghost.OnGhostInteraction();
 
@@ -84,6 +85,8 @@ public class PlayerGhostAwake : MonoBehaviour, ICheckPlayerInteraction
             healingCourtuine = StartCoroutine(HealthUpGrduadly());
 
             playerHealingEffect.Play();
+
+            StartCoroutine(StartGlobalCooldown());
         }
     }
     public IEnumerator HealthUpGrduadly()
@@ -132,6 +135,13 @@ public class PlayerGhostAwake : MonoBehaviour, ICheckPlayerInteraction
         {
             decayCourtuine = StartCoroutine(HealthDownGrduadly());
         }
+    }
+
+    private IEnumerator StartGlobalCooldown()
+    {
+        isGlobalCooldown = true;
+        yield return new WaitForSeconds(7f); 
+        isGlobalCooldown = false;
     }
 
 }

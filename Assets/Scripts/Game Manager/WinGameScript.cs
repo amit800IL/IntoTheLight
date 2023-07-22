@@ -1,3 +1,4 @@
+using System.Linq.Expressions;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -13,10 +14,12 @@ public class WinGameScript : MonoBehaviour
         gameObject.SetActive(true);
         Cursor.lockState = CursorLockMode.None;
         FindObjectOfType<AudioSource>().Stop();
+        Cursor.visible = true;
         Time.timeScale = 0f;
     }
     public void RestartLevel()
     {
+        FindObjectOfType<AudioSource>().Play();
         SceneManager.LoadScene("MazeScene");
     }
     public void MainMenu()

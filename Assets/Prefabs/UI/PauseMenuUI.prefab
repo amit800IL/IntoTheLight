@@ -508,6 +508,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   inputActions: {fileID: 11400000, guid: 32a8ba2bb0af2b44b801e74f479228ce, type: 2}
   menu: {fileID: 1115671675590521037}
+  maincamera: {fileID: 0}
 --- !u!1 &1115671675506740706
 GameObject:
   m_ObjectHideFlags: 0

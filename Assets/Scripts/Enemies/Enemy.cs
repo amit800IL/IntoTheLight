@@ -50,7 +50,7 @@ public class Enemy : MonoBehaviour
 
         Vector3 WalkDirection = transform.position - PlayerPosition;
         WalkDirection.y = 0f;
-        Vector3 spawnPosition = PlayerPosition - WalkDirection.normalized * WalkAwayDistanceFraction;
+        Vector3 spawnPosition = PlayerPosition + WalkDirection.normalized * WalkAwayDistanceFraction;
         agent.SetDestination(spawnPosition);
         Debug.Log("Scare Player" + spawnPosition);
     }
