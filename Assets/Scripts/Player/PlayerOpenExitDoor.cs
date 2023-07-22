@@ -9,7 +9,8 @@ public class PlayerOpenExitDoor : MonoBehaviour, ICheckPlayerInteraction
     [SerializeField] private RealKey keyScript;
     [SerializeField] private Transform Door;
     private InputAction.CallbackContext context;
-
+    public delegate void WinGameAction();
+    public static event WinGameAction OnWin;
     private void Start()
     {
         context = new InputAction.CallbackContext();
@@ -20,6 +21,8 @@ public class PlayerOpenExitDoor : MonoBehaviour, ICheckPlayerInteraction
         if (context.performed && keyScript.Haskey && isInDoorTrigger)
         {
             Door.transform.Translate(0, 10000, 0);
+            if (OnWin != null)
+                OnWin();
             Application.Quit();
         }
     }

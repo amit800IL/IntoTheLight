@@ -17,7 +17,6 @@ public class EndGameScript : MonoBehaviour
     }
     private void DeathSquenceMethods()
     {
-        Debug.Log("Dead");
         DeathPanelActivate();
         Thread.Sleep(15000);
         RestartLevel();

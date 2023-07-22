@@ -6,8 +6,8 @@ public class PlayerStats : MonoBehaviour
     public float maxHp = 100;
     public float speed;
     public int CurrKeys;
-    public delegate void EndGameAction();
-    public static event EndGameAction OnDeath;
+    public delegate void LoseGameAction();
+    public static event LoseGameAction OnDeath;
 
     private void Start()
     {
