@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour
@@ -29,10 +30,11 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
-        SpawnEnemy();
+        StartCoroutine(SpawnEnemy());
     }
-    public void SpawnEnemy()
+    public IEnumerator SpawnEnemy()
     {
+        yield return new WaitForSeconds(5);
         enemy.SetActive(true);
     }
 }

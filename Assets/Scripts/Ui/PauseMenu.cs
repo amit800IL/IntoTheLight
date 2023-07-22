@@ -33,6 +33,8 @@ public class PauseMenu : MonoBehaviour
 
     public void PauseGame()
     {
+        FindObjectOfType<AudioSource>().Pause();
+        Cursor.lockState = CursorLockMode.None;
         Time.timeScale = 0f;
         gameIsPaused = true;
         menu.SetActive(true);
@@ -41,6 +43,7 @@ public class PauseMenu : MonoBehaviour
     }
     public void Resume()
     {
+        FindObjectOfType<AudioSource>().UnPause();
         Time.timeScale = 1;
         gameIsPaused = false;
         menu.SetActive(false);

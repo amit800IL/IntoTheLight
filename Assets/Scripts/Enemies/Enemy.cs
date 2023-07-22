@@ -1,7 +1,6 @@
 using System.Collections;
 using UnityEngine;
 using UnityEngine.AI;
-using UnityEngine.SceneManagement;
 
 public class Enemy : MonoBehaviour
 {
@@ -14,6 +13,7 @@ public class Enemy : MonoBehaviour
     [SerializeField] private Light enemyLight;
     [SerializeField] private AudioSource[] enemyScreams;
     [SerializeField] private InputActionsSO inputActions;
+    [SerializeField] private InRoomBehavior[] rooms;
     private bool isChasingPlayer;
     private bool canKillPlayer = true;
     private Vector3 PlayerPosition;
@@ -37,10 +37,6 @@ public class Enemy : MonoBehaviour
 
     private void Start()
     {
-        isChasingPlayer = false;
-        killingDistance = Random.Range(minkillingDistance, maxKillingDistance);
-        EnemySpeed = Random.Range(minEnemySpeed, maxEnemySpeed);
-        agent.speed = EnemySpeed;
         StartCoroutine(ChasePlayer());
     }
 
@@ -50,13 +46,11 @@ public class Enemy : MonoBehaviour
     }
     private void ScarePlayer()
     {
-        float WalkAwayDistanceFraction = 0.5f;
-        float walkAwayDistance = Vector3.Distance(transform.position, PlayerPosition);
-        float targetDistance = walkAwayDistance * WalkAwayDistanceFraction;
+        float WalkAwayDistanceFraction = 3f;
 
         Vector3 WalkDirection = transform.position - PlayerPosition;
         WalkDirection.y = 0f;
-        Vector3 spawnPosition = PlayerPosition - WalkDirection.normalized * targetDistance;
+        Vector3 spawnPosition = PlayerPosition - WalkDirection.normalized * WalkAwayDistanceFraction;
         agent.SetDestination(spawnPosition);
         Debug.Log("Scare Player" + spawnPosition);
     }
@@ -84,7 +78,14 @@ public class Enemy : MonoBehaviour
     }
     private IEnumerator ChasePlayer()
     {
-        yield return new WaitForSeconds(5);
+        PlayerPosition = GameManager.Instance.Player.transform.position;
+        isChasingPlayer = false;
+        killingDistance = Random.Range(minkillingDistance, maxKillingDistance);
+        EnemySpeed = Random.Range(minEnemySpeed, maxEnemySpeed);
+        agent.speed = EnemySpeed;
+
+        animator.SetTrigger("IsWalking");
+        ScarePlayer();
 
         enemyRenderer.forceRenderingOff = true;
 
@@ -92,34 +93,38 @@ public class Enemy : MonoBehaviour
 
         enemyLight.enabled = false;
 
+
         yield return new WaitForSeconds(5);
+
+        PlayerPosition = GameManager.Instance.Player.transform.position;
+
+        ScarePlayer();
 
         enemyRenderer.forceRenderingOff = false;
 
         enemyLight.enabled = true;
 
-        animator.SetTrigger("IsWalking");
-        ScarePlayer();
-
-        guardWalkSound.Play();
-
         AudioSource randomScream = enemyScreams[Random.Range(0, enemyScreams.Length)];
         randomScream.Play();
 
-        enemyLight.enabled = false;
+        guardWalkSound.Play();
 
-        animator.SetTrigger("IsWalking");
-        ScarePlayer();
+        randomScream = enemyScreams[Random.Range(0, enemyScreams.Length)];
+        randomScream.Play();
+
+        enemyLight.enabled = false;
         yield return new WaitForSeconds(Random.Range(minDelay, maxDelay));
 
-        animator.SetTrigger("IsWalking");
+        PlayerPosition = GameManager.Instance.Player.transform.position;
+
         ScarePlayer();
 
         enemyRenderer.forceRenderingOff = true;
 
         yield return new WaitForSeconds(Random.Range(minDelay, maxDelay));
 
-        animator.SetTrigger("IsWalking");
+        PlayerPosition = GameManager.Instance.Player.transform.position;
+
         ScarePlayer();
 
         guardWalkSound.Stop();
@@ -145,11 +150,6 @@ public class Enemy : MonoBehaviour
 
         enemyLight.enabled = false;
 
-        yield return new WaitForSeconds(Random.Range(minDelay, maxDelay));
-
-        randomScream = enemyScreams[Random.Range(0, enemyScreams.Length)];
-        randomScream.Play();
-
         yield return new WaitForSeconds(2);
 
         randomScream.Stop();
@@ -165,6 +165,8 @@ public class Enemy : MonoBehaviour
 
             guardWalkSound.Play();
 
+            enemyAttackDoor();
+
             GoToPlayer();
 
             standInFronOfGhost();
@@ -172,14 +174,6 @@ public class Enemy : MonoBehaviour
             if (agent != null && distance < killingDistance && canKillPlayer)
             {
                 enemyKill();
-
-                yield return new WaitForSeconds(2);
-
-                if (GameManager.Instance.playerStats.HP <= 0)
-                {
-                    SceneManager.LoadScene(SceneManager.GetActiveScene().name);
-                }
-
             }
             yield return new WaitForSeconds(1);
         }
@@ -201,7 +195,7 @@ public class Enemy : MonoBehaviour
 
         Quaternion playerRotation = Quaternion.Euler(-90, GameManager.Instance.Player.transform.rotation.eulerAngles.y, 0);
         GameManager.Instance.Player.transform.rotation = playerRotation;
-        
+
         agent.isStopped = true;
         guardKillingScream.Play();
         guardKillingScream.volume = 1f;
@@ -239,6 +233,34 @@ public class Enemy : MonoBehaviour
             animator.SetTrigger("IsWalking");
             agent.isStopped = false;
             canKillPlayer = true;
+        }
+    }
+
+    public void enemyAttackDoor()
+    {
+        foreach (InRoomBehavior rooms in rooms)
+        {
+            float enemyTriggerDistance = Vector3.Distance(rooms.transform.position, transform.position);
+
+            if (enemyTriggerDistance < 50 && rooms.isPlayerInsideRoom)
+            {
+                rooms.hitDoor.Play();
+                guardWalkSound.Stop();
+                agent.isStopped = true;
+                canKillPlayer = false;
+                animator.ResetTrigger("IsWalking");
+                animator.SetTrigger("IsAttacking");
+            }
+            else if (!rooms.isPlayerInsideRoom)
+            {
+                rooms.hitDoor.Stop();
+                guardWalkSound.Play();
+                agent.isStopped = false;
+                canKillPlayer = true;
+                animator.ResetTrigger("IsAttacking");
+                animator.SetTrigger("IsWalking");
+            }
+
         }
     }
 

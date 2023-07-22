@@ -11,4 +11,10 @@ public class CurrKeyText : MonoBehaviour
         this.GetComponent <TMP_Text>().text =
             GameManager.Instance.playerStats.CurrKeys.ToString();
     }
+
+    private void Update()
+    {
+        this.GetComponent<TMP_Text>().text =
+            GameManager.Instance.playerStats.CurrKeys.ToString();
+    }
 }

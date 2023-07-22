@@ -65,7 +65,7 @@ public class RealKey : MonoBehaviour, ICheckPlayerInteraction
         GameManager.Instance.playerStats.CurrKeys++;
         gameObject.SetActive(false);
         Haskey = true;
-        Debug.Log(Haskey);
+        Debug.Log(GameManager.Instance.playerStats.CurrKeys);
     }
 
 }

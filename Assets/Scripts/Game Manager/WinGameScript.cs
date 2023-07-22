@@ -1,22 +1,23 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class WinGameScript : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    private void Start()
     {
         PlayerOpenExitDoor.OnWin += WinPanelActivate;
+        gameObject.SetActive(false);
     }
     private void WinPanelActivate()
     {
         gameObject.SetActive(true);
+        Cursor.lockState = CursorLockMode.None;
+        FindObjectOfType<AudioSource>().Stop();
+        Time.timeScale = 0f;
     }
     public void RestartLevel()
     {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        SceneManager.LoadScene("MazeScene");
     }
     public void MainMenu()
     {

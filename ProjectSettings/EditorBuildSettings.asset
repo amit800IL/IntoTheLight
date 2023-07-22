@@ -11,6 +11,9 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/MazeScene.unity
     guid: cba09a8033cce37439ea4a30e209c2c1
+  - enabled: 1
+    path: Assets/Scenes/VictoryScene.unity
+    guid: 538379b366ae47142875312fb7efeb07
   m_configObjects:
     com.unity.input.settings: {fileID: 11400000, guid: 076646c178ace5c479995aa8998311d0,
       type: 2}

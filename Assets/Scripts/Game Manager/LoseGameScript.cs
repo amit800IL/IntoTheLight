@@ -1,15 +1,10 @@
 using System.Collections;
-using System.Collections.Generic;
-using System.Threading;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using UnityEngine.UI;
-using UnityEngine.UIElements;
 
-public class EndGameScript : MonoBehaviour
+public class LoseGameScript : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    private void Start()
     {
         Debug.Log("Waiting for death");
         gameObject.SetActive(false);
@@ -18,7 +13,12 @@ public class EndGameScript : MonoBehaviour
     private void DeathSquenceMethods()
     {
         DeathPanelActivate();
-        Thread.Sleep(15000);
+        StartCoroutine(deathTimer());
+    }
+
+    private IEnumerator deathTimer()
+    {
+        yield return new WaitForSeconds(3);
         RestartLevel();
     }
     private void DeathPanelActivate()
