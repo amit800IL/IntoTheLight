@@ -173,10 +173,10 @@ Light:
   m_Type: 0
   m_Shape: 0
   m_Color: {r: 0.8962264, g: 0.011836906, b: 0.011836906, a: 1}
-  m_Intensity: 1000
-  m_Range: 200
-  m_SpotAngle: 146.03789
-  m_InnerSpotAngle: 5.04921
+  m_Intensity: 5000
+  m_Range: 1000
+  m_SpotAngle: 179
+  m_InnerSpotAngle: 0
   m_CookieSize: 10
   m_Shadows:
     m_Type: 2
@@ -639,16 +639,13 @@ GameObject:
   - component: {fileID: 1468124598860436399}
   - component: {fileID: 6777421282977997086}
   - component: {fileID: 7247184916246678163}
-  - component: {fileID: 1148225672}
-  - component: {fileID: 1148225671}
-  - component: {fileID: 6041768982576153642}
   m_Layer: 0
   m_Name: Enemy
   m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &6050444081387312380
 Transform:
   m_ObjectHideFlags: 0
@@ -684,17 +681,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   <agent>k__BackingField: {fileID: 6777421282977997086}
+  <animator>k__BackingField: {fileID: 7247184916246678163}
   enemyRenderer: {fileID: 7845111578218500457}
   enemyLight: {fileID: 4019241146482662692}
-  animator: {fileID: 7247184916246678163}
   enemyScreams:
   - {fileID: 5971873096229309752}
   - {fileID: 2938674370795472078}
   - {fileID: 5349354144246091762}
   inputActions: {fileID: 11400000, guid: 32a8ba2bb0af2b44b801e74f479228ce, type: 2}
+  <guardWalkSound>k__BackingField: {fileID: 4274505277907835150}
   guardScream: {fileID: 5971873096229309752}
   guardKillingScream: {fileID: 2938674370795472078}
-  guardWalkSound: {fileID: 4274505277907835150}
 --- !u!195 &6777421282977997086
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -704,7 +701,7 @@ NavMeshAgent:
   m_GameObject: {fileID: 7320963435959732098}
   m_Enabled: 1
   m_AgentTypeID: 0
-  m_Radius: 2
+  m_Radius: 4
   m_Speed: 3.5
   m_Acceleration: 10
   avoidancePriority: 1
@@ -715,7 +712,7 @@ NavMeshAgent:
   m_AutoRepath: 1
   m_Height: 2
   m_BaseOffset: 0
-  m_WalkableMask: 4294967295
+  m_WalkableMask: 1
   m_ObstacleAvoidanceType: 4
 --- !u!95 &7247184916246678163
 Animator:
@@ -737,53 +734,6 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
---- !u!54 &1148225672
-Rigidbody:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7320963435959732098}
-  serializedVersion: 2
-  m_Mass: 1
-  m_Drag: 0
-  m_AngularDrag: 0.05
-  m_UseGravity: 1
-  m_IsKinematic: 1
-  m_Interpolate: 0
-  m_Constraints: 0
-  m_CollisionDetection: 0
---- !u!136 &1148225671
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7320963435959732098}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  m_Radius: 1.1226114
-  m_Height: 4.7817144
-  m_Direction: 1
-  m_Center: {x: -0.07489347, y: 3.2197633, z: 0.024070619}
---- !u!114 &6041768982576153642
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7320963435959732098}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 17b6353140fbdee4896d61bb8ad63e9c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  rightDoor:
-  - {fileID: 0}
-  - {fileID: 0}
-  leftDoor: []
-  inputActions: {fileID: 11400000, guid: 32a8ba2bb0af2b44b801e74f479228ce, type: 2}
 --- !u!1 &7814672890762324622
 GameObject:
   m_ObjectHideFlags: 0
@@ -978,6 +928,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Skeletonzombie T Avelange@Walking
+      objectReference: {fileID: 0}
+    - target: {fileID: 1852576806548013000, guid: 5e560dce8246c9441b125d99b5cdbddd,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0.05595178
+      objectReference: {fileID: 0}
+    - target: {fileID: 1852576806548013000, guid: 5e560dce8246c9441b125d99b5cdbddd,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0.04291489
       objectReference: {fileID: 0}
     - target: {fileID: 5866666021909216657, guid: 5e560dce8246c9441b125d99b5cdbddd,
         type: 3}

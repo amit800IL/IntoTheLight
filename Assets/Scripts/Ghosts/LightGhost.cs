@@ -10,11 +10,13 @@ public class LightGhost : MonoBehaviour
 
     [SerializeField] private Light Light;
 
+    [SerializeField] private Enemy enemy;
+
     [SerializeField] private ParticleSystem GhostHealingLight;
 
     [SerializeField] private InputActionsSO InputActions;
 
-    [field : Header("Numbers")]
+    [field: Header("Numbers")]
     public float coolDown { get; private set; } = 7f;
     public float elapsedTime { get; private set; }
 
@@ -27,16 +29,6 @@ public class LightGhost : MonoBehaviour
     {
         elapsedTime = coolDown;
         PlayerGhostAwake = GameManager.Instance.PlayerGhostAwake;
-        CheckIfGhostAwake();
-    }
-
-    private void CheckIfGhostAwake()
-    {
-        if (!IsGhostAwake && !PlayerGhostAwake.HasAwaknedGhost)
-        {
-            Light.spotAngle = 40f;
-            Light.intensity = 40f;
-        }
     }
 
     public void OnGhostInteraction()
@@ -54,6 +46,7 @@ public class LightGhost : MonoBehaviour
 
     public void OnGhostAwake()
     {
+
         IsGhostAwake = true;
 
         PlayerVoiceManager.Instance.GuardGettingCloser.Stop();
@@ -65,8 +58,6 @@ public class LightGhost : MonoBehaviour
     public void OnGhostSleep()
     {
         GhostHealingLight.Stop();
-        Light.spotAngle = 40f;
-        Light.intensity = 40f;
     }
 
     private IEnumerator GhostFromWakeToSleep()
@@ -75,6 +66,13 @@ public class LightGhost : MonoBehaviour
         {
             elapsedTime -= Time.deltaTime;
             yield return null;
+
+            float enemyGhostDistance = Vector3.Distance(transform.position, enemy.transform.position);
+
+            if (enemyGhostDistance < 10f && PlayerGhostAwake.isInRangeOfGhost)
+            {
+                transform.LookAt(enemy.transform.position);
+            }
 
             if (!PlayerGhostAwake.isInRangeOfGhost)
             {

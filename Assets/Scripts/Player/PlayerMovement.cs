@@ -9,7 +9,6 @@ public class PlayerMovement : MonoBehaviour
     private Vector3 newMove;
 
     private bool isMoving = false;
-    [field: SerializeField] public Collider playerCollider { get; private set; }
 
     [SerializeField] private InputActionsSO InputActions;
 

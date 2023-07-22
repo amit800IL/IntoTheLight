@@ -7,22 +7,21 @@ public class Enemy : MonoBehaviour
 {
 
     [field: Header("General")]
-    [field: SerializeField] public NavMeshAgent agent { get; protected set; }
-    private PlayerGhostAwake playerGhostAwake;
-    private Vector3 playerPosition;
-    private bool isChasingPlayer;
-    private bool canKillPlayer = true;
+    [field: SerializeField] public NavMeshAgent agent { get; private set; }
+    [field: SerializeField] public Animator animator { get; private set; }
+
     [SerializeField] private SkinnedMeshRenderer enemyRenderer;
     [SerializeField] private Light enemyLight;
-    [SerializeField] private Animator animator;
     [SerializeField] private AudioSource[] enemyScreams;
     [SerializeField] private InputActionsSO inputActions;
+    private bool isChasingPlayer;
+    private bool canKillPlayer = true;
+    private Vector3 PlayerPosition;
 
     [field: Header("Numbers")]
-
     public float EnemySpeed { get; private set; }
-    private float maxDelay = 2f;
-    private float minDelay = 5f;
+    private float maxDelay = 5f;
+    private float minDelay = 7f;
     private float minEnemySpeed = 3f;
     private float maxEnemySpeed = 6f;
     private float minkillingDistance = 3f;
@@ -30,17 +29,14 @@ public class Enemy : MonoBehaviour
     private float killingDistance;
     private float distance;
 
-    [Header("Audio Sources")]
-
+    [field: Header("Audio Sources")]
+    [field: SerializeField] public AudioSource guardWalkSound { get; private set; }
     [SerializeField] private AudioSource guardScream;
     [SerializeField] private AudioSource guardKillingScream;
-    [SerializeField] private AudioSource guardWalkSound;
 
 
     private void Start()
     {
-        playerGhostAwake = GameManager.Instance.PlayerGhostAwake;
-        playerPosition = GameManager.Instance.Player.transform.position;
         isChasingPlayer = false;
         killingDistance = Random.Range(minkillingDistance, maxKillingDistance);
         EnemySpeed = Random.Range(minEnemySpeed, maxEnemySpeed);
@@ -48,16 +44,48 @@ public class Enemy : MonoBehaviour
         StartCoroutine(ChasePlayer());
     }
 
-    private void GoToPlayer(float Radius)
+    private void Update()
     {
+        PlayerPosition = GameManager.Instance.Player.transform.position;
+    }
+    private void ScarePlayer()
+    {
+        float WalkAwayDistanceFraction = 0.5f;
+        float walkAwayDistance = Vector3.Distance(transform.position, PlayerPosition);
+        float targetDistance = walkAwayDistance * WalkAwayDistanceFraction;
+
+        Vector3 WalkDirection = transform.position - PlayerPosition;
+        WalkDirection.y = 0f;
+        Vector3 spawnPosition = PlayerPosition - WalkDirection.normalized * targetDistance;
+        agent.SetDestination(spawnPosition);
+        Debug.Log("Scare Player" + spawnPosition);
+    }
+
+    private void StandInFrontOfPlayer()
+    {
+        float offset = 10f;
+
+        Vector3 directionToPlayer = transform.position - PlayerPosition;
+        Vector3 targetPosition = PlayerPosition + directionToPlayer.normalized * offset;
+        agent.Warp(targetPosition);
+        Debug.Log("stand in front of player" + targetPosition);
+    }
+    private void GoToPlayer()
+    {
+        float offset = killingDistance + 2f;
+
+        Vector3 directionToPlayer = transform.position - PlayerPosition;
+        directionToPlayer.y = 0f;
+        Vector3 targetPosition = PlayerPosition + directionToPlayer.normalized * offset;
+
         animator.SetTrigger("IsWalking");
-        Vector3 targetPosition = playerPosition;
-        Vector2 randomCircle = UnityEngine.Random.insideUnitCircle * Radius;
-        Vector3 randomPosition = targetPosition + new Vector3(randomCircle.x, 0, randomCircle.y);
-        agent.SetDestination(randomPosition);
+        agent.SetDestination(targetPosition);
+        Debug.Log("go to player : " + targetPosition);
     }
     private IEnumerator ChasePlayer()
     {
+        yield return new WaitForSeconds(5);
+
         enemyRenderer.forceRenderingOff = true;
 
         isChasingPlayer = true;
@@ -70,65 +98,61 @@ public class Enemy : MonoBehaviour
 
         enemyLight.enabled = true;
 
-        for (int i = 0; i < 2; i++)
-        {
-            animator.SetTrigger("IsWalking");
-            ScarePlayer();
+        animator.SetTrigger("IsWalking");
+        ScarePlayer();
 
-            guardWalkSound.Play();
+        guardWalkSound.Play();
 
-            AudioSource randomScream = enemyScreams[UnityEngine.Random.Range(0, enemyScreams.Length)];
-            randomScream.Play();
+        AudioSource randomScream = enemyScreams[Random.Range(0, enemyScreams.Length)];
+        randomScream.Play();
 
-            enemyLight.enabled = false;
+        enemyLight.enabled = false;
 
-            animator.SetTrigger("IsWalking");
-            ScarePlayer();
-            yield return new WaitForSeconds(Random.Range(minDelay, maxDelay));
+        animator.SetTrigger("IsWalking");
+        ScarePlayer();
+        yield return new WaitForSeconds(Random.Range(minDelay, maxDelay));
 
-            animator.SetTrigger("IsWalking");
-            ScarePlayer();
+        animator.SetTrigger("IsWalking");
+        ScarePlayer();
 
-            enemyRenderer.forceRenderingOff = true;
+        enemyRenderer.forceRenderingOff = true;
 
-            yield return new WaitForSeconds(Random.Range(minDelay, maxDelay));
+        yield return new WaitForSeconds(Random.Range(minDelay, maxDelay));
 
-            animator.SetTrigger("IsWalking");
-            ScarePlayer();
+        animator.SetTrigger("IsWalking");
+        ScarePlayer();
 
-            guardWalkSound.Stop();
+        guardWalkSound.Stop();
 
-            randomScream = enemyScreams[Random.Range(0, enemyScreams.Length)];
-            randomScream.Play();
+        randomScream = enemyScreams[Random.Range(0, enemyScreams.Length)];
+        randomScream.Play();
 
-            enemyRenderer.forceRenderingOff = false;
+        enemyRenderer.forceRenderingOff = false;
 
-            enemyLight.enabled = true;
+        enemyLight.enabled = true;
 
-            yield return new WaitForSeconds(Random.Range(minDelay, maxDelay));
+        yield return new WaitForSeconds(Random.Range(minDelay, maxDelay));
 
-            guardWalkSound.Play();
+        guardWalkSound.Play();
 
-            randomScream = enemyScreams[Random.Range(0, enemyScreams.Length)];
-            randomScream.Play();
+        randomScream = enemyScreams[Random.Range(0, enemyScreams.Length)];
+        randomScream.Play();
 
-            animator.SetTrigger("IsWalking");
-            ScarePlayer();
+        animator.SetTrigger("IsWalking");
+        ScarePlayer();
 
-            enemyRenderer.forceRenderingOff = true;
+        enemyRenderer.forceRenderingOff = true;
 
-            enemyLight.enabled = false;
+        enemyLight.enabled = false;
 
-            yield return new WaitForSeconds(Random.Range(minDelay, maxDelay));
+        yield return new WaitForSeconds(Random.Range(minDelay, maxDelay));
 
-            randomScream = enemyScreams[Random.Range(0, enemyScreams.Length)];
-            randomScream.Play();
+        randomScream = enemyScreams[Random.Range(0, enemyScreams.Length)];
+        randomScream.Play();
 
-            yield return new WaitForSeconds(2);
+        yield return new WaitForSeconds(2);
 
-            randomScream.Stop();
-
-        }
+        randomScream.Stop();
 
         canKillPlayer = true;
         isChasingPlayer = true;
@@ -137,21 +161,25 @@ public class Enemy : MonoBehaviour
 
         while (isChasingPlayer)
         {
-            distance = Vector3.Distance(agent.transform.position, playerPosition);
+            distance = Vector3.Distance(agent.transform.position, PlayerPosition);
 
             guardWalkSound.Play();
 
-            GoToPlayer(1f);
+            GoToPlayer();
 
             standInFronOfGhost();
-
-            yield return new WaitForSeconds(3);
 
             if (agent != null && distance < killingDistance && canKillPlayer)
             {
                 enemyKill();
 
                 yield return new WaitForSeconds(2);
+
+                if (GameManager.Instance.playerStats.HP <= 0)
+                {
+                    SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+                }
+
             }
             yield return new WaitForSeconds(1);
         }
@@ -173,12 +201,11 @@ public class Enemy : MonoBehaviour
 
         Quaternion playerRotation = Quaternion.Euler(-90, GameManager.Instance.Player.transform.rotation.eulerAngles.y, 0);
         GameManager.Instance.Player.transform.rotation = playerRotation;
-
-
+        
         agent.isStopped = true;
         guardKillingScream.Play();
         guardKillingScream.volume = 1f;
-        GameManager.Instance.playerStats.HP = 0;
+        GameManager.Instance.playerStats.HP -= 200;
         PlayerVoiceManager.Instance.playerScream.Play();
         PlayerVoiceManager.Instance.secondPlayerScream.Play();
 
@@ -189,41 +216,25 @@ public class Enemy : MonoBehaviour
     {
         while (true)
         {
-            transform.position = GameManager.Instance.Player.transform.position;
+            transform.position = PlayerPosition;
 
             yield return null;
         }
     }
-    private void ScarePlayer()
-    {
-        float WalkAwayDistance = 10f;
-
-        Vector3 WalkDirection = transform.position - playerPosition;
-        WalkDirection.y = 0f;
-        Vector3 spawnPosition = transform.position + WalkDirection.normalized * WalkAwayDistance;
-        agent.SetDestination(spawnPosition);
-    }
-
-    private void StandInFrontOfPlayer()
-    {
-        float StandingDistance = 5f;
-
-        Vector3 standingDirection = playerPosition - transform.position;
-        Vector3 spawnPosition = playerPosition + standingDirection.normalized * StandingDistance;
-        agent.Warp(spawnPosition);
-    }
     private void standInFronOfGhost()
     {
-        if (playerGhostAwake.isInRangeOfGhost && playerGhostAwake.HasAwaknedGhost)
+        if (GameManager.Instance.PlayerGhostAwake.isInRangeOfGhost && GameManager.Instance.PlayerGhostAwake.HasAwaknedGhost)
         {
+            Debug.Log("StandingInFront");
             animator.ResetTrigger("IsWalking");
             animator.SetTrigger("IsStanding");
             StandInFrontOfPlayer();
             agent.isStopped = true;
             canKillPlayer = false;
         }
-        else if (!playerGhostAwake.isInRangeOfGhost && !playerGhostAwake.HasAwaknedGhost)
+        else if (!GameManager.Instance.PlayerGhostAwake.isInRangeOfGhost && !GameManager.Instance.PlayerGhostAwake.HasAwaknedGhost)
         {
+            Debug.Log("NotStandingInFront");
             animator.ResetTrigger("IsStanding");
             animator.SetTrigger("IsWalking");
             agent.isStopped = false;
