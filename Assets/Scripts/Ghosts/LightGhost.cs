@@ -29,16 +29,6 @@ public class LightGhost : MonoBehaviour
     {
         elapsedTime = coolDown;
         PlayerGhostAwake = GameManager.Instance.PlayerGhostAwake;
-        //CheckIfGhostAwake();
-    }
-
-    private void CheckIfGhostAwake()
-    {
-        if (!IsGhostAwake && !PlayerGhostAwake.HasAwaknedGhost)
-        {
-            Light.spotAngle = 40f;
-            Light.intensity = 40f;
-        }
     }
 
     public void OnGhostInteraction()
@@ -68,8 +58,6 @@ public class LightGhost : MonoBehaviour
     public void OnGhostSleep()
     {
         GhostHealingLight.Stop();
-        //Light.spotAngle = 40f;
-        //Light.intensity = 40f;
     }
 
     private IEnumerator GhostFromWakeToSleep()

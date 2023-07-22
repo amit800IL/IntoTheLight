@@ -14,7 +14,7 @@ public class InRoomBehavior : MonoBehaviour
     {
         float enemyTriggerDistance = Vector3.Distance(transform.position, enemy.transform.position);
 
-        if (enemyTriggerDistance < 10 && isPlayerInsideRoom)
+        if (enemyTriggerDistance < 50 && isPlayerInsideRoom)
         {
             hitDoor.Play();
             enemy.guardWalkSound.Stop();

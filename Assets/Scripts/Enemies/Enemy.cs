@@ -20,8 +20,8 @@ public class Enemy : MonoBehaviour
 
     [field: Header("Numbers")]
     public float EnemySpeed { get; private set; }
-    private float maxDelay = 2f;
-    private float minDelay = 5f;
+    private float maxDelay = 5f;
+    private float minDelay = 7f;
     private float minEnemySpeed = 3f;
     private float maxEnemySpeed = 6f;
     private float minkillingDistance = 3f;
@@ -51,12 +51,12 @@ public class Enemy : MonoBehaviour
     private void ScarePlayer()
     {
         float WalkAwayDistanceFraction = 0.5f;
-        float walkAwayDistance = Vector3.Distance(PlayerPosition, transform.position);
+        float walkAwayDistance = Vector3.Distance(transform.position, PlayerPosition);
         float targetDistance = walkAwayDistance * WalkAwayDistanceFraction;
 
-        Vector3 WalkDirection = PlayerPosition - transform.position;
+        Vector3 WalkDirection = transform.position - PlayerPosition;
         WalkDirection.y = 0f;
-        Vector3 spawnPosition = transform.position - WalkDirection.normalized * targetDistance;
+        Vector3 spawnPosition = PlayerPosition - WalkDirection.normalized * targetDistance;
         agent.SetDestination(spawnPosition);
         Debug.Log("Scare Player" + spawnPosition);
     }
@@ -84,6 +84,7 @@ public class Enemy : MonoBehaviour
     }
     private IEnumerator ChasePlayer()
     {
+        yield return new WaitForSeconds(5);
 
         enemyRenderer.forceRenderingOff = true;
 
@@ -97,66 +98,61 @@ public class Enemy : MonoBehaviour
 
         enemyLight.enabled = true;
 
-        for (int i = 0; i < 2; i++)
-        {
+        animator.SetTrigger("IsWalking");
+        ScarePlayer();
 
-            animator.SetTrigger("IsWalking");
-            ScarePlayer();
+        guardWalkSound.Play();
 
-            guardWalkSound.Play();
+        AudioSource randomScream = enemyScreams[Random.Range(0, enemyScreams.Length)];
+        randomScream.Play();
 
-            AudioSource randomScream = enemyScreams[Random.Range(0, enemyScreams.Length)];
-            randomScream.Play();
+        enemyLight.enabled = false;
 
-            enemyLight.enabled = false;
+        animator.SetTrigger("IsWalking");
+        ScarePlayer();
+        yield return new WaitForSeconds(Random.Range(minDelay, maxDelay));
 
-            animator.SetTrigger("IsWalking");
-            ScarePlayer();
-            yield return new WaitForSeconds(Random.Range(minDelay, maxDelay));
+        animator.SetTrigger("IsWalking");
+        ScarePlayer();
 
-            animator.SetTrigger("IsWalking");
-            ScarePlayer();
+        enemyRenderer.forceRenderingOff = true;
 
-            enemyRenderer.forceRenderingOff = true;
+        yield return new WaitForSeconds(Random.Range(minDelay, maxDelay));
 
-            yield return new WaitForSeconds(Random.Range(minDelay, maxDelay));
+        animator.SetTrigger("IsWalking");
+        ScarePlayer();
 
-            animator.SetTrigger("IsWalking");
-            ScarePlayer();
+        guardWalkSound.Stop();
 
-            guardWalkSound.Stop();
+        randomScream = enemyScreams[Random.Range(0, enemyScreams.Length)];
+        randomScream.Play();
 
-            randomScream = enemyScreams[Random.Range(0, enemyScreams.Length)];
-            randomScream.Play();
+        enemyRenderer.forceRenderingOff = false;
 
-            enemyRenderer.forceRenderingOff = false;
+        enemyLight.enabled = true;
 
-            enemyLight.enabled = true;
+        yield return new WaitForSeconds(Random.Range(minDelay, maxDelay));
 
-            yield return new WaitForSeconds(Random.Range(minDelay, maxDelay));
+        guardWalkSound.Play();
 
-            guardWalkSound.Play();
+        randomScream = enemyScreams[Random.Range(0, enemyScreams.Length)];
+        randomScream.Play();
 
-            randomScream = enemyScreams[Random.Range(0, enemyScreams.Length)];
-            randomScream.Play();
+        animator.SetTrigger("IsWalking");
+        ScarePlayer();
 
-            animator.SetTrigger("IsWalking");
-            ScarePlayer();
+        enemyRenderer.forceRenderingOff = true;
 
-            enemyRenderer.forceRenderingOff = true;
+        enemyLight.enabled = false;
 
-            enemyLight.enabled = false;
+        yield return new WaitForSeconds(Random.Range(minDelay, maxDelay));
 
-            yield return new WaitForSeconds(Random.Range(minDelay, maxDelay));
+        randomScream = enemyScreams[Random.Range(0, enemyScreams.Length)];
+        randomScream.Play();
 
-            randomScream = enemyScreams[Random.Range(0, enemyScreams.Length)];
-            randomScream.Play();
+        yield return new WaitForSeconds(2);
 
-            yield return new WaitForSeconds(2);
-
-            randomScream.Stop();
-
-        }
+        randomScream.Stop();
 
         canKillPlayer = true;
         isChasingPlayer = true;
@@ -205,7 +201,7 @@ public class Enemy : MonoBehaviour
 
         Quaternion playerRotation = Quaternion.Euler(-90, GameManager.Instance.Player.transform.rotation.eulerAngles.y, 0);
         GameManager.Instance.Player.transform.rotation = playerRotation;
-
+        
         agent.isStopped = true;
         guardKillingScream.Play();
         guardKillingScream.volume = 1f;
