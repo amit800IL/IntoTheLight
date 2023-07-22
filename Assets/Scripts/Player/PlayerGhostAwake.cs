@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -12,6 +13,7 @@ public class PlayerGhostAwake : MonoBehaviour, ICheckPlayerInteraction
 
     public bool isInRangeOfGhost { get; private set; } = false;
     public bool HasAwaknedGhost { get; private set; }
+    
 
     [SerializeField] private InputActionsSO InputActions;
 
@@ -114,11 +116,6 @@ public class PlayerGhostAwake : MonoBehaviour, ICheckPlayerInteraction
                 InputActions.Move.Disable();
                 InputActions.Look.Disable();
                 yield return new WaitForSeconds(1);
-
-                if (GameManager.Instance.playerStats.HP <= 0)
-                {
-                    SceneManager.LoadScene(SceneManager.GetActiveScene().name);
-                }
             }
             Debug.Log("Player lost health");
             yield return new WaitForSeconds(1);

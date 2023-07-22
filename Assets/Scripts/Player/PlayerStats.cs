@@ -6,6 +6,8 @@ public class PlayerStats : MonoBehaviour
     public float maxHp = 100;
     public float speed;
     public int CurrKeys;
+    public delegate void EndGameAction();
+    public static event EndGameAction OnDeath;
 
     private void Start()
     {
@@ -20,7 +22,9 @@ public class PlayerStats : MonoBehaviour
         }
         else if (HP <= 0)
         {
-            HP = 0;
+            Debug.Log("Health zero");
+            if (OnDeath != null)
+                OnDeath();
         }
     }
 }

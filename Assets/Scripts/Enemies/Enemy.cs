@@ -152,11 +152,6 @@ public class Enemy : MonoBehaviour
                 enemyKill();
 
                 yield return new WaitForSeconds(2);
-
-                if (GameManager.Instance.playerStats.HP <= 0)
-                {
-                    SceneManager.LoadScene(SceneManager.GetActiveScene().name);
-                }
             }
             yield return new WaitForSeconds(1);
         }
@@ -179,10 +174,11 @@ public class Enemy : MonoBehaviour
         Quaternion playerRotation = Quaternion.Euler(-90, GameManager.Instance.Player.transform.rotation.eulerAngles.y, 0);
         GameManager.Instance.Player.transform.rotation = playerRotation;
 
+
         agent.isStopped = true;
         guardKillingScream.Play();
         guardKillingScream.volume = 1f;
-        GameManager.Instance.playerStats.HP -= 200;
+        GameManager.Instance.playerStats.HP = 0;
         PlayerVoiceManager.Instance.playerScream.Play();
         PlayerVoiceManager.Instance.secondPlayerScream.Play();
 
