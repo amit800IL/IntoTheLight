@@ -10,6 +10,15 @@ public class LoseGameScript : MonoBehaviour
         gameObject.SetActive(false);
         PlayerStats.OnDeath += DeathSquenceMethods;
     }
+    private void OnEnable()
+    {
+        gameObject.SetActive(true);
+    }
+
+    private void OnDisable()
+    {
+        PlayerStats.OnDeath -= DeathSquenceMethods;
+    }
     private void DeathSquenceMethods()
     {
         DeathPanelActivate();
