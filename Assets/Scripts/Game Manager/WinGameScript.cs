@@ -4,6 +4,8 @@ using UnityEngine.SceneManagement;
 
 public class WinGameScript : MonoBehaviour
 {
+    private AudioSource[] audioSorces;
+
     private void Start()
     {
         PlayerOpenExitDoor.OnWin += WinPanelActivate;
@@ -13,13 +15,26 @@ public class WinGameScript : MonoBehaviour
     {
         gameObject.SetActive(true);
         Cursor.lockState = CursorLockMode.None;
-        FindObjectOfType<AudioSource>().Stop();
+
+        audioSorces = FindObjectsOfType<AudioSource>();
+
+        foreach (AudioSource source in audioSorces)
+        {
+            source.Stop();
+        }
+
         Cursor.visible = true;
         Time.timeScale = 0f;
     }
     public void RestartLevel()
     {
-        FindObjectOfType<AudioSource>().Play();
+        audioSorces = FindObjectsOfType<AudioSource>();
+
+        foreach (AudioSource source in audioSorces)
+        {
+            source.Play();
+        }
+
         SceneManager.LoadScene("MazeScene");
     }
     public void MainMenu()

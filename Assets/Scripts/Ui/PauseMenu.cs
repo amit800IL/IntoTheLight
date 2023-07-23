@@ -4,6 +4,7 @@ using UnityEngine.InputSystem;
 public class PauseMenu : MonoBehaviour
 {
     private static bool gameIsPaused;
+    private AudioSource[] audioSorces;
     [SerializeField] private InputActionsSO inputActions;
     [SerializeField] private GameObject menu;
 
@@ -35,7 +36,14 @@ public class PauseMenu : MonoBehaviour
     {
         inputActions.Move.Disable();
         inputActions.Look.Disable();
-        FindObjectOfType<AudioSource>().Stop();
+
+        audioSorces = FindObjectsOfType<AudioSource>();
+
+        foreach (AudioSource source in audioSorces)
+        {
+            source.Pause();
+        }
+
         Cursor.lockState = CursorLockMode.None;
         Time.timeScale = 0f;
         gameIsPaused = true;
@@ -47,7 +55,14 @@ public class PauseMenu : MonoBehaviour
     {
         inputActions.Move.Enable();
         inputActions.Look.Enable();
-        FindObjectOfType<AudioSource>().Play();
+
+        audioSorces = FindObjectsOfType<AudioSource>();
+
+        foreach (AudioSource source in audioSorces)
+        {
+            source.UnPause();
+        }
+
         Time.timeScale = 1;
         gameIsPaused = false;
         menu.SetActive(false);
