@@ -8,9 +8,19 @@ public class WinGameScript : MonoBehaviour
 
     private void Start()
     {
-        PlayerOpenExitDoor.OnWin += WinPanelActivate;
         gameObject.SetActive(false);
+        PlayerOpenExitDoor.OnWin += WinPanelActivate;
     }
+    private void OnEnable()
+    {
+        gameObject.SetActive(true);
+    }
+
+    private void OnDisable()
+    {
+        PlayerOpenExitDoor.OnWin -= WinPanelActivate;
+    }
+
     private void WinPanelActivate()
     {
         gameObject.SetActive(true);
@@ -28,14 +38,14 @@ public class WinGameScript : MonoBehaviour
     }
     public void RestartLevel()
     {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+
         audioSorces = FindObjectsOfType<AudioSource>();
 
         foreach (AudioSource source in audioSorces)
         {
             source.Play();
         }
-
-        SceneManager.LoadScene("MazeScene");
     }
     public void MainMenu()
     {

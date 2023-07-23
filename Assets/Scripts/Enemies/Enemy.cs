@@ -254,14 +254,21 @@ public class Enemy : MonoBehaviour
             else if (!rooms.isPlayerInsideRoom)
             {
                 rooms.hitDoor.Stop();
-                guardWalkSound.Play();
-                agent.isStopped = false;
-                canKillPlayer = true;
-                animator.ResetTrigger("IsAttacking");
-                animator.SetTrigger("IsWalking");
+                StartCoroutine(backToKillTimer());
             }
 
         }
+    }
+
+    private IEnumerator backToKillTimer()
+    {
+        guardWalkSound.Play();
+        agent.isStopped = false;
+        canKillPlayer = true;
+        animator.ResetTrigger("IsAttacking");
+        animator.SetTrigger("IsWalking");
+        yield return new WaitForSeconds(5);
+        canKillPlayer = true;
     }
 
 }
