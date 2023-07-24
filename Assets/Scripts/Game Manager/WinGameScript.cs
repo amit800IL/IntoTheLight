@@ -4,7 +4,6 @@ using UnityEngine.SceneManagement;
 
 public class WinGameScript : MonoBehaviour
 {
-
     private AudioSource[] audioSources;
 
     void Start()
@@ -12,6 +11,7 @@ public class WinGameScript : MonoBehaviour
         PlayerOpenExitDoor.OnWin += WinPanelActivate;
         gameObject.SetActive(false);
     }
+
     private void WinPanelActivate()
     {
         gameObject.SetActive(true);
@@ -22,10 +22,18 @@ public class WinGameScript : MonoBehaviour
         {
             source.Stop();
         }
+
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
+
+        Time.timeScale = 0f;
     }
     public void RestartLevel()
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = true;
+        Time.timeScale = 1f;
     }
     public void MainMenu()
     {
