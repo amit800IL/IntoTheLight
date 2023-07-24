@@ -6,9 +6,7 @@ public class PlayerOpenKeyRoomDoor : MonoBehaviour, ICheckPlayerInteraction
 {
     private bool isInDoorTrigger = false;
     private bool isDoorOpen = false;
-    private Vector3[] rightDoorDefaultPositions;
     private Quaternion[] rightDoorDefaultRotations;
-    private Vector3[] leftDoorDefaultPositions;
     private Quaternion[] leftDoorDefaultRotations;
     [SerializeField] private Transform[] rightDoor;
     [SerializeField] private Transform[] leftDoor;
@@ -55,7 +53,6 @@ public class PlayerOpenKeyRoomDoor : MonoBehaviour, ICheckPlayerInteraction
             if (isInDoorTrigger)
             {
                 RightDoor.Rotate(0, -90, 0);
-                RightDoor.position = new Vector3(0, -0.3f, 0);
             }
         }
 
@@ -64,7 +61,6 @@ public class PlayerOpenKeyRoomDoor : MonoBehaviour, ICheckPlayerInteraction
             if (isInDoorTrigger)
             {
                 LeftDoor.Rotate(0, 90, 0);
-                LeftDoor.position = new Vector3(0, 0.3f, 0);
             }
         }
     }
@@ -87,7 +83,6 @@ public class PlayerOpenKeyRoomDoor : MonoBehaviour, ICheckPlayerInteraction
         {
             if (!isInDoorTrigger)
             {
-                rightDoor[i].position = rightDoorDefaultPositions[i];
                 rightDoor[i].rotation = rightDoorDefaultRotations[i];
             }
         }
@@ -96,7 +91,6 @@ public class PlayerOpenKeyRoomDoor : MonoBehaviour, ICheckPlayerInteraction
         {
             if (!isInDoorTrigger)
             {
-                leftDoor[i].position = leftDoorDefaultPositions[i];
                 leftDoor[i].rotation = leftDoorDefaultRotations[i];
             }
         }
@@ -106,21 +100,17 @@ public class PlayerOpenKeyRoomDoor : MonoBehaviour, ICheckPlayerInteraction
 
     private void StoreDoorsDefault()
     {
-        rightDoorDefaultPositions = new Vector3[rightDoor.Length];
         rightDoorDefaultRotations = new Quaternion[rightDoor.Length];
 
         for (int i = 0; i < rightDoor.Length; i++)
         {
-            rightDoorDefaultPositions[i] = rightDoor[i].position;
             rightDoorDefaultRotations[i] = rightDoor[i].rotation;
         }
 
-        leftDoorDefaultPositions = new Vector3[leftDoor.Length];
         leftDoorDefaultRotations = new Quaternion[leftDoor.Length];
 
         for (int i = 0; i < leftDoor.Length; i++)
         {
-            leftDoorDefaultPositions[i] = leftDoor[i].position;
             leftDoorDefaultRotations[i] = leftDoor[i].rotation;
         }
     }

@@ -46,23 +46,23 @@ public class Enemy : MonoBehaviour
     }
     private void ScarePlayer()
     {
+
         float WalkAwayDistanceFraction = 3f;
 
         Vector3 WalkDirection = transform.position - PlayerPosition;
         WalkDirection.y = 0f;
         Vector3 spawnPosition = PlayerPosition + WalkDirection.normalized * WalkAwayDistanceFraction;
         agent.SetDestination(spawnPosition);
-        Debug.Log("Scare Player" + spawnPosition);
+
     }
 
     private void StandInFrontOfPlayer()
     {
-        float offset = 10f;
+        float offset = 5f;
 
         Vector3 directionToPlayer = transform.position - PlayerPosition;
         Vector3 targetPosition = PlayerPosition + directionToPlayer.normalized * offset;
         agent.Warp(targetPosition);
-        Debug.Log("stand in front of player" + targetPosition);
     }
     private void GoToPlayer()
     {
@@ -74,7 +74,6 @@ public class Enemy : MonoBehaviour
 
         animator.SetTrigger("IsWalking");
         agent.SetDestination(targetPosition);
-        Debug.Log("go to player : " + targetPosition);
     }
     private IEnumerator ChasePlayer()
     {
@@ -143,7 +142,6 @@ public class Enemy : MonoBehaviour
         randomScream = enemyScreams[Random.Range(0, enemyScreams.Length)];
         randomScream.Play();
 
-        animator.SetTrigger("IsWalking");
         ScarePlayer();
 
         enemyRenderer.forceRenderingOff = true;
@@ -171,10 +169,21 @@ public class Enemy : MonoBehaviour
 
             standInFronOfGhost();
 
+            foreach (InRoomBehavior rooms in rooms)
+            {
+                if ((GameManager.Instance.PlayerGhostAwake.isInRangeOfGhost && GameManager.Instance.PlayerGhostAwake.HasAwaknedGhost) || rooms.isPlayerInsideRoom)
+                {
+                    canKillPlayer = false;
+                }
+            }
+
+            yield return new WaitForSeconds(2);
+
             if (agent != null && distance < killingDistance && canKillPlayer)
             {
                 enemyKill();
             }
+
             yield return new WaitForSeconds(1);
         }
 
@@ -219,16 +228,13 @@ public class Enemy : MonoBehaviour
     {
         if (GameManager.Instance.PlayerGhostAwake.isInRangeOfGhost && GameManager.Instance.PlayerGhostAwake.HasAwaknedGhost)
         {
-            Debug.Log("StandingInFront");
             animator.ResetTrigger("IsWalking");
             animator.SetTrigger("IsStanding");
             StandInFrontOfPlayer();
             agent.isStopped = true;
-            canKillPlayer = false;
         }
         else if (!GameManager.Instance.PlayerGhostAwake.isInRangeOfGhost && !GameManager.Instance.PlayerGhostAwake.HasAwaknedGhost)
         {
-            Debug.Log("NotStandingInFront");
             animator.ResetTrigger("IsStanding");
             animator.SetTrigger("IsWalking");
             agent.isStopped = false;
@@ -242,33 +248,26 @@ public class Enemy : MonoBehaviour
         {
             float enemyTriggerDistance = Vector3.Distance(rooms.transform.position, transform.position);
 
+
             if (enemyTriggerDistance < 50 && rooms.isPlayerInsideRoom)
             {
                 rooms.hitDoor.Play();
                 guardWalkSound.Stop();
                 agent.isStopped = true;
-                canKillPlayer = false;
                 animator.ResetTrigger("IsWalking");
                 animator.SetTrigger("IsAttacking");
             }
             else if (!rooms.isPlayerInsideRoom)
             {
                 rooms.hitDoor.Stop();
-                StartCoroutine(backToKillTimer());
+                guardWalkSound.Play();
+                agent.isStopped = false;
+                animator.ResetTrigger("IsAttacking");
+                animator.SetTrigger("IsWalking");
+                canKillPlayer = true;
             }
 
         }
-    }
-
-    private IEnumerator backToKillTimer()
-    {
-        guardWalkSound.Play();
-        agent.isStopped = false;
-        canKillPlayer = true;
-        animator.ResetTrigger("IsAttacking");
-        animator.SetTrigger("IsWalking");
-        yield return new WaitForSeconds(5);
-        canKillPlayer = true;
     }
 
 }

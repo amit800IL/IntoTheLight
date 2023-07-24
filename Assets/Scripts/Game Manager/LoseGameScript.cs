@@ -6,7 +6,6 @@ public class LoseGameScript : MonoBehaviour
 {
     private void Start()
     {
-        Debug.Log("Waiting for death");
         gameObject.SetActive(false);
         PlayerStats.OnDeath += DeathSquenceMethods;
     }
@@ -33,17 +32,8 @@ public class LoseGameScript : MonoBehaviour
     private void DeathPanelActivate()
     {
         gameObject.SetActive(true);
-
-        //StartCoroutine(CanvasFadeIn());
     }
-    //private IEnumerator CanvasFadeIn()
-    //{
-    //    for (float i = 0; i <= 1; i = i + 0.01f)
-    //    {
-    //        gameObject.GetComponent<CanvasGroup>().alpha = i;
-    //        yield return new WaitForSeconds(1);
-    //    }
-    //}
+
     private void RestartLevel()
     {
         Debug.Log("Restarted level");

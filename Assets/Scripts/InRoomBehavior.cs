@@ -19,6 +19,7 @@ public class InRoomBehavior : MonoBehaviour
         if (other.gameObject.CompareTag("Player"))
         {
             isPlayerInsideRoom = true;
+            Debug.Log("Inside room");
         }
     }
 
@@ -27,6 +28,7 @@ public class InRoomBehavior : MonoBehaviour
         if (other.gameObject.CompareTag("Player"))
         {
             isPlayerInsideRoom = false;
+            Debug.Log("Outside room");
         }
     }
 }
