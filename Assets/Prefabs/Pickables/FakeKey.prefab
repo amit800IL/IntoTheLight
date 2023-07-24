@@ -113,3 +113,4 @@ MonoBehaviour:
   InputActions: {fileID: 11400000, guid: 32a8ba2bb0af2b44b801e74f479228ce, type: 2}
   chestLock: {fileID: 0}
   enemy: {fileID: 0}
+  roomFloor: {fileID: 0}

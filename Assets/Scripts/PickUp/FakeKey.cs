@@ -1,5 +1,6 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.AI;
 using UnityEngine.InputSystem;
 
 public class FakeKey : MonoBehaviour, ICheckPlayerInteraction
@@ -12,10 +13,17 @@ public class FakeKey : MonoBehaviour, ICheckPlayerInteraction
 
     [SerializeField] private Enemy enemy;
 
+    [SerializeField] private GameObject roomFloor;
+
     private bool pickUpAllowed = false;
 
     private bool isInChestTrigger;
 
+
+    private void Start()
+    {
+        roomFloor.SetActive(true);
+    }
 
     private void OnEnable()
     {
@@ -68,7 +76,9 @@ public class FakeKey : MonoBehaviour, ICheckPlayerInteraction
         gameObject.SetActive(false);
         Haskey = true;
 
-        enemy.agent.Warp(GameManager.Instance.Player.transform.position);
+        roomFloor.SetActive(false);
+
+        enemy.agent.Warp(GameManager.Instance.Player.transform.position + new Vector3(-4,0,0));
 
         enemy.enemyKill();
     }

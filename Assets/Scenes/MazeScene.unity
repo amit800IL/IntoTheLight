@@ -3862,6 +3862,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 23b840ccb81c30f4685e317d9ca58d84, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &2088551888 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6887581964724723921, guid: 3bf6729c8c84298499f28d4f4a019ca2,
+    type: 3}
+  m_PrefabInstance: {fileID: 3407970056611047643}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &2115087776 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 373760747329438589, guid: 1f45b3fae489f27428ecbf5c8887de48,
@@ -4126,7 +4132,7 @@ PrefabInstance:
     - target: {fileID: 3329633612021156671, guid: d6d1c06a83c71bb428aad00826a38099,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -57.444
+      value: -58.62
       objectReference: {fileID: 0}
     - target: {fileID: 3329633612021156671, guid: d6d1c06a83c71bb428aad00826a38099,
         type: 3}
@@ -4136,7 +4142,7 @@ PrefabInstance:
     - target: {fileID: 3329633612021156671, guid: d6d1c06a83c71bb428aad00826a38099,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: -162.689
+      value: -163.71
       objectReference: {fileID: 0}
     - target: {fileID: 3329633612021156671, guid: d6d1c06a83c71bb428aad00826a38099,
         type: 3}
@@ -4183,6 +4189,11 @@ PrefabInstance:
       propertyPath: chestLock
       value: 
       objectReference: {fileID: 903590056}
+    - target: {fileID: 7275632040394521188, guid: d6d1c06a83c71bb428aad00826a38099,
+        type: 3}
+      propertyPath: roomFloor
+      value: 
+      objectReference: {fileID: 2088551888}
     - target: {fileID: 8189736272251910491, guid: d6d1c06a83c71bb428aad00826a38099,
         type: 3}
       propertyPath: m_Name
